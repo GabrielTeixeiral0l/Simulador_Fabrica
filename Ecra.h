@@ -6,31 +6,31 @@
 
 class Ecra {
     char buffer[Settings::ecra_max_linhas][Settings::ecra_max_colunas];
-    int rows;
-    int cols;
-    int cursorRow;
-    int cursorCol;
+    int linhas;
+    int colunas;
+    int linhaCursor;
+    int colunaCursor;
 
-    bool isInBounds(int r, int c) const noexcept;
-    void putChar(int r, int c, char ch) noexcept;
+    bool estaDentroDosLimites(int l, int c) const noexcept;
+    void colocarCaractere(int l, int c, char ch) noexcept;
 
 public:
-    explicit Ecra(int r = Settings::ecra_max_linhas, int c = Settings::ecra_max_colunas) noexcept;
+    explicit Ecra(int l = Settings::ecra_max_linhas, int c = Settings::ecra_max_colunas) noexcept;
 
-    void clear() noexcept;
-    bool gotoxy(int r, int c) noexcept;
-    void write(char c) noexcept;
-    void write(const std::string& text);
-    void write(int r, int c, char ch) noexcept;
-    void write(int r, int c, const std::string& text);
-    void drawFrame(int startRow, int startCol, int height, int width) noexcept;
-    void show() const;
+    void limpar() noexcept;
+    bool gotoxy(int l, int c) noexcept;
+    void escrever(char c) noexcept;
+    void escrever(const std::string& texto);
+    void escrever(int l, int c, char ch) noexcept;
+    void escrever(int l, int c, const std::string& texto);
+    void desenharMoldura(int linhaInicio, int colunaInicio, int altura, int largura) noexcept;
+    void mostrar() const;
 
-    char getChar(int r, int c) const noexcept;
-    int getRows() const noexcept;
-    int getCols() const noexcept;
-    int getCursorRow() const noexcept;
-    int getCursorCol() const noexcept;
+    char getCaractere(int l, int c) const noexcept;
+    int getLinhas() const noexcept;
+    int getColunas() const noexcept;
+    int getLinhaCursor() const noexcept;
+    int getColunaCursor() const noexcept;
 };
 
 #endif // SIMULADOR_ECRA_H

@@ -1,144 +1,145 @@
 #include "Ecra.h"
 #include <iostream>
 
-Ecra::Ecra(int r, int c) noexcept
-    : rows(r), cols(c), cursorRow(0), cursorCol(0) {
-    if (rows < 1) {
-        rows = 1;
-    } else if (rows > Settings::ecra_max_linhas) {
-        rows = Settings::ecra_max_linhas;
+Ecra::Ecra(int l, int c) noexcept
+    : linhas(l), colunas(c), linhaCursor(0), colunaCursor(0) {
+    if (linhas < 1) {
+        linhas = 1;
+    } else if (linhas > Settings::ecra_max_linhas) {
+        linhas = Settings::ecra_max_linhas;
     }
 
-    if (cols < 1) {
-        cols = 1;
-    } else if (cols > Settings::ecra_max_colunas) {
-        cols = Settings::ecra_max_colunas;
+    if (colunas < 1) {
+        colunas = 1;
+    } else if (colunas > Settings::ecra_max_colunas) {
+        colunas = Settings::ecra_max_colunas;
     }
 
-    clear();
+    limpar();
 }
 
-bool Ecra::isInBounds(int r, int c) const noexcept {
-    return r >= 0 && r < rows && c >= 0 && c < cols;
+bool Ecra::estaDentroDosLimites(int l, int c) const noexcept {
+    return l >= 0 && l < linhas && c >= 0 && c < colunas;
 }
 
-void Ecra::putChar(int r, int c, char ch) noexcept {
-    if (isInBounds(r, c)) {
-        buffer[r][c] = ch;
+void Ecra::colocarCaractere(int l, int c, char ch) noexcept {
+    if (estaDentroDosLimites(l, c)) {
+        buffer[l][c] = ch;
     }
 }
 
-void Ecra::clear() noexcept {
-    for (int r = 0; r < Settings::ecra_max_linhas; ++r) {
+void Ecra::limpar() noexcept {
+    for (int l = 0; l < Settings::ecra_max_linhas; ++l) {
         for (int c = 0; c < Settings::ecra_max_colunas; ++c) {
-            buffer[r][c] = ' ';
+            buffer[l][c] = ' ';
         }
     }
-    cursorRow = 0;
-    cursorCol = 0;
+    linhaCursor = 0;
+    colunaCursor = 0;
 }
 
-bool Ecra::gotoxy(int r, int c) noexcept {
-    if (isInBounds(r, c)) {
-        cursorRow = r;
-        cursorCol = c;
+bool Ecra::gotoxy(int l, int c) noexcept {
+    if (estaDentroDosLimites(l, c)) {
+        linhaCursor = l;
+        colunaCursor = c;
         return true;
     }
     return false;
 }
 
-void Ecra::write(char c) noexcept {
+void Ecra::escrever(char c) noexcept {
     if (c == '\n') {
-        cursorRow++;
-        cursorCol = 0;
+        linhaCursor++;
+        colunaCursor = 0;
         return;
     }
 
-    if (cursorCol >= cols) {
-        cursorRow++;
-        cursorCol = 0;
+    if (colunaCursor >= colunas) {
+        linhaCursor++;
+        colunaCursor = 0;
     }
 
-    if (isInBounds(cursorRow, cursorCol)) {
-        buffer[cursorRow][cursorCol] = c;
-        cursorCol++;
-    }
-}
-
-void Ecra::write(const std::string& text) {
-    for (char c : text) {
-        write(c);
+    if (estaDentroDosLimites(linhaCursor, colunaCursor)) {
+        buffer[linhaCursor][colunaCursor] = c;
+        colunaCursor++;
     }
 }
 
-void Ecra::write(int r, int c, char ch) noexcept {
-    if (gotoxy(r, c)) {
-        write(ch);
+void Ecra::escrever(const std::string& texto) {
+    for (char c : texto) {
+        escrever(c);
     }
 }
 
-void Ecra::write(int r, int c, const std::string& text) {
-    if (gotoxy(r, c)) {
-        write(text);
+void Ecra::escrever(int l, int c, char ch) noexcept {
+    if (gotoxy(l, c)) {
+        escrever(ch);
     }
 }
 
-void Ecra::drawFrame(int startRow, int startCol, int height, int width) noexcept {
-    if (height < 2 || width < 2) {
+void Ecra::escrever(int l, int c, const std::string& texto) {
+    if (gotoxy(l, c)) {
+        escrever(texto);
+    }
+}
+
+void Ecra::desenharMoldura(int linhaInicio, int colunaInicio, int altura, int largura) noexcept {
+    if (altura < 2 || largura < 2) {
         return;
     }
 
-    int endRow = startRow + height - 1;
-    int endCol = startCol + width - 1;
+    int linhaFim = linhaInicio + altura - 1;
+    int colunaFim = colunaInicio + largura - 1;
 
-    for (int c = startCol + 1; c < endCol; ++c) {
-        putChar(startRow, c, '-');
-        putChar(endRow, c, '-');
+    for (int c = colunaInicio + 1; c < colunaFim; ++c) {
+        colocarCaractere(linhaInicio, c, '-');
+        colocarCaractere(linhaFim, c, '-');
     }
 
-    for (int r = startRow + 1; r < endRow; ++r) {
-        putChar(r, startCol, '|');
-        putChar(r, endCol, '|');
+    for (int l = linhaInicio + 1; l < linhaFim; ++l) {
+        colocarCaractere(l, colunaInicio, '|');
+        colocarCaractere(l, colunaFim, '|');
     }
 
-    putChar(startRow, startCol, '+');
-    putChar(startRow, endCol, '+');
-    putChar(endRow, startCol, '+');
-    putChar(endRow, endCol, '+');
+    colocarCaractere(linhaInicio, colunaInicio, '+');
+    colocarCaractere(linhaInicio, colunaFim, '+');
+    colocarCaractere(linhaFim, colunaInicio, '+');
+    colocarCaractere(linhaFim, colunaFim, '+');
 }
 
-void Ecra::show() const {
-    std::string output;
+void Ecra::mostrar() const {
+    std::string saida;
+    saida.reserve(linhas * (colunas + 1));
 
-    for (int r = 0; r < rows; ++r) {
-        for (int c = 0; c < cols; ++c) {
-            output += buffer[r][c];
+    for (int l = 0; l < linhas; ++l) {
+        for (int c = 0; c < colunas; ++c) {
+            saida += buffer[l][c];
         }
-        output += '\n';
+        saida += '\n';
     }
 
-    std::cout << output;
+    std::cout << saida;
 }
 
-char Ecra::getChar(int r, int c) const noexcept {
-    if (isInBounds(r, c)) {
-        return buffer[r][c];
+char Ecra::getCaractere(int l, int c) const noexcept {
+    if (estaDentroDosLimites(l, c)) {
+        return buffer[l][c];
     }
     return ' ';
 }
 
-int Ecra::getRows() const noexcept {
-    return rows;
+int Ecra::getLinhas() const noexcept {
+    return linhas;
 }
 
-int Ecra::getCols() const noexcept {
-    return cols;
+int Ecra::getColunas() const noexcept {
+    return colunas;
 }
 
-int Ecra::getCursorRow() const noexcept {
-    return cursorRow;
+int Ecra::getLinhaCursor() const noexcept {
+    return linhaCursor;
 }
 
-int Ecra::getCursorCol() const noexcept {
-    return cursorCol;
+int Ecra::getColunaCursor() const noexcept {
+    return colunaCursor;
 }
