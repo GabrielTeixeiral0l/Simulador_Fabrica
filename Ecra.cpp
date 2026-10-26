@@ -66,8 +66,8 @@ void Ecra::escrever(char c) noexcept {
 }
 
 void Ecra::escrever(const std::string& texto) {
-    for (char c : texto) {
-        escrever(c);
+    for (unsigned int i = 0; i < texto.length(); ++i) {
+        escrever(texto[i]);
     }
 }
 
