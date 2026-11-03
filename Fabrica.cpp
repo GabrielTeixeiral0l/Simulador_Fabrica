@@ -42,34 +42,34 @@ bool Fabrica::estaDentroDosLimites(int l, int c) const noexcept {
     return l >= 0 && l < linhas && c >= 0 && c < colunas;
 }
 
-int Fabrica::gerarNumeroAleatorio(int min, int max) const {
+int Fabrica::gerarNumeroAleatorio(int min, int max) {
     static std::random_device rd;
     static std::default_random_engine gerador(rd());
     std::uniform_int_distribution<int> distribuicao(min, max);
     return distribuicao(gerador);
 }
 
-void Fabrica::sortearPosicaoLivre(int& r, int& c) const {
+void Fabrica::sortearPosicaoLivre(int& l, int& c) const {
     do {
-        r = gerarNumeroAleatorio(0, linhas - 1);
+        l = gerarNumeroAleatorio(0, linhas - 1);
         c = gerarNumeroAleatorio(0, colunas - 1);
-    } while (grelha[r][c] != nullptr);
+    } while (grelha[l][c] != nullptr);
 }
 
 void Fabrica::criarCrateras(int numCrateras) {
-    int r, col;
+    int l, c;
     for (int i = 0; i < numCrateras; ++i) {
-        sortearPosicaoLivre(r, col);
-        grelha[r][col] = new Cratera();
+        sortearPosicaoLivre(l, c);
+        grelha[l][c] = new Cratera();
     }
 }
 
 void Fabrica::criarDepositos(int numDepositos, const std::string& nome, char simbolo) {
-    int r, col;
+    int l, c;
     for (int i = 0; i < numDepositos; ++i) {
-        sortearPosicaoLivre(r, col);
+        sortearPosicaoLivre(l, c);
         int qtd = gerarNumeroAleatorio(Settings::deposito_quantidade_min, Settings::deposito_quantidade_max);
-        grelha[r][col] = new Deposito(nome, simbolo, qtd);
+        grelha[l][c] = new Deposito(nome, simbolo, qtd);
     }
 }
 

@@ -15,7 +15,7 @@ class Fabrica {
 
     void limparGrelha() noexcept;
     bool estaDentroDosLimites(int l, int c) const noexcept;
-    int gerarNumeroAleatorio(int min, int max) const;
+    static int gerarNumeroAleatorio(int min, int max);
     void sortearPosicaoLivre(int& r, int& c) const;
     void criarCrateras(int numCrateras);
     void criarDepositos(int numDepositos, const std::string& nome, char simbolo);

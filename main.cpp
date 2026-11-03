@@ -3,7 +3,7 @@
 #include "Fabrica.h"
 
 int main() {
-    Fabrica fabrica(10, 15);
+    const Fabrica fabrica(10, 15);
 
     int larguraTotal = fabrica.getColunas() + 5 + 1 + 35;
     int alturaTotal = fabrica.getLinhas() + 3;
