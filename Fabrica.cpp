@@ -18,7 +18,7 @@ Fabrica::Fabrica(int l, int c)
 
     for (int i = 0; i < Settings::fabrica_max_linhas; ++i) {
         for (int j = 0; j < Settings::fabrica_max_colunas; ++j) {
-            grelha[i][j] = NULL;
+            grelha[i][j] = nullptr;
         }
     }
 
@@ -33,7 +33,7 @@ void Fabrica::limparGrelha() noexcept {
     for (int l = 0; l < Settings::fabrica_max_linhas; ++l) {
         for (int c = 0; c < Settings::fabrica_max_colunas; ++c) {
             delete grelha[l][c];
-            grelha[l][c] = NULL;
+            grelha[l][c] = nullptr;
         }
     }
 }
@@ -53,7 +53,7 @@ void Fabrica::sortearPosicaoLivre(int& r, int& c) const {
     do {
         r = gerarNumeroAleatorio(0, linhas - 1);
         c = gerarNumeroAleatorio(0, colunas - 1);
-    } while (grelha[r][c] != NULL);
+    } while (grelha[r][c] != nullptr);
 }
 
 void Fabrica::criarCrateras(int numCrateras) {
@@ -99,7 +99,7 @@ bool Fabrica::gerarAleatoria(int l, int c) {
 
     for (int i = 0; i < linhas; ++i) {
         for (int j = 0; j < colunas; ++j) {
-            if (grelha[i][j] == NULL) {
+            if (grelha[i][j] == nullptr) {
                 grelha[i][j] = new Solo();
             }
         }
@@ -126,7 +126,7 @@ bool Fabrica::carregarFicheiro(const std::string& nomeFicheiro) {
     Terreno* temp[Settings::fabrica_max_linhas][Settings::fabrica_max_colunas];
     for (int i = 0; i < l; ++i) {
         for (int j = 0; j < c; ++j) {
-            temp[i][j] = NULL;
+            temp[i][j] = nullptr;
         }
     }
 
@@ -219,7 +219,7 @@ void Fabrica::desenhar(Ecra& ecra) const {
 
     for (int l = 0; l < linhas; ++l) {
         for (int c = 0; c < colunas; ++c) {
-            if (grelha[l][c] != NULL) {
+            if (grelha[l][c] != nullptr) {
                 ecra.escrever(2 + l, 3 + c, grelha[l][c]->getSimbolo());
             }
         }
@@ -234,7 +234,7 @@ void Fabrica::desenhar(Ecra& ecra) const {
 }
 
 std::string Fabrica::getInfoPosicao(int l, int c) const {
-    if (!estaDentroDosLimites(l, c) || grelha[l][c] == NULL) {
+    if (!estaDentroDosLimites(l, c) || grelha[l][c] == nullptr) {
         return "Posicao fora dos limites da fabrica";
     }
 
@@ -281,5 +281,5 @@ const Terreno* Fabrica::getTerreno(int l, int c) const noexcept {
     if (estaDentroDosLimites(l, c)) {
         return grelha[l][c];
     }
-    return NULL;
+    return nullptr;
 }

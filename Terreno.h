@@ -14,19 +14,19 @@ public:
 class Solo : public Terreno {
 public:
     Solo() noexcept;
-    ~Solo();
+    ~Solo() override;
 
-    char getSimbolo() const noexcept;
-    std::string getDescricao() const;
+    char getSimbolo() const noexcept override;
+    std::string getDescricao() const override;
 };
 
 class Cratera : public Terreno {
 public:
     Cratera() noexcept;
-    ~Cratera();
+    ~Cratera() override;
 
-    char getSimbolo() const noexcept;
-    std::string getDescricao() const;
+    char getSimbolo() const noexcept override;
+    std::string getDescricao() const override;
 };
 
 class Deposito : public Terreno {
@@ -36,10 +36,10 @@ class Deposito : public Terreno {
 
 public:
     Deposito(const std::string& n, char s, int q);
-    ~Deposito();
+    ~Deposito() override;
 
-    char getSimbolo() const noexcept;
-    std::string getDescricao() const;
+    char getSimbolo() const noexcept override;
+    std::string getDescricao() const override;
 
     const std::string& getNome() const noexcept;
     int getQuantidade() const noexcept;
