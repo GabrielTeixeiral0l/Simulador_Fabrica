@@ -1,19 +1,18 @@
 #include "Terreno.h"
 #include <sstream>
 
-Terreno::~Terreno() {}
+Terreno::~Terreno() = default;
 
 char Terreno::getSimbolo() const noexcept {
     return ' ';
 }
 
 std::string Terreno::getDescricao() const {
+
     return "Terreno";
 }
 
-Solo::Solo() noexcept {}
-
-Solo::~Solo() {}
+Solo::~Solo() = default;
 
 char Solo::getSimbolo() const noexcept {
     return ' ';
@@ -23,9 +22,7 @@ std::string Solo::getDescricao() const {
     return "Solo vazio";
 }
 
-Cratera::Cratera() noexcept {}
-
-Cratera::~Cratera() {}
+Cratera::~Cratera() = default;
 
 char Cratera::getSimbolo() const noexcept {
     return '#';
@@ -38,7 +35,7 @@ std::string Cratera::getDescricao() const {
 Deposito::Deposito(const std::string& n, char s, int q)
     : nome(n), simbolo(s), quantidade(q) {}
 
-Deposito::~Deposito() {}
+Deposito::~Deposito() = default;
 
 char Deposito::getSimbolo() const noexcept {
     return simbolo;

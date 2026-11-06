@@ -13,7 +13,6 @@ public:
 
 class Solo : public Terreno {
 public:
-    Solo() noexcept;
     ~Solo() override;
 
     char getSimbolo() const noexcept override;
@@ -22,7 +21,6 @@ public:
 
 class Cratera : public Terreno {
 public:
-    Cratera() noexcept;
     ~Cratera() override;
 
     char getSimbolo() const noexcept override;
