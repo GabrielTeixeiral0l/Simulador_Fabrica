@@ -10,11 +10,11 @@ class Terreno {
 
 public:
     Terreno() noexcept;
-    Terreno(char s, std::string n = "", int q = 0) noexcept;
+    Terreno(char simbolo, std::string nome = "", int quantidade = 0) noexcept;
 
     static Terreno criarSolo() noexcept;
     static Terreno criarCratera() noexcept;
-    static Terreno criarDeposito(char s, const std::string& n, int q) noexcept;
+    static Terreno criarDeposito(char simbolo, const std::string& nome, int quantidade) noexcept;
 
     char getSimbolo() const noexcept;
     std::string getDescricao() const;
@@ -22,7 +22,7 @@ public:
     int getQuantidade() const noexcept;
 
     bool podeConstruir() const noexcept;
-    bool extrair(int qtd = 1) noexcept;
+    bool extrair(int quantidadeExtrair = 1) noexcept;
 };
 
 #endif // SIMULADOR_TERRENO_H

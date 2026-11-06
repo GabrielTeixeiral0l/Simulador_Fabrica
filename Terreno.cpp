@@ -4,8 +4,8 @@
 Terreno::Terreno() noexcept
     : simbolo(' '), nome(""), quantidade(0) {}
 
-Terreno::Terreno(char s, std::string n, int q) noexcept
-    : simbolo(s), nome(std::move(n)), quantidade(q) {}
+Terreno::Terreno(char simbolo, std::string nome, int quantidade) noexcept
+    : simbolo(simbolo), nome(std::move(nome)), quantidade(quantidade) {}
 
 Terreno Terreno::criarSolo() noexcept {
     return Terreno(' ', "", 0);
@@ -15,8 +15,8 @@ Terreno Terreno::criarCratera() noexcept {
     return Terreno('#', "", 0);
 }
 
-Terreno Terreno::criarDeposito(char s, const std::string& n, int q) noexcept {
-    return Terreno(s, n, q);
+Terreno Terreno::criarDeposito(char simbolo, const std::string& nome, int quantidade) noexcept {
+    return Terreno(simbolo, nome, quantidade);
 }
 
 char Terreno::getSimbolo() const noexcept {
@@ -47,10 +47,10 @@ bool Terreno::podeConstruir() const noexcept {
     return simbolo != '#';
 }
 
-bool Terreno::extrair(int qtd) noexcept {
-    if (qtd <= 0 || quantidade < qtd) {
+bool Terreno::extrair(int quantidadeExtrair) noexcept {
+    if (quantidadeExtrair <= 0 || quantidade < quantidadeExtrair) {
         return false;
     }
-    quantidade -= qtd;
+    quantidade -= quantidadeExtrair;
     return true;
 }

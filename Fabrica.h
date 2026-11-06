@@ -14,30 +14,30 @@ class Fabrica {
     Terreno grelha[Settings::fabrica_max_linhas][Settings::fabrica_max_colunas];
 
     void limparGrelha() noexcept;
-    bool estaDentroDosLimites(int l, int c) const noexcept;
+    bool estaDentroDosLimites(int linha, int coluna) const noexcept;
     static int gerarNumeroAleatorio(int min, int max);
-    void sortearPosicaoLivre(int& l, int& c) const;
+    void sortearPosicaoLivre(int& linha, int& coluna) const;
     void criarCrateras(int numCrateras);
     void criarDepositos(int numDepositos, const std::string& nome, char simbolo);
     void desenharRegua(Ecra& ecra) const noexcept;
     void desenharPainel(Ecra& ecra) const;
 
 public:
-    explicit Fabrica(int l = Settings::fabrica_max_linhas, int c = Settings::fabrica_max_colunas);
+    explicit Fabrica(int numLinhas = Settings::fabrica_max_linhas, int numColunas = Settings::fabrica_max_colunas);
     ~Fabrica() = default;
 
-    bool gerarAleatoria(int l, int c);
+    bool gerarAleatoria(int numLinhas, int numColunas);
     bool carregarFicheiro(const std::string& nomeFicheiro);
     void desenhar(Ecra& ecra) const;
 
-    std::string getInfoPosicao(int l, int c) const;
-    std::string getInfoPosicao(const std::string& coords) const;
+    std::string getInfoPosicao(int linha, int coluna) const;
+    std::string getInfoPosicao(const std::string& coordenadas) const;
 
     int getLinhas() const noexcept;
     int getColunas() const noexcept;
     int getCreditos() const noexcept;
     int getInstante() const noexcept;
-    const Terreno* getTerreno(int l, int c) const noexcept;
+    const Terreno* getTerreno(int linha, int coluna) const noexcept;
 };
 
 #endif // SIMULADOR_FABRICA_H

@@ -2,8 +2,8 @@
 #include <fstream>
 #include <random>
 
-Fabrica::Fabrica(int l, int c)
-    : linhas(l), colunas(c), creditos(Settings::fabrica_creditos_iniciais), instante(1) {
+Fabrica::Fabrica(int numLinhas, int numColunas)
+    : linhas(numLinhas), colunas(numColunas), creditos(Settings::fabrica_creditos_iniciais), instante(1) {
     if (linhas < 1) {
         linhas = 1;
     } else if (linhas > Settings::fabrica_max_linhas) {
@@ -28,8 +28,8 @@ void Fabrica::limparGrelha() noexcept {
     }
 }
 
-bool Fabrica::estaDentroDosLimites(int l, int c) const noexcept {
-    return l >= 0 && l < linhas && c >= 0 && c < colunas;
+bool Fabrica::estaDentroDosLimites(int linha, int coluna) const noexcept {
+    return linha >= 0 && linha < linhas && coluna >= 0 && coluna < colunas;
 }
 
 int Fabrica::gerarNumeroAleatorio(int min, int max) {
@@ -39,38 +39,38 @@ int Fabrica::gerarNumeroAleatorio(int min, int max) {
     return distribuicao(gerador);
 }
 
-void Fabrica::sortearPosicaoLivre(int& l, int& c) const {
+void Fabrica::sortearPosicaoLivre(int& linha, int& coluna) const {
     do {
-        l = gerarNumeroAleatorio(0, linhas - 1);
-        c = gerarNumeroAleatorio(0, colunas - 1);
-    } while (grelha[l][c].getSimbolo() != ' ');
+        linha = gerarNumeroAleatorio(0, linhas - 1);
+        coluna = gerarNumeroAleatorio(0, colunas - 1);
+    } while (grelha[linha][coluna].getSimbolo() != ' ');
 }
 
 void Fabrica::criarCrateras(int numCrateras) {
-    int l, c;
+    int linha, coluna;
     for (int i = 0; i < numCrateras; ++i) {
-        sortearPosicaoLivre(l, c);
-        grelha[l][c] = Terreno::criarCratera();
+        sortearPosicaoLivre(linha, coluna);
+        grelha[linha][coluna] = Terreno::criarCratera();
     }
 }
 
 void Fabrica::criarDepositos(int numDepositos, const std::string& nome, char simbolo) {
-    int l, c;
+    int linha, coluna;
     for (int i = 0; i < numDepositos; ++i) {
-        sortearPosicaoLivre(l, c);
+        sortearPosicaoLivre(linha, coluna);
         int qtd = gerarNumeroAleatorio(Settings::deposito_quantidade_min, Settings::deposito_quantidade_max);
-        grelha[l][c] = Terreno::criarDeposito(simbolo, nome, qtd);
+        grelha[linha][coluna] = Terreno::criarDeposito(simbolo, nome, qtd);
     }
 }
 
-bool Fabrica::gerarAleatoria(int l, int c) {
-    if (l < 1 || l > Settings::fabrica_max_linhas || c < 1 || c > Settings::fabrica_max_colunas) {
+bool Fabrica::gerarAleatoria(int numLinhas, int numColunas) {
+    if (numLinhas < 1 || numLinhas > Settings::fabrica_max_linhas || numColunas < 1 || numColunas > Settings::fabrica_max_colunas) {
         return false;
     }
 
     limparGrelha();
-    linhas = l;
-    colunas = c;
+    linhas = numLinhas;
+    colunas = numColunas;
     creditos = Settings::fabrica_creditos_iniciais;
     instante = 1;
 
@@ -96,25 +96,25 @@ bool Fabrica::carregarFicheiro(const std::string& nomeFicheiro) {
         return false;
     }
 
-    int l, c;
-    if (!(fich >> l >> c)) {
+    int linhasFich, colunasFich;
+    if (!(fich >> linhasFich >> colunasFich)) {
         return false;
     }
 
-    if (l < 1 || l > Settings::fabrica_max_linhas || c < 1 || c > Settings::fabrica_max_colunas) {
+    if (linhasFich < 1 || linhasFich > Settings::fabrica_max_linhas || colunasFich < 1 || colunasFich > Settings::fabrica_max_colunas) {
         return false;
     }
 
     Terreno temp[Settings::fabrica_max_linhas][Settings::fabrica_max_colunas];
 
-    for (int i = 0; i < l; ++i) {
+    for (int i = 0; i < linhasFich; ++i) {
         std::string linhaMapa;
         fich >> linhaMapa;
-        if (linhaMapa.length() != static_cast<size_t>(c)) {
+        if (linhaMapa.length() != static_cast<size_t>(colunasFich)) {
             return false;
         }
 
-        for (int j = 0; j < c; ++j) {
+        for (int j = 0; j < colunasFich; ++j) {
             char ch = linhaMapa[j];
             int qtd = gerarNumeroAleatorio(Settings::deposito_quantidade_min, Settings::deposito_quantidade_max);
 
@@ -135,8 +135,8 @@ bool Fabrica::carregarFicheiro(const std::string& nomeFicheiro) {
     }
 
     limparGrelha();
-    linhas = l;
-    colunas = c;
+    linhas = linhasFich;
+    colunas = colunasFich;
     creditos = Settings::fabrica_creditos_iniciais;
     instante = 1;
 
@@ -204,27 +204,27 @@ void Fabrica::desenhar(Ecra& ecra) const {
     desenharPainel(ecra);
 }
 
-std::string Fabrica::getInfoPosicao(int l, int c) const {
-    if (!estaDentroDosLimites(l, c)) {
+std::string Fabrica::getInfoPosicao(int linha, int coluna) const {
+    if (!estaDentroDosLimites(linha, coluna)) {
         return "Posicao fora dos limites da fabrica";
     }
 
-    char lChar = 'a' + l;
-    char cChar = 'a' + c;
+    char lChar = 'a' + linha;
+    char cChar = 'a' + coluna;
     std::string pos;
     pos += lChar;
     pos += cChar;
 
-    return "Posicao " + pos + ": " + grelha[l][c].getDescricao();
+    return "Posicao " + pos + ": " + grelha[linha][coluna].getDescricao();
 }
 
-std::string Fabrica::getInfoPosicao(const std::string& coords) const {
-    if (coords.length() != 2) {
+std::string Fabrica::getInfoPosicao(const std::string& coordenadas) const {
+    if (coordenadas.length() != 2) {
         return "Coordenadas invalidas (devem ter 2 letras, ex: ce)";
     }
 
-    char lChar = coords[0];
-    char cChar = coords[1];
+    char lChar = coordenadas[0];
+    char cChar = coordenadas[1];
 
     int l = (lChar >= 'a' && lChar <= 'z') ? (lChar - 'a') : (lChar - 'A');
     int c = (cChar >= 'a' && cChar <= 'z') ? (cChar - 'a') : (cChar - 'A');
@@ -248,9 +248,9 @@ int Fabrica::getInstante() const noexcept {
     return instante;
 }
 
-const Terreno* Fabrica::getTerreno(int l, int c) const noexcept {
-    if (estaDentroDosLimites(l, c)) {
-        return &grelha[l][c];
+const Terreno* Fabrica::getTerreno(int linha, int coluna) const noexcept {
+    if (estaDentroDosLimites(linha, coluna)) {
+        return &grelha[linha][coluna];
     }
     return nullptr;
 }
