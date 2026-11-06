@@ -90,7 +90,7 @@ bool Fabrica::gerarAleatoria(int l, int c) {
                            + Settings::fabrica_num_depositos_silicio
                            + Settings::fabrica_num_depositos_gelo;
 
-    if (totalCelulas >= celulasNecessarias) {
+    if (totalCelulas >= celulasNecessarias) { // Para não entrar em loop infinito (em termos práticos tbm não será o melhor pois poderá não haver espaço para mais nada ...
         criarCrateras(Settings::fabrica_num_crateras);
         criarDepositos(Settings::fabrica_num_depositos_ferro, "Ferro", '%');
         criarDepositos(Settings::fabrica_num_depositos_silicio, "Silicio", '$');
@@ -188,20 +188,23 @@ bool Fabrica::carregarFicheiro(const std::string& nomeFicheiro) {
 void Fabrica::desenharRegua(Ecra& ecra) const noexcept {
     for (int c = 0; c < colunas; ++c) {
         char letraCol = 'A' + c;
-        ecra.escrever(1, 3 + c, letraCol);
+        ecra.escrever(1, 3 + c, letraCol); // linha 1: a 0 é a da moldura, coluna 3 + c: 1 da moldura + 1 da coluna da regua das linhas + 1 onde começa + c que é a posição
     }
 
     for (int l = 0; l < linhas; ++l) {
         char letraLin = 'A' + l;
-        ecra.escrever(2 + l, 1, letraLin);
+        ecra.escrever(2 + l, 1, letraLin); // Mesma lógica das colunas (2 em vez de 3 porque um caracter não é um quadrado, tem mais altura do que largura)
     }
 }
 
 void Fabrica::desenharPainel(Ecra& ecra) const {
-    int colunaPainel = colunas + 5 + 1;
+    int colunaPainel = colunas + 6; // colunas + 3 (borda esquerda da moldura + Régua vertical + espaçamento + 1 (borda direita da fábrica) + 2 (espaçamento entre molduras)
 
-    ecra.escrever(1, colunaPainel + 2, "Instante: " + std::to_string(instante));
+
+    ecra.escrever(1, colunaPainel + 2, "Instante: " + std::to_string(instante)); // colunaPainel é onde fica o "|" da moldura + 2 (Espaçamento de 1 + onde vai escrever)
     ecra.escrever(2, colunaPainel + 2, "Creditos: " + std::to_string(creditos));
+
+    // completar mais tarde
     ecra.escrever(3, colunaPainel + 2, "Maquinas: 0");
     ecra.escrever(4, colunaPainel + 2, "Engenheiros: 0");
     ecra.escrever(6, colunaPainel + 2, "No ultimo instante:");
@@ -211,25 +214,34 @@ void Fabrica::desenharPainel(Ecra& ecra) const {
 void Fabrica::desenhar(Ecra& ecra) const {
     ecra.limpar();
 
-    int alturaFabrica = linhas + 3;
-    int larguraFabrica = colunas + 5;
-    ecra.desenharMoldura(0, 0, alturaFabrica, larguraFabrica);
+    int alturaFabrica = linhas + 3;  // +2 das bordas (topo/fundo) +1 da régua de colunas
+    int larguraFabrica = colunas + 4; // +2 das bordas (esq/dir) +1 da régua +1 do espaço
 
+    const int alturaPainel = 12;
+    const int larguraPainel = 30;
+
+    int alturaTotal = (alturaFabrica > alturaPainel) ? alturaFabrica : alturaPainel;
+    int larguraTotal = larguraFabrica + 1 + larguraPainel;
+
+    ecra.setDimensoes(alturaTotal, larguraTotal);
+
+    // Mapa
+    ecra.desenharMoldura(0, 0, alturaTotal, larguraFabrica);
     desenharRegua(ecra);
 
     for (int l = 0; l < linhas; ++l) {
         for (int c = 0; c < colunas; ++c) {
             if (grelha[l][c] != nullptr) {
                 ecra.escrever(2 + l, 3 + c, grelha[l][c]->getSimbolo());
+                // 2 + l: moldura + regua
+                // 3 + c: moldura + regua + espaço
             }
         }
     }
 
+    // Painel
     int colunaPainel = larguraFabrica + 1;
-    int alturaPainel = (alturaFabrica > 14) ? alturaFabrica : 14;
-    int larguraPainel = 35;
-    ecra.desenharMoldura(0, colunaPainel, alturaPainel, larguraPainel);
-
+    ecra.desenharMoldura(0, colunaPainel, alturaTotal, larguraPainel);
     desenharPainel(ecra);
 }
 
@@ -240,7 +252,7 @@ std::string Fabrica::getInfoPosicao(int l, int c) const {
 
     char lChar = 'a' + l;
     char cChar = 'a' + c;
-    std::string pos = "";
+    std::string pos;
     pos += lChar;
     pos += cChar;
 

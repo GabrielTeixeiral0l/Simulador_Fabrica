@@ -11,7 +11,7 @@ class Fabrica {
     int colunas;
     int creditos;
     int instante;
-    Terreno* grelha[Settings::fabrica_max_linhas][Settings::fabrica_max_colunas];
+    Terreno* grelha[Settings::fabrica_max_linhas][Settings::fabrica_max_colunas]{};
 
     void limparGrelha() noexcept;
     bool estaDentroDosLimites(int l, int c) const noexcept;
