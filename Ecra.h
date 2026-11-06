@@ -5,7 +5,7 @@
 #include "Settings.h"
 
 class Ecra {
-    char buffer[Settings::ecra_max_linhas][Settings::ecra_max_colunas];
+    char buffer[Settings::ecra_max_linhas][Settings::ecra_max_colunas]{};
     int linhas;
     int colunas;
     int linhaCursor;
@@ -25,6 +25,8 @@ public:
     void escrever(int l, int c, const std::string& texto);
     void desenharMoldura(int linhaInicio, int colunaInicio, int altura, int largura) noexcept;
     void mostrar() const;
+
+    void setDimensoes(int l, int c) noexcept;
 
     char getCaractere(int l, int c) const noexcept;
     int getLinhas() const noexcept;

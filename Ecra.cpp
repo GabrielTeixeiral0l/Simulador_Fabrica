@@ -66,7 +66,7 @@ void Ecra::escrever(char c) noexcept {
 }
 
 void Ecra::escrever(const std::string& texto) {
-    for (unsigned int i = 0; i < texto.length(); ++i) {
+    for (int i = 0; i < texto.length(); ++i) {
         escrever(texto[i]);
     }
 }
@@ -109,7 +109,6 @@ void Ecra::desenharMoldura(int linhaInicio, int colunaInicio, int altura, int la
 
 void Ecra::mostrar() const {
     std::string saida;
-    saida.reserve(linhas * (colunas + 1));
 
     for (int l = 0; l < linhas; ++l) {
         for (int c = 0; c < colunas; ++c) {
@@ -119,6 +118,15 @@ void Ecra::mostrar() const {
     }
 
     std::cout << saida;
+}
+
+void Ecra::setDimensoes(int l, int c) noexcept { // Forma de redefinir o tamanho do ecra
+    if (l >= 1 && l <= Settings::ecra_max_linhas) {
+        linhas = l;
+    }
+    if (c >= 1 && c <= Settings::ecra_max_colunas) {
+        colunas = c;
+    }
 }
 
 char Ecra::getCaractere(int l, int c) const noexcept {
