@@ -3,15 +3,10 @@
 #include "Fabrica.h"
 
 int main() {
-    const Fabrica fabrica(10, 15);
+    Fabrica fabrica(10, 15);
 
-    int larguraTotal = fabrica.getColunas() + 5 + 1 + 35;
-    int alturaTotal = fabrica.getLinhas() + 3;
-    if (alturaTotal < 14) {
-        alturaTotal = 14;
-    }
+    Ecra ecra;
 
-    Ecra ecra(alturaTotal, larguraTotal);
     fabrica.desenhar(ecra);
     ecra.mostrar();
 
@@ -20,3 +15,20 @@ int main() {
 
     return 0;
 }
+
+
+/*int main() {
+    Fabrica fabrica(10, 15);
+    Ecra ecra;
+
+    std::cout << "\n--- A CARREGAR MAPA DE FICHEIRO ---" << std::endl;
+    if (fabrica.carregarFicheiro("../mapa_teste.txt")) {
+        std::cout << "Ficheiro carregado com sucesso!\n" << std::endl;
+        fabrica.desenhar(ecra);
+        ecra.mostrar();
+    } else {
+        std::cout << "Erro ao carregar o ficheiro mapa_teste.txt!" << std::endl;
+    }
+
+    return 0;
+}*/
