@@ -21,7 +21,6 @@ int main() {
     Fabrica fabrica(10, 15);
     Ecra ecra;
 
-    std::cout << "\n--- A CARREGAR MAPA DE FICHEIRO ---" << std::endl;
     if (fabrica.carregarFicheiro("../mapa_teste.txt")) {
         std::cout << "Ficheiro carregado com sucesso!\n" << std::endl;
         fabrica.desenhar(ecra);
