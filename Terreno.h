@@ -4,43 +4,24 @@
 #include <string>
 
 class Terreno {
-public:
-    virtual ~Terreno();
-
-    virtual char getSimbolo() const noexcept;
-    virtual std::string getDescricao() const;
-};
-
-class Solo : public Terreno {
-public:
-    ~Solo() override;
-
-    char getSimbolo() const noexcept override;
-    std::string getDescricao() const override;
-};
-
-class Cratera : public Terreno {
-public:
-    ~Cratera() override;
-
-    char getSimbolo() const noexcept override;
-    std::string getDescricao() const override;
-};
-
-class Deposito : public Terreno {
-    std::string nome;
     char simbolo;
+    std::string nome;
     int quantidade;
 
 public:
-    Deposito(const std::string& n, char s, int q);
-    ~Deposito() override;
+    Terreno() noexcept;
+    Terreno(char s, std::string n = "", int q = 0) noexcept;
 
-    char getSimbolo() const noexcept override;
-    std::string getDescricao() const override;
+    static Terreno criarSolo() noexcept;
+    static Terreno criarCratera() noexcept;
+    static Terreno criarDeposito(char s, const std::string& n, int q) noexcept;
 
+    char getSimbolo() const noexcept;
+    std::string getDescricao() const;
     const std::string& getNome() const noexcept;
     int getQuantidade() const noexcept;
+
+    bool podeConstruir() const noexcept;
     bool extrair(int qtd = 1) noexcept;
 };
 
