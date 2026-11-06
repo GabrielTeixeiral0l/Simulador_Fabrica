@@ -33,7 +33,7 @@ class Deposito : public Terreno {
     int quantidade;
 
 public:
-    Deposito(const std::string& n, char s, int q);
+    Deposito(const std::string& nome, char simbolo, int quantidade);
     ~Deposito() override;
 
     char getSimbolo() const noexcept override;
@@ -41,7 +41,7 @@ public:
 
     const std::string& getNome() const noexcept;
     int getQuantidade() const noexcept;
-    bool extrair(int qtd = 1) noexcept;
+    bool extrair(int quantidadeExtrair = 1) noexcept;
 };
 
 #endif // SIMULADOR_TERRENO_H

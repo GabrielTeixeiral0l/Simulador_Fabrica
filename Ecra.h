@@ -11,24 +11,24 @@ class Ecra {
     int linhaCursor;
     int colunaCursor;
 
-    bool estaDentroDosLimites(int l, int c) const noexcept;
-    void colocarCaractere(int l, int c, char ch) noexcept;
+    bool estaDentroDosLimites(int linha, int coluna) const noexcept;
+    void colocarCaractere(int linha, int coluna, char caractere) noexcept;
 
 public:
-    explicit Ecra(int l = Settings::ecra_max_linhas, int c = Settings::ecra_max_colunas) noexcept;
+    explicit Ecra(int numLinhas = Settings::ecra_max_linhas, int numColunas = Settings::ecra_max_colunas) noexcept;
 
     void limpar() noexcept;
-    bool gotoxy(int l, int c) noexcept;
-    void escrever(char c) noexcept;
+    bool gotoxy(int linha, int coluna) noexcept;
+    void escrever(char caractere) noexcept;
     void escrever(const std::string& texto);
-    void escrever(int l, int c, char ch) noexcept;
-    void escrever(int l, int c, const std::string& texto);
+    void escrever(int linha, int coluna, char caractere) noexcept;
+    void escrever(int linha, int coluna, const std::string& texto);
     void desenharMoldura(int linhaInicio, int colunaInicio, int altura, int largura) noexcept;
     void mostrar() const;
 
-    void setDimensoes(int l, int c) noexcept;
+    void setDimensoes(int numLinhas, int numColunas) noexcept;
 
-    char getCaractere(int l, int c) const noexcept;
+    char getCaractere(int linha, int coluna) const noexcept;
     int getLinhas() const noexcept;
     int getColunas() const noexcept;
     int getLinhaCursor() const noexcept;

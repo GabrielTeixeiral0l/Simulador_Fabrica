@@ -8,7 +8,6 @@ char Terreno::getSimbolo() const noexcept {
 }
 
 std::string Terreno::getDescricao() const {
-
     return "Terreno";
 }
 
@@ -32,8 +31,8 @@ std::string Cratera::getDescricao() const {
     return "Cratera";
 }
 
-Deposito::Deposito(const std::string& n, char s, int q)
-    : nome(n), simbolo(s), quantidade(q) {}
+Deposito::Deposito(const std::string& nome, char simbolo, int quantidade)
+    : nome(nome), simbolo(simbolo), quantidade(quantidade) {}
 
 Deposito::~Deposito() = default;
 
@@ -55,10 +54,10 @@ int Deposito::getQuantidade() const noexcept {
     return quantidade;
 }
 
-bool Deposito::extrair(int qtd) noexcept {
-    if (qtd <= 0 || quantidade < qtd) {
+bool Deposito::extrair(int quantidadeExtrair) noexcept {
+    if (quantidadeExtrair <= 0 || quantidade < quantidadeExtrair) {
         return false;
     }
-    quantidade -= qtd;
+    quantidade -= quantidadeExtrair;
     return true;
 }
