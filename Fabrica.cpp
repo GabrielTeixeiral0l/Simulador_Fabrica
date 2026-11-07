@@ -110,7 +110,7 @@ bool Fabrica::carregarFicheiro(const std::string& nomeFicheiro) {
     for (int i = 0; i < linhasFich; ++i) {
         std::string linhaMapa;
         fich >> linhaMapa;
-        if (linhaMapa.length() != static_cast<size_t>(colunasFich)) {
+        if (linhaMapa.length() != colunasFich) {
             return false;
         }
 

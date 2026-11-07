@@ -5,7 +5,7 @@ Terreno::Terreno() noexcept
     : simbolo(' '), nome(""), quantidade(0) {}
 
 Terreno::Terreno(char simbolo, std::string nome, int quantidade) noexcept
-    : simbolo(simbolo), nome(std::move(nome)), quantidade(quantidade) {}
+    : simbolo(simbolo), nome(nome), quantidade(quantidade) {}
 
 Terreno Terreno::criarSolo() noexcept {
     return Terreno(' ', "", 0);
