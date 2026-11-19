@@ -6,12 +6,15 @@
 
 class ComandoCarrega : public Comando {
 private:
-    std::string nomeFicheiro;
+    std::string ficheiro;
+    std::string resto;
 
 public:
-    explicit ComandoCarrega(std::string nomeFicheiro) noexcept;
+    ComandoCarrega(std::string ficheiro, std::string resto = "") noexcept;
     ~ComandoCarrega() noexcept override = default;
 
+    bool validar() const override;
+    std::string getAjuda() const override;
     std::string executar(Fabrica& fabrica, Simulador& simulador) override;
 };
 

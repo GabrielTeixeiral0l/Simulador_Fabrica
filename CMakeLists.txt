@@ -36,14 +36,38 @@ add_executable(simulador main.cpp
         Simulador.h
         Comando.cpp
         Comando.h
+        ComandoFabrica.cpp
+        ComandoFabrica.h
         ComandoCarrega.cpp
         ComandoCarrega.h
-        ComandoCria.cpp
-        ComandoCria.h
-        ComandoInfo.cpp
-        ComandoInfo.h
-        ComandoExec.cpp
-        ComandoExec.h
-        ComandoSair.cpp
-        ComandoSair.h
+        ComandoExecuta.cpp
+        ComandoExecuta.h
+        ComandoCompra.cpp
+        ComandoCompra.h
+        ComandoVende.cpp
+        ComandoVende.h
+        ComandoRoda.cpp
+        ComandoRoda.h
+        ComandoAvanca.cpp
+        ComandoAvanca.h
+        ComandoEstado.cpp
+        ComandoEstado.h
+        ComandoLPosicao.cpp
+        ComandoLPosicao.h
+        ComandoAjuda.cpp
+        ComandoAjuda.h
+        ComandoFim.cpp
+        ComandoFim.h
+        ComandoMelhora.cpp
+        ComandoMelhora.h
+        ComandoContrata.cpp
+        ComandoContrata.h
+        ComandoAtribui.cpp
+        ComandoAtribui.h
+        ComandoDespede.cpp
+        ComandoDespede.h
+        ComandoGrava.cpp
+        ComandoGrava.h
+        ComandoRecupera.cpp
+        ComandoRecupera.h
         Settings.h)

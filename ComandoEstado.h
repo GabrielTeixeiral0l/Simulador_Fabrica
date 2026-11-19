@@ -1,0 +1,20 @@
+#ifndef SIMULADOR_COMANDOESTADO_H
+#define SIMULADOR_COMANDOESTADO_H
+
+#include "Comando.h"
+#include <string>
+
+class ComandoEstado : public Comando {
+private:
+    std::string resto;
+
+public:
+    explicit ComandoEstado(std::string resto = "") noexcept;
+    ~ComandoEstado() noexcept override = default;
+
+    bool validar() const override;
+    std::string getAjuda() const override;
+    std::string executar(Fabrica& fabrica, Simulador& simulador) override;
+};
+
+#endif // SIMULADOR_COMANDOESTADO_H

@@ -73,8 +73,15 @@ std::string Simulador::processarLinha(const std::string& linha) {
 
     Comando* cmd = Comando::criar(linha);
     if (cmd == nullptr) {
-        ultimaMensagem = "Comando invalido";
-        return "Comando desconhecido ou argumentos invalidos: " + linha;
+        ultimaMensagem = "Comando desconhecido";
+        return "Comando desconhecido: " + linha + " (escreva 'ajuda' para listar os comandos).";
+    }
+
+    if (!cmd->validar()) {
+        std::string erroMsg = "Parametros invalidos para o comando.\nAjuda:\n" + cmd->getAjuda();
+        delete cmd;
+        ultimaMensagem = "Erro de parametros";
+        return erroMsg;
     }
 
     std::string resultado = cmd->executar(fabrica, *this);
