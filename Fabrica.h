@@ -4,6 +4,8 @@
 #include <string>
 #include "Settings.h"
 #include "Terreno.h"
+#include "Silo.h"
+#include "Maquina.h"
 
 class Fabrica {
 private:
@@ -12,6 +14,7 @@ private:
     int creditos;
     int instante;
     Terreno* grelha[Settings::fabrica_max_linhas][Settings::fabrica_max_colunas];
+    Silo silo;
 
     void inicializarGrelha() noexcept;
     void libertarGrelha() noexcept;
@@ -22,6 +25,7 @@ private:
     void sortearPosicaoLivre(int& linha, int& coluna) const;
     void criarCrateras(int numCrateras);
     void criarDepositos(int numDepositos, const std::string& nome, char simbolo);
+    static bool parseCoordenadas(const std::string& coord, int& linha, int& coluna) noexcept;
 
 public:
     explicit Fabrica(int numLinhas = Settings::fabrica_max_linhas, int numColunas = Settings::fabrica_max_colunas);
@@ -32,6 +36,11 @@ public:
     bool gerarAleatoria(int numLinhas, int numColunas);
     bool carregarFicheiro(const std::string& nomeFicheiro);
 
+    bool comprarMaquina(const std::string& tipo, const std::string& coord, char dir = 'c');
+    bool venderMaquina(const std::string& coord);
+    bool rodarMaquina(const std::string& coord);
+    void avancarInstante(int n = 1);
+
     std::string getInfoPosicao(int linha, int coluna) const;
     std::string getInfoPosicao(const std::string& coordenadas) const;
 
@@ -40,6 +49,10 @@ public:
     int getCreditos() const noexcept;
     int getInstante() const noexcept;
     const Terreno* getTerreno(int linha, int coluna) const noexcept;
+    Terreno* getTerreno(int linha, int coluna) noexcept;
+
+    const Silo& getSilo() const noexcept;
+    Silo& getSilo() noexcept;
 };
 
 #endif // SIMULADOR_FABRICA_H

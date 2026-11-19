@@ -9,6 +9,8 @@ class Simulador {
 private:
     Fabrica fabrica;
     Ecra ecra;
+    bool emExecucao;
+    std::string ultimaMensagem;
 
     void desenharRegua() noexcept;
     void desenharPainel();
@@ -19,6 +21,8 @@ public:
     ~Simulador() noexcept = default;
 
     void executar();
+    std::string processarLinha(const std::string& linha);
+    void parar() noexcept;
     bool carregarFicheiro(const std::string& nomeFicheiro);
 };
 

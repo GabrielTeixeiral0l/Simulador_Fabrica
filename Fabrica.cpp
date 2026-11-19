@@ -2,11 +2,17 @@
 #include "Solo.h"
 #include "Cratera.h"
 #include "Deposito.h"
+#include "Perfuradora.h"
+#include "Transportador.h"
+#include "Refinaria.h"
+#include "Oficina.h"
+#include "MaquinaSilo.h"
+#include "Lancador.h"
 #include <fstream>
 #include <random>
 
 Fabrica::Fabrica(int numLinhas, int numColunas)
-    : linhas(numLinhas), colunas(numColunas), creditos(Settings::fabrica_creditos_iniciais), instante(1) {
+    : linhas(numLinhas), colunas(numColunas), creditos(Settings::fabrica_creditos_iniciais), instante(1), silo() {
     if (linhas < 1) {
         linhas = 1;
     } else if (linhas > Settings::fabrica_max_linhas) {
@@ -28,7 +34,7 @@ Fabrica::~Fabrica() {
 }
 
 Fabrica::Fabrica(const Fabrica& outra)
-    : linhas(outra.linhas), colunas(outra.colunas), creditos(outra.creditos), instante(outra.instante) {
+    : linhas(outra.linhas), colunas(outra.colunas), creditos(outra.creditos), instante(outra.instante), silo(outra.silo) {
     inicializarGrelha();
     copiarDe(outra);
 }
@@ -40,6 +46,7 @@ Fabrica& Fabrica::operator=(const Fabrica& outra) {
         colunas = outra.colunas;
         creditos = outra.creditos;
         instante = outra.instante;
+        silo = outra.silo;
         copiarDe(outra);
     }
     return *this;
@@ -118,6 +125,17 @@ void Fabrica::criarDepositos(int numDepositos, const std::string& nome, char sim
         delete grelha[linha][coluna];
         grelha[linha][coluna] = new Deposito(simbolo, nome, qtd);
     }
+}
+
+bool Fabrica::parseCoordenadas(const std::string& coord, int& linha, int& coluna) noexcept {
+    if (coord.length() != 2) {
+        return false;
+    }
+    char lChar = coord[0];
+    char cChar = coord[1];
+    linha = (lChar >= 'a' && lChar <= 'z') ? (lChar - 'a') : (lChar - 'A');
+    coluna = (cChar >= 'a' && cChar <= 'z') ? (cChar - 'a') : (cChar - 'A');
+    return true;
 }
 
 bool Fabrica::gerarAleatoria(int numLinhas, int numColunas) {
@@ -225,13 +243,116 @@ bool Fabrica::carregarFicheiro(const std::string& nomeFicheiro) {
     return true;
 }
 
+bool Fabrica::comprarMaquina(const std::string& tipo, const std::string& coord, char dir) {
+    int l, c;
+    if (!parseCoordenadas(coord, l, c) || !estaDentroDosLimites(l, c)) {
+        return false;
+    }
+
+    Solo* solo = dynamic_cast<Solo*>(grelha[l][c]);
+    if (solo == nullptr || !solo->podeConstruir()) {
+        return false;
+    }
+
+    Maquina::Orientacao orientacao = Maquina::charParaOrientacao(dir);
+    Maquina* novaMaquina = nullptr;
+
+    if (tipo == "p" || tipo == "perfuradora" || tipo == "P") {
+        novaMaquina = new Perfuradora(orientacao);
+    } else if (tipo == "t" || tipo == "transportador" || tipo == "T") {
+        novaMaquina = new Transportador(orientacao);
+    } else if (tipo == "r" || tipo == "refinaria" || tipo == "R") {
+        novaMaquina = new Refinaria(orientacao);
+    } else if (tipo == "o" || tipo == "oficina" || tipo == "O") {
+        novaMaquina = new Oficina(orientacao);
+    } else if (tipo == "s" || tipo == "silo" || tipo == "S") {
+        novaMaquina = new MaquinaSilo(orientacao);
+    } else if (tipo == "l" || tipo == "lancador" || tipo == "L") {
+        novaMaquina = new Lancador(orientacao);
+    } else {
+        return false;
+    }
+
+    if (creditos < novaMaquina->getCusto()) {
+        delete novaMaquina;
+        return false;
+    }
+
+    creditos -= novaMaquina->getCusto();
+    solo->colocarMaquina(novaMaquina);
+    return true;
+}
+
+bool Fabrica::venderMaquina(const std::string& coord) {
+    int l, c;
+    if (!parseCoordenadas(coord, l, c) || !estaDentroDosLimites(l, c)) {
+        return false;
+    }
+
+    Solo* solo = dynamic_cast<Solo*>(grelha[l][c]);
+    if (solo == nullptr) {
+        return false;
+    }
+
+    Maquina* maq = solo->removerMaquina();
+    if (maq == nullptr) {
+        return false;
+    }
+
+    int reembolso = (maq->getCusto() * Settings::maquina_percentagem_venda) / 100;
+    creditos += reembolso;
+    delete maq;
+    return true;
+}
+
+bool Fabrica::rodarMaquina(const std::string& coord) {
+    int l, c;
+    if (!parseCoordenadas(coord, l, c) || !estaDentroDosLimites(l, c)) {
+        return false;
+    }
+
+    Solo* solo = dynamic_cast<Solo*>(grelha[l][c]);
+    if (solo == nullptr) {
+        return false;
+    }
+
+    Maquina* maq = solo->getMaquina();
+    if (maq == nullptr) {
+        return false;
+    }
+
+    maq->rodar();
+    return true;
+}
+
+void Fabrica::avancarInstante(int n) {
+    if (n < 1) {
+        return;
+    }
+
+    for (int passo = 0; passo < n; ++passo) {
+        ++instante;
+        for (int l = 0; l < linhas; ++l) {
+            for (int c = 0; c < colunas; ++c) {
+                Solo* solo = dynamic_cast<Solo*>(grelha[l][c]);
+                if (solo != nullptr) {
+                    Maquina* maq = solo->getMaquina();
+                    if (maq != nullptr && maq->isAtivo()) {
+                        maq->atuar(*this, l, c);
+                    }
+                }
+            }
+        }
+    }
+}
+
 std::string Fabrica::getInfoPosicao(int linha, int coluna) const {
     if (!estaDentroDosLimites(linha, coluna)) {
         return "Posicao fora dos limites da fabrica";
     }
 
-    char lChar = 'a' + linha;
-    char cChar = 'a' + coluna;
+    char lChar = static_cast<char>('a' + linha);
+    char cChar = static_cast<char>('a' + coluna);
     std::string pos;
     pos += lChar;
     pos += cChar;
@@ -240,20 +361,20 @@ std::string Fabrica::getInfoPosicao(int linha, int coluna) const {
         return "Posicao " + pos + ": Vazia";
     }
 
+    const Solo* solo = dynamic_cast<const Solo*>(grelha[linha][coluna]);
+    if (solo != nullptr && solo->getMaquina() != nullptr) {
+        const Maquina* maq = solo->getMaquina();
+        return "Posicao " + pos + ": Solo com " + maq->getDescricao() + " [ID: " + std::to_string(maq->getId()) + "]";
+    }
+
     return "Posicao " + pos + ": " + grelha[linha][coluna]->getDescricao();
 }
 
 std::string Fabrica::getInfoPosicao(const std::string& coordenadas) const {
-    if (coordenadas.length() != 2) {
+    int l, c;
+    if (!parseCoordenadas(coordenadas, l, c)) {
         return "Coordenadas invalidas (devem ter 2 letras, ex: ce)";
     }
-
-    char lChar = coordenadas[0];
-    char cChar = coordenadas[1];
-
-    int l = (lChar >= 'a' && lChar <= 'z') ? (lChar - 'a') : (lChar - 'A');
-    int c = (cChar >= 'a' && cChar <= 'z') ? (cChar - 'a') : (cChar - 'A');
-
     return getInfoPosicao(l, c);
 }
 
@@ -278,4 +399,19 @@ const Terreno* Fabrica::getTerreno(int linha, int coluna) const noexcept {
         return grelha[linha][coluna];
     }
     return nullptr;
+}
+
+Terreno* Fabrica::getTerreno(int linha, int coluna) noexcept {
+    if (estaDentroDosLimites(linha, coluna)) {
+        return grelha[linha][coluna];
+    }
+    return nullptr;
+}
+
+const Silo& Fabrica::getSilo() const noexcept {
+    return silo;
+}
+
+Silo& Fabrica::getSilo() noexcept {
+    return silo;
 }

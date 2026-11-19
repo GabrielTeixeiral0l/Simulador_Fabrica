@@ -1,9 +1,10 @@
 #include "Simulador.h"
+#include "Comando.h"
 #include <iostream>
 #include <algorithm>
 
 Simulador::Simulador(int numLinhas, int numColunas)
-    : fabrica(numLinhas, numColunas), ecra() {}
+    : fabrica(numLinhas, numColunas), ecra(), emExecucao(false), ultimaMensagem("Simulacao iniciada") {}
 
 void Simulador::desenharRegua() noexcept {
     int colunas = fabrica.getColunas();
@@ -29,7 +30,7 @@ void Simulador::desenharPainel() {
     ecra.escrever(3, colunaPainel + 2, "Maquinas: 0");
     ecra.escrever(4, colunaPainel + 2, "Engenheiros: 0");
     ecra.escrever(6, colunaPainel + 2, "No ultimo instante:");
-    ecra.escrever(7, colunaPainel + 2, "Simulacao iniciada");
+    ecra.escrever(7, colunaPainel + 2, ultimaMensagem);
 }
 
 void Simulador::desenharFabrica() {
@@ -65,11 +66,54 @@ void Simulador::desenharFabrica() {
     desenharPainel();
 }
 
+std::string Simulador::processarLinha(const std::string& linha) {
+    if (linha.empty()) {
+        return "";
+    }
+
+    Comando* cmd = Comando::criar(linha);
+    if (cmd == nullptr) {
+        ultimaMensagem = "Comando invalido";
+        return "Comando desconhecido ou argumentos invalidos: " + linha;
+    }
+
+    std::string resultado = cmd->executar(fabrica, *this);
+    delete cmd;
+
+    ultimaMensagem = resultado;
+    return resultado;
+}
+
+void Simulador::parar() noexcept {
+    emExecucao = false;
+}
+
 void Simulador::executar() {
+    emExecucao = true;
     desenharFabrica();
     ecra.mostrar();
-    std::cout << '\n';
-    std::cout << fabrica.getInfoPosicao("aa") << '\n';
+
+    std::string linha;
+    while (emExecucao) {
+        std::cout << "\nComando: ";
+        if (!std::getline(std::cin, linha)) {
+            break;
+        }
+
+        if (linha.empty()) {
+            continue;
+        }
+
+        std::string resultado = processarLinha(linha);
+        if (!resultado.empty()) {
+            std::cout << resultado << '\n';
+        }
+
+        if (emExecucao) {
+            desenharFabrica();
+            ecra.mostrar();
+        }
+    }
 }
 
 bool Simulador::carregarFicheiro(const std::string& nomeFicheiro) {

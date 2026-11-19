@@ -1,0 +1,47 @@
+#ifndef SIMULADOR_MAQUINA_H
+#define SIMULADOR_MAQUINA_H
+
+#include <string>
+
+class Fabrica;
+
+class Maquina {
+public:
+    enum class Orientacao {
+        Norte, // Cima ('c')
+        Este,  // Direita ('d')
+        Sul,   // Baixo ('b')
+        Oeste  // Esquerda ('e')
+    };
+
+private:
+    static int proximoId;
+    int id;
+    Orientacao orientacao;
+    int custo;
+    bool ativo;
+
+public:
+    explicit Maquina(int custo, Orientacao orientacao = Orientacao::Norte) noexcept;
+    virtual ~Maquina() noexcept = default;
+
+    virtual char getSimbolo() const noexcept = 0;
+    virtual std::string getDescricao() const = 0;
+    virtual void atuar(Fabrica& fabrica, int linha, int coluna) = 0;
+    virtual Maquina* clone() const = 0;
+
+    void rodar() noexcept;
+    void setOrientacao(Orientacao novaOrientacao) noexcept;
+    Orientacao getOrientacao() const noexcept;
+    char getOrientacaoChar() const noexcept;
+    std::string getOrientacaoNome() const;
+
+    int getId() const noexcept;
+    int getCusto() const noexcept;
+    bool isAtivo() const noexcept;
+    void setAtivo(bool estado) noexcept;
+
+    static Orientacao charParaOrientacao(char c);
+};
+
+#endif // SIMULADOR_MAQUINA_H
