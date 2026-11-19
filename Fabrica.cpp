@@ -357,6 +357,19 @@ int Fabrica::getInstante() const noexcept {
     return instante;
 }
 
+int Fabrica::getNumMaquinas() const noexcept {
+    int total = 0;
+    for (int l = 0; l < linhas; ++l) {
+        for (int c = 0; c < colunas; ++c) {
+            const Solo* solo = dynamic_cast<const Solo*>(grelha[l][c]);
+            if (solo != nullptr && solo->getMaquina() != nullptr) {
+                ++total;
+            }
+        }
+    }
+    return total;
+}
+
 const Terreno* Fabrica::getTerreno(int linha, int coluna) const noexcept {
     if (estaDentroDosLimites(linha, coluna)) {
         return grelha[linha][coluna];

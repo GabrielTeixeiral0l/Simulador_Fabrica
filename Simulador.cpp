@@ -1,7 +1,6 @@
 #include "Simulador.h"
 #include "comandos/Comando.h"
 #include <iostream>
-#include <algorithm>
 
 Simulador::Simulador(int numLinhas, int numColunas)
     : fabrica(numLinhas, numColunas), ecra(), emExecucao(false), ultimaMensagem("Simulacao iniciada") {}
@@ -27,10 +26,14 @@ void Simulador::desenharPainel() {
 
     ecra.escrever(1, colunaPainel + 2, "Instante: " + std::to_string(fabrica.getInstante()));
     ecra.escrever(2, colunaPainel + 2, "Creditos: " + std::to_string(fabrica.getCreditos()));
-    ecra.escrever(3, colunaPainel + 2, "Maquinas: 0");
+    ecra.escrever(3, colunaPainel + 2, "Maquinas: " + std::to_string(fabrica.getNumMaquinas()));
     ecra.escrever(4, colunaPainel + 2, "Engenheiros: 0");
     ecra.escrever(6, colunaPainel + 2, "No ultimo instante:");
-    ecra.escrever(7, colunaPainel + 2, ultimaMensagem);
+    std::string msgPainel = ultimaMensagem;
+    std::size_t posQuebra = msgPainel.find('\n');
+    if (posQuebra != std::string::npos) msgPainel = msgPainel.substr(0, posQuebra);
+    if (msgPainel.length() > 26) msgPainel = msgPainel.substr(0, 26);
+    ecra.escrever(7, colunaPainel + 2, msgPainel);
 }
 
 void Simulador::desenharFabrica() {
@@ -45,7 +48,7 @@ void Simulador::desenharFabrica() {
     const int alturaPainel = 12;
     const int larguraPainel = 30;
 
-    int alturaTotal = std::max(alturaFabrica, alturaPainel);
+    int alturaTotal = (alturaFabrica > alturaPainel ? alturaFabrica : alturaPainel);
     int larguraTotal = larguraFabrica + 1 + larguraPainel;
 
     ecra.setDimensoes(alturaTotal, larguraTotal);

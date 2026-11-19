@@ -47,6 +47,7 @@ public:
     int getColunas() const noexcept;
     int getCreditos() const noexcept;
     int getInstante() const noexcept;
+    int getNumMaquinas() const noexcept;
     const Terreno* getTerreno(int linha, int coluna) const noexcept;
     Terreno* getTerreno(int linha, int coluna) noexcept;
 
