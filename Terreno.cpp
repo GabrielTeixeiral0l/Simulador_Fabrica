@@ -1,60 +1,53 @@
 #include "Terreno.h"
 #include <sstream>
 
-Terreno::~Terreno() = default;
+Terreno::Terreno() noexcept
+    : simbolo(' '), nome(""), quantidade(0) {}
+
+Terreno::Terreno(char simbolo, std::string nome, int quantidade) noexcept
+    : simbolo(simbolo), nome(nome), quantidade(quantidade) {}
+
+Terreno Terreno::criarSolo() noexcept {
+    return Terreno(' ', "", 0);
+}
+
+Terreno Terreno::criarCratera() noexcept {
+    return Terreno('#', "", 0);
+}
+
+Terreno Terreno::criarDeposito(char simbolo, const std::string& nome, int quantidade) noexcept {
+    return Terreno(simbolo, nome, quantidade);
+}
 
 char Terreno::getSimbolo() const noexcept {
-    return ' ';
-}
-
-std::string Terreno::getDescricao() const {
-    return "Terreno";
-}
-
-Solo::~Solo() = default;
-
-char Solo::getSimbolo() const noexcept {
-    return ' ';
-}
-
-std::string Solo::getDescricao() const {
-    return "Solo vazio";
-}
-
-Cratera::~Cratera() = default;
-
-char Cratera::getSimbolo() const noexcept {
-    return '#';
-}
-
-std::string Cratera::getDescricao() const {
-    return "Cratera";
-}
-
-Deposito::Deposito(const std::string& nome, char simbolo, int quantidade)
-    : nome(nome), simbolo(simbolo), quantidade(quantidade) {}
-
-Deposito::~Deposito() = default;
-
-char Deposito::getSimbolo() const noexcept {
     return simbolo;
 }
 
-std::string Deposito::getDescricao() const {
+std::string Terreno::getDescricao() const {
+    if (simbolo == '#') {
+        return "Cratera";
+    }
+    if (simbolo == ' ') {
+        return "Solo vazio";
+    }
     std::ostringstream oss;
     oss << "Deposito de " << nome << " (" << quantidade << " unidades)";
     return oss.str();
 }
 
-const std::string& Deposito::getNome() const noexcept {
+const std::string& Terreno::getNome() const noexcept {
     return nome;
 }
 
-int Deposito::getQuantidade() const noexcept {
+int Terreno::getQuantidade() const noexcept {
     return quantidade;
 }
 
-bool Deposito::extrair(int quantidadeExtrair) noexcept {
+bool Terreno::podeConstruir() const noexcept {
+    return simbolo != '#';
+}
+
+bool Terreno::extrair(int quantidadeExtrair) noexcept {
     if (quantidadeExtrair <= 0 || quantidade < quantidadeExtrair) {
         return false;
     }

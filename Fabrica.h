@@ -11,7 +11,7 @@ class Fabrica {
     int colunas;
     int creditos;
     int instante;
-    Terreno* grelha[Settings::fabrica_max_linhas][Settings::fabrica_max_colunas]{};
+    Terreno grelha[Settings::fabrica_max_linhas][Settings::fabrica_max_colunas];
 
     void limparGrelha() noexcept;
     bool estaDentroDosLimites(int linha, int coluna) const noexcept;
@@ -24,7 +24,7 @@ class Fabrica {
 
 public:
     explicit Fabrica(int numLinhas = Settings::fabrica_max_linhas, int numColunas = Settings::fabrica_max_colunas);
-    ~Fabrica();
+    ~Fabrica() = default;
 
     bool gerarAleatoria(int numLinhas, int numColunas);
     bool carregarFicheiro(const std::string& nomeFicheiro);
