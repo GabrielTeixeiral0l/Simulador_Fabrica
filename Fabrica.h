@@ -4,7 +4,7 @@
 #include <string>
 #include "Settings.h"
 #include "terreno/Terreno.h"
-#include "Silo.h"
+#include "Armazem.h"
 #include "maquinas/Maquina.h"
 
 class Fabrica {
@@ -13,7 +13,7 @@ class Fabrica {
     int creditos;
     int instante;
     Terreno* grelha[Settings::fabrica_max_linhas][Settings::fabrica_max_colunas];
-    Silo silo;
+    Armazem armazem;
 
     void inicializarGrelha() noexcept;
     void libertarGrelha() noexcept;
@@ -49,8 +49,8 @@ public:
     const Terreno* getTerreno(int linha, int coluna) const noexcept;
     Terreno* getTerreno(int linha, int coluna) noexcept;
 
-    const Silo& getSilo() const noexcept;
-    Silo& getSilo() noexcept;
+    const Armazem& getSilo() const noexcept;
+    Armazem& getSilo() noexcept;
 };
 
 #endif // SIMULADOR_FABRICA_H

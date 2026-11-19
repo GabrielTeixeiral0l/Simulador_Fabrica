@@ -12,8 +12,8 @@ add_executable(simulador
         Simulador.cpp
         Fabrica.h
         Fabrica.cpp
-        Silo.h
-        Silo.cpp
+        Armazem.h
+        Armazem.cpp
 
         terreno/Terreno.h
         terreno/Terreno.cpp
@@ -34,8 +34,8 @@ add_executable(simulador
         maquinas/Refinaria.cpp
         maquinas/Oficina.h
         maquinas/Oficina.cpp
-        maquinas/MaquinaSilo.h
-        maquinas/MaquinaSilo.cpp
+        maquinas/Silo.h
+        maquinas/Silo.cpp
         maquinas/Lancador.h
         maquinas/Lancador.cpp
 

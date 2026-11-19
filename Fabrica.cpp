@@ -6,13 +6,13 @@
 #include "maquinas/Transportador.h"
 #include "maquinas/Refinaria.h"
 #include "maquinas/Oficina.h"
-#include "maquinas/MaquinaSilo.h"
+#include "maquinas/Silo.h"
 #include "maquinas/Lancador.h"
 #include <fstream>
 #include <random>
 
 Fabrica::Fabrica(int numLinhas, int numColunas)
-    : linhas(numLinhas), colunas(numColunas), creditos(Settings::fabrica_creditos_iniciais), instante(1), silo() {
+    : linhas(numLinhas), colunas(numColunas), creditos(Settings::fabrica_creditos_iniciais), instante(1), armazem() {
     if (linhas < 1) {
         linhas = 1;
     } else if (linhas > Settings::fabrica_max_linhas) {
@@ -234,8 +234,8 @@ bool Fabrica::comprarMaquina(const std::string& tipo, const std::string& coord, 
         novaMaquina = new Refinaria(orientacao);
     } else if (tipo == "o" || tipo == "oficina" || tipo == "O") {
         novaMaquina = new Oficina(orientacao);
-    } else if (tipo == "s" || tipo == "silo" || tipo == "S") {
-        novaMaquina = new MaquinaSilo(orientacao);
+    } else if (tipo == "s" || tipo == "armazem" || tipo == "S") {
+        novaMaquina = new Silo(orientacao);
     } else if (tipo == "l" || tipo == "lancador" || tipo == "L") {
         novaMaquina = new Lancador(orientacao);
     } else {
@@ -377,10 +377,10 @@ Terreno* Fabrica::getTerreno(int linha, int coluna) noexcept {
     return nullptr;
 }
 
-const Silo& Fabrica::getSilo() const noexcept {
-    return silo;
+const Armazem& Fabrica::getSilo() const noexcept {
+    return armazem;
 }
 
-Silo& Fabrica::getSilo() noexcept {
-    return silo;
+Armazem& Fabrica::getSilo() noexcept {
+    return armazem;
 }

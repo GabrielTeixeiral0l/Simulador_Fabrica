@@ -1,14 +1,14 @@
-#include "Silo.h"
+#include "Armazem.h"
 #include <sstream>
 
-Silo::Silo() noexcept
+Armazem::Armazem() noexcept
     : primeiro(nullptr), ultimo(nullptr), quantidade(0) {}
 
-Silo::~Silo() {
+Armazem::~Armazem() {
     libertarItens();
 }
 
-void Silo::libertarItens() noexcept {
+void Armazem::libertarItens() noexcept {
     ElementoItem* atual = primeiro;
     while (atual != nullptr) {
         ElementoItem* seg = atual->proximo;
@@ -20,7 +20,7 @@ void Silo::libertarItens() noexcept {
     quantidade = 0;
 }
 
-bool Silo::adicionarItem(const std::string& tipo) {
+bool Armazem::adicionarItem(const std::string& tipo) {
     if (tipo.empty()) {
         return false;
     }
@@ -37,7 +37,7 @@ bool Silo::adicionarItem(const std::string& tipo) {
     return true;
 }
 
-bool Silo::removerItemMaisAntigo(std::string& tipoRemovido) {
+bool Armazem::removerItemMaisAntigo(std::string& tipoRemovido) {
     if (primeiro == nullptr) {
         return false;
     }
@@ -54,7 +54,7 @@ bool Silo::removerItemMaisAntigo(std::string& tipoRemovido) {
     return true;
 }
 
-bool Silo::removerItem(const std::string& tipo) {
+bool Armazem::removerItem(const std::string& tipo) {
     ElementoItem* anterior = nullptr;
     ElementoItem* atual = primeiro;
 
@@ -81,11 +81,11 @@ bool Silo::removerItem(const std::string& tipo) {
     return false;
 }
 
-int Silo::getQuantidadeTotal() const noexcept {
+int Armazem::getQuantidadeTotal() const noexcept {
     return quantidade;
 }
 
-int Silo::getQuantidadePorTipo(const std::string& tipo) const noexcept {
+int Armazem::getQuantidadePorTipo(const std::string& tipo) const noexcept {
     int contagem = 0;
     ElementoItem* atual = primeiro;
     while (atual != nullptr) {
@@ -97,9 +97,9 @@ int Silo::getQuantidadePorTipo(const std::string& tipo) const noexcept {
     return contagem;
 }
 
-std::string Silo::getInfoEstado() const {
+std::string Armazem::getInfoEstado() const {
     std::ostringstream oss;
-    oss << "Silo (" << quantidade << " itens guardados)";
+    oss << "Armazem (" << quantidade << " itens guardados)";
     if (quantidade == 0) {
         oss << ": vazio";
         return oss.str();

@@ -69,7 +69,7 @@ public:
     inline static const int oficina_melhoria_custo = 30;
     inline static const int oficina_melhoria_max = 1;                // número máximo de melhorias
 
-    // ----- Silo -----
+    // ----- Armazem -----
     inline static const int silo_custo = 120;
     inline static const int silo_prob_perda = 20;                    // % de perder o item mais antigo, por instante
     inline static const int silo_melhoria_reducao_prob = 5;          // pontos percentuais por melhoria

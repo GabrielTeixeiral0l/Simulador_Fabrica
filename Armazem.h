@@ -1,9 +1,9 @@
-#ifndef SIMULADOR_SILO_H
-#define SIMULADOR_SILO_H
+#ifndef SIMULADOR_ARMAZEM_H
+#define SIMULADOR_ARMAZEM_H
 
 #include <string>
 
-class Silo {
+class Armazem {
     struct ElementoItem {
         std::string tipo;
         ElementoItem* proximo;
@@ -16,10 +16,10 @@ class Silo {
     void libertarItens() noexcept;
 
 public:
-    Silo() noexcept;
-    ~Silo();
-    Silo(const Silo&) = delete;
-    Silo& operator=(const Silo&) = delete;
+    Armazem() noexcept;
+    ~Armazem();
+    Armazem(const Armazem&) = delete;
+    Armazem& operator=(const Armazem&) = delete;
 
     bool adicionarItem(const std::string& tipo);
     bool removerItemMaisAntigo(std::string& tipoRemovido);
@@ -30,4 +30,4 @@ public:
     std::string getInfoEstado() const;
 };
 
-#endif // SIMULADOR_SILO_H
+#endif // SIMULADOR_ARMAZEM_H
