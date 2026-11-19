@@ -2,26 +2,18 @@
 #define SIMULADOR_MAQUINA_H
 
 #include <string>
+#include "Orientacao.h"
 
 class Fabrica;
-
-enum class OrientacaoMaquina {
-    Norte, // Cima ('c')
-    Este,  // Direita ('d')
-    Sul,   // Baixo ('b')
-    Oeste  // Esquerda ('e')
-};
 
 class Maquina {
     static int proximoId;
     int id;
-    OrientacaoMaquina orientacao;
+    Orientacao orientacao;
     int custo;
     bool ativo;
 
 public:
-    using Orientacao = OrientacaoMaquina;
-
     explicit Maquina(int custo, Orientacao orientacao = Orientacao::Norte) noexcept;
     virtual ~Maquina() noexcept = default;
 
@@ -40,7 +32,7 @@ public:
     bool isAtivo() const noexcept;
     void setAtivo(bool estado) noexcept;
 
-    static Orientacao charParaOrientacao(char c);
+    static Orientacao charParaOrientacao(char c) noexcept;
 };
 
 #endif // SIMULADOR_MAQUINA_H

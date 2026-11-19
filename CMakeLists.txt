@@ -25,6 +25,8 @@ add_executable(simulador
         terreno/Deposito.cpp
 
         maquinas/Maquina.h
+        maquinas/Orientacao.h
+        maquinas/Orientacao.cpp
         maquinas/Maquina.cpp
         maquinas/Perfuradora.h
         maquinas/Perfuradora.cpp

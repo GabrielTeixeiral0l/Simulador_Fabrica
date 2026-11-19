@@ -223,7 +223,7 @@ bool Fabrica::comprarMaquina(const std::string& tipo, const std::string& coord, 
         return false;
     }
 
-    Maquina::Orientacao orientacao = Maquina::charParaOrientacao(dir);
+    Orientacao orientacao = Maquina::charParaOrientacao(dir);
     Maquina* novaMaquina = nullptr;
 
     if (tipo == "p" || tipo == "perfuradora" || tipo == "P") {

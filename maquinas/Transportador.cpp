@@ -5,7 +5,7 @@ Transportador::Transportador(Orientacao orientacao) noexcept
     : Maquina(Settings::transportador_custo, orientacao) {}
 
 char Transportador::getSimbolo() const noexcept {
-    switch (getOrientacao()) {
+    switch (getOrientacaoChar()) {
         case Orientacao::Norte:
             return '^';
         case Orientacao::Este:
