@@ -4,7 +4,7 @@ bool Terreno::podeConstruir() const noexcept {
     return false;
 }
 
-bool Terreno::extrair(int quantidadeExtrair) noexcept {
+bool Terreno::extrair([[maybe_unused]] int quantidadeExtrair) noexcept {
     return false;
 }
 

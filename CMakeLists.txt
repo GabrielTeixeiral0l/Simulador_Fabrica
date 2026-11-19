@@ -16,4 +16,6 @@ add_executable(simulador main.cpp
         Deposito.h
         Fabrica.cpp
         Fabrica.h
+        Simulador.cpp
+        Simulador.h
         Settings.h)
