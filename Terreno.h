@@ -4,25 +4,17 @@
 #include <string>
 
 class Terreno {
-    char simbolo;
-    std::string nome;
-    int quantidade;
-
 public:
-    Terreno() noexcept;
-    Terreno(char simbolo, std::string nome = "", int quantidade = 0) noexcept;
+    Terreno() noexcept = default;
+    virtual ~Terreno() noexcept = default;
 
-    static Terreno criarSolo() noexcept;
-    static Terreno criarCratera() noexcept;
-    static Terreno criarDeposito(char simbolo, const std::string& nome, int quantidade) noexcept;
+    virtual char getSimbolo() const noexcept = 0;
+    virtual std::string getDescricao() const = 0;
+    virtual Terreno* clone() const = 0;
 
-    char getSimbolo() const noexcept;
-    std::string getDescricao() const;
-    const std::string& getNome() const noexcept;
-    int getQuantidade() const noexcept;
-
-    bool podeConstruir() const noexcept;
-    bool extrair(int quantidadeExtrair = 1) noexcept;
+    virtual bool podeConstruir() const noexcept;
+    virtual bool extrair(int quantidadeExtrair = 1) noexcept;
+    virtual int getQuantidade() const noexcept;
 };
 
 #endif // SIMULADOR_TERRENO_H

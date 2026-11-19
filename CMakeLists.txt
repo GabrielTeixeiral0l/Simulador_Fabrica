@@ -5,5 +5,15 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(simulador main.cpp
         Ecra.cpp
+        Ecra.h
         Terreno.cpp
-        Fabrica.cpp)
+        Terreno.h
+        Solo.cpp
+        Solo.h
+        Cratera.cpp
+        Cratera.h
+        Deposito.cpp
+        Deposito.h
+        Fabrica.cpp
+        Fabrica.h
+        Settings.h)
