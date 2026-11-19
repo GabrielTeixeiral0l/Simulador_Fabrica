@@ -5,7 +5,6 @@
 #include <string>
 
 class ComandoDespede : public Comando {
-private:
     std::string argId;
     std::string resto;
 

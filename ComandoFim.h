@@ -5,7 +5,6 @@
 #include <string>
 
 class ComandoFim : public Comando {
-private:
     std::string resto;
 
 public:

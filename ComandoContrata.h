@@ -5,7 +5,6 @@
 #include <string>
 
 class ComandoContrata : public Comando {
-private:
     std::string nome;
     std::string resto;
 

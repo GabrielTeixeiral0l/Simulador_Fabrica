@@ -5,7 +5,6 @@
 #include <string>
 
 class ComandoFabrica : public Comando {
-private:
     std::string argLinhas;
     std::string argColunas;
     std::string resto;

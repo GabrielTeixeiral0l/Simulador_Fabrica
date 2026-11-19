@@ -5,7 +5,6 @@
 #include <string>
 
 class ComandoAtribui : public Comando {
-private:
     std::string argId;
     std::string coord;
     std::string resto;

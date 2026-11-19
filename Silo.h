@@ -4,7 +4,6 @@
 #include <string>
 
 class Silo {
-private:
     struct ElementoItem {
         std::string tipo;
         ElementoItem* proximo;

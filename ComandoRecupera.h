@@ -5,7 +5,6 @@
 #include <string>
 
 class ComandoRecupera : public Comando {
-private:
     std::string nome;
     std::string resto;
 

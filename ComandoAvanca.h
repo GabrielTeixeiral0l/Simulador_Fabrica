@@ -5,7 +5,6 @@
 #include <string>
 
 class ComandoAvanca : public Comando {
-private:
     std::string argN;
     std::string resto;
 

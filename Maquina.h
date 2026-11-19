@@ -5,23 +5,23 @@
 
 class Fabrica;
 
-class Maquina {
-public:
-    enum class Orientacao {
-        Norte, // Cima ('c')
-        Este,  // Direita ('d')
-        Sul,   // Baixo ('b')
-        Oeste  // Esquerda ('e')
-    };
+enum class OrientacaoMaquina {
+    Norte, // Cima ('c')
+    Este,  // Direita ('d')
+    Sul,   // Baixo ('b')
+    Oeste  // Esquerda ('e')
+};
 
-private:
+class Maquina {
     static int proximoId;
     int id;
-    Orientacao orientacao;
+    OrientacaoMaquina orientacao;
     int custo;
     bool ativo;
 
 public:
+    using Orientacao = OrientacaoMaquina;
+
     explicit Maquina(int custo, Orientacao orientacao = Orientacao::Norte) noexcept;
     virtual ~Maquina() noexcept = default;
 

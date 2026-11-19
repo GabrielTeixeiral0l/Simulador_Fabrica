@@ -8,7 +8,6 @@
 #include "Maquina.h"
 
 class Fabrica {
-private:
     int linhas;
     int colunas;
     int creditos;

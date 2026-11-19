@@ -6,7 +6,6 @@
 #include <string>
 
 class Simulador {
-private:
     Fabrica fabrica;
     Ecra ecra;
     bool emExecucao;

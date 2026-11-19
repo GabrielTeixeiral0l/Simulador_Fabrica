@@ -5,7 +5,6 @@
 #include <string>
 
 class ComandoCompra : public Comando {
-private:
     std::string tipo;
     std::string coord;
     std::string dir;

@@ -5,7 +5,6 @@
 #include <string>
 
 class ComandoRoda : public Comando {
-private:
     std::string coord;
     std::string dir;
     std::string resto;

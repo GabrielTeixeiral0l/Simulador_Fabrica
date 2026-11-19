@@ -5,7 +5,6 @@
 #include <string>
 
 class Deposito : public Terreno {
-private:
     char simbolo;
     std::string nome;
     int quantidade;

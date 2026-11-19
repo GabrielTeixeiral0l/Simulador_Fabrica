@@ -5,7 +5,6 @@
 #include <string>
 
 class ComandoExecuta : public Comando {
-private:
     std::string ficheiro;
     std::string resto;
 

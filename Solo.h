@@ -5,7 +5,6 @@
 #include "Maquina.h"
 
 class Solo : public Terreno {
-private:
     Maquina* maquina;
 
 public:

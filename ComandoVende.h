@@ -5,7 +5,6 @@
 #include <string>
 
 class ComandoVende : public Comando {
-private:
     std::string coord;
     std::string resto;
 

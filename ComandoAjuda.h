@@ -5,7 +5,6 @@
 #include <string>
 
 class ComandoAjuda : public Comando {
-private:
     std::string comandoAlvo;
     std::string resto;
 

@@ -5,7 +5,6 @@
 #include <string>
 
 class ComandoMelhora : public Comando {
-private:
     std::string coord;
     std::string resto;
 

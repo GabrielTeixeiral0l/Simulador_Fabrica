@@ -5,7 +5,6 @@
 #include <string>
 
 class ComandoLPosicao : public Comando {
-private:
     std::string coord;
     std::string argRaio;
     std::string resto;
