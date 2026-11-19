@@ -18,9 +18,10 @@ class Fabrica {
     void inicializarGrelha() noexcept;
     void libertarGrelha() noexcept;
     void limparGrelha();
+    static void limparGrelhaTemp(Terreno* temp[Settings::fabrica_max_linhas][Settings::fabrica_max_colunas]) noexcept;
     bool estaDentroDosLimites(int linha, int coluna) const noexcept;
     static int gerarNumeroAleatorio(int min, int max);
-    void sortearPosicaoLivre(int& linha, int& coluna) const;
+    bool sortearPosicaoLivre(int& linha, int& coluna) const;
     void criarCrateras(int numCrateras);
     void criarDepositos(int numDepositos, const std::string& nome, char simbolo);
     static bool parseCoordenadas(const std::string& coord, int& linha, int& coluna) noexcept;
@@ -49,8 +50,8 @@ public:
     const Terreno* getTerreno(int linha, int coluna) const noexcept;
     Terreno* getTerreno(int linha, int coluna) noexcept;
 
-    const Armazem& getSilo() const noexcept;
-    Armazem& getSilo() noexcept;
+    const Armazem& getArmazem() const noexcept;
+    Armazem& getArmazem() noexcept;
 };
 
 #endif // SIMULADOR_FABRICA_H

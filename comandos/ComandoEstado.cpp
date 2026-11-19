@@ -23,7 +23,7 @@ std::string ComandoEstado::executar(Fabrica& fabrica, Simulador&) {
     oss << "Estado da Fabrica:\n"
         << "  Instante: " << fabrica.getInstante() << "\n"
         << "  Creditos: " << fabrica.getCreditos() << "\n"
-        << "  " << fabrica.getSilo().getInfoEstado() << "\n";
+        << "  " << fabrica.getArmazem().getInfoEstado() << "\n";
 
     int numMaquinas = 0;
     std::ostringstream maquinasOss;

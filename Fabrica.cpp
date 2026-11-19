@@ -59,6 +59,10 @@ void Fabrica::limparGrelha() {
     }
 }
 
+void Fabrica::limparGrelhaTemp(Terreno* temp[Settings::fabrica_max_linhas][Settings::fabrica_max_colunas]) noexcept {
+    for (int i=0;i<Settings::fabrica_max_linhas;++i) for (int j=0;j<Settings::fabrica_max_colunas;++j) { delete temp[i][j]; temp[i][j]=nullptr; }
+}
+
 bool Fabrica::estaDentroDosLimites(int linha, int coluna) const noexcept {
     return linha >= 0 && linha < linhas && coluna >= 0 && coluna < colunas;
 }
@@ -70,17 +74,16 @@ int Fabrica::gerarNumeroAleatorio(int min, int max) {
     return distribuicao(gerador);
 }
 
-void Fabrica::sortearPosicaoLivre(int& linha, int& coluna) const {
-    do {
-        linha = gerarNumeroAleatorio(0, linhas - 1);
-        coluna = gerarNumeroAleatorio(0, colunas - 1);
-    } while (grelha[linha][coluna] != nullptr && grelha[linha][coluna]->getSimbolo() != ' ');
+bool Fabrica::sortearPosicaoLivre(int& linha, int& coluna) const {
+    for (int t=0;t<linhas*colunas*4;++t) { int l=gerarNumeroAleatorio(0,linhas-1), c=gerarNumeroAleatorio(0,colunas-1); if (!grelha[l][c] || grelha[l][c]->getSimbolo()==' ') { linha=l; coluna=c; return true; } }
+    for (int l=0;l<linhas;++l) for (int c=0;c<colunas;++c) if (!grelha[l][c] || grelha[l][c]->getSimbolo()==' ') { linha=l; coluna=c; return true; }
+    return false;
 }
 
 void Fabrica::criarCrateras(int numCrateras) {
     int linha, coluna;
     for (int i = 0; i < numCrateras; ++i) {
-        sortearPosicaoLivre(linha, coluna);
+        if (!sortearPosicaoLivre(linha, coluna)) break;
         delete grelha[linha][coluna];
         grelha[linha][coluna] = new Cratera();
     }
@@ -89,7 +92,7 @@ void Fabrica::criarCrateras(int numCrateras) {
 void Fabrica::criarDepositos(int numDepositos, const std::string& nome, char simbolo) {
     int linha, coluna;
     for (int i = 0; i < numDepositos; ++i) {
-        sortearPosicaoLivre(linha, coluna);
+        if (!sortearPosicaoLivre(linha, coluna)) break;
         int qtd = gerarNumeroAleatorio(Settings::deposito_quantidade_min, Settings::deposito_quantidade_max);
         delete grelha[linha][coluna];
         grelha[linha][coluna] = new Deposito(simbolo, nome, qtd);
@@ -156,20 +159,11 @@ bool Fabrica::carregarFicheiro(const std::string& nomeFicheiro) {
         }
     }
 
-    auto limparTemp = [&]() {
-        for (int i = 0; i < Settings::fabrica_max_linhas; ++i) {
-            for (int j = 0; j < Settings::fabrica_max_colunas; ++j) {
-                delete temp[i][j];
-                temp[i][j] = nullptr;
-            }
-        }
-    };
-
     for (int i = 0; i < linhasFich; ++i) {
         std::string linhaMapa;
         fich >> linhaMapa;
         if (static_cast<int>(linhaMapa.length()) != colunasFich) {
-            limparTemp();
+            limparGrelhaTemp(temp);
             return false;
         }
 
@@ -188,7 +182,7 @@ bool Fabrica::carregarFicheiro(const std::string& nomeFicheiro) {
             } else if (ch == '~') {
                 temp[i][j] = new Deposito('~', "Gelo", qtd);
             } else {
-                limparTemp();
+                limparGrelhaTemp(temp);
                 return false;
             }
         }
@@ -208,7 +202,7 @@ bool Fabrica::carregarFicheiro(const std::string& nomeFicheiro) {
         }
     }
 
-    limparTemp();
+    limparGrelhaTemp(temp);
     return true;
 }
 
@@ -234,7 +228,7 @@ bool Fabrica::comprarMaquina(const std::string& tipo, const std::string& coord, 
         novaMaquina = new Refinaria(orientacao);
     } else if (tipo == "o" || tipo == "oficina" || tipo == "O") {
         novaMaquina = new Oficina(orientacao);
-    } else if (tipo == "s" || tipo == "armazem" || tipo == "S") {
+    } else if (tipo == "s" || tipo == "silo" || tipo == "S") {
         novaMaquina = new Silo(orientacao);
     } else if (tipo == "l" || tipo == "lancador" || tipo == "L") {
         novaMaquina = new Lancador(orientacao);
@@ -377,10 +371,10 @@ Terreno* Fabrica::getTerreno(int linha, int coluna) noexcept {
     return nullptr;
 }
 
-const Armazem& Fabrica::getSilo() const noexcept {
+const Armazem& Fabrica::getArmazem() const noexcept {
     return armazem;
 }
 
-Armazem& Fabrica::getSilo() noexcept {
+Armazem& Fabrica::getArmazem() noexcept {
     return armazem;
 }
