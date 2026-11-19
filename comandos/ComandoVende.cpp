@@ -1,5 +1,5 @@
 #include "ComandoVende.h"
-#include "Fabrica.h"
+#include "../Fabrica.h"
 #include <utility>
 
 ComandoVende::ComandoVende(std::string coord, std::string resto) noexcept

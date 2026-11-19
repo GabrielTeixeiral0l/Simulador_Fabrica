@@ -1,5 +1,5 @@
 #include "Transportador.h"
-#include "Settings.h"
+#include "../Settings.h"
 
 Transportador::Transportador(Orientacao orientacao) noexcept
     : Maquina(Settings::transportador_custo, orientacao) {}

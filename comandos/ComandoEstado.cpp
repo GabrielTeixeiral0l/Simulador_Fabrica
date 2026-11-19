@@ -1,6 +1,6 @@
 #include "ComandoEstado.h"
-#include "Fabrica.h"
-#include "Solo.h"
+#include "../Fabrica.h"
+#include "../terreno/Solo.h"
 #include <sstream>
 #include <utility>
 

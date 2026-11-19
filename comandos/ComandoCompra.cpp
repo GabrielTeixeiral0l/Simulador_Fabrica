@@ -1,5 +1,5 @@
 #include "ComandoCompra.h"
-#include "Fabrica.h"
+#include "../Fabrica.h"
 #include <utility>
 
 ComandoCompra::ComandoCompra(std::string tipo, std::string coord, std::string dir, std::string resto) noexcept

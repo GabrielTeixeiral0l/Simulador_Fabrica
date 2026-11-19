@@ -2,7 +2,7 @@
 #define SIMULADOR_SOLO_H
 
 #include "Terreno.h"
-#include "Maquina.h"
+#include "../maquinas/Maquina.h"
 
 class Solo : public Terreno {
     Maquina* maquina;

@@ -1,5 +1,5 @@
 #include "Oficina.h"
-#include "Settings.h"
+#include "../Settings.h"
 
 Oficina::Oficina(Orientacao orientacao) noexcept
     : Maquina(Settings::oficina_custo, orientacao) {}

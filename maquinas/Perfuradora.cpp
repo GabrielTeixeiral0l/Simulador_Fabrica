@@ -1,5 +1,5 @@
 #include "Perfuradora.h"
-#include "Settings.h"
+#include "../Settings.h"
 
 Perfuradora::Perfuradora(Orientacao orientacao) noexcept
     : Maquina(Settings::perfuradora_custo, orientacao) {}

@@ -1,5 +1,5 @@
 #include "MaquinaSilo.h"
-#include "Settings.h"
+#include "../Settings.h"
 
 MaquinaSilo::MaquinaSilo(Orientacao orientacao) noexcept
     : Maquina(Settings::silo_custo, orientacao) {}

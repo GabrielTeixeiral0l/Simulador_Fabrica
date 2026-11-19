@@ -1,6 +1,6 @@
 #include "ComandoFabrica.h"
-#include "Fabrica.h"
-#include "Settings.h"
+#include "../Fabrica.h"
+#include "../Settings.h"
 #include <utility>
 
 ComandoFabrica::ComandoFabrica(std::string argLinhas, std::string argColunas, std::string resto) noexcept

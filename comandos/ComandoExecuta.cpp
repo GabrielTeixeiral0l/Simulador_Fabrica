@@ -1,5 +1,5 @@
 #include "ComandoExecuta.h"
-#include "Simulador.h"
+#include "../Simulador.h"
 #include <fstream>
 #include <utility>
 

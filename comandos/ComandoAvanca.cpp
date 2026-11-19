@@ -1,5 +1,5 @@
 #include "ComandoAvanca.h"
-#include "Fabrica.h"
+#include "../Fabrica.h"
 #include <utility>
 
 ComandoAvanca::ComandoAvanca(std::string argN, std::string resto) noexcept

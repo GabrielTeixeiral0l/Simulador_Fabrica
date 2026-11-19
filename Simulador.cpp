@@ -1,5 +1,5 @@
 #include "Simulador.h"
-#include "Comando.h"
+#include "comandos/Comando.h"
 #include <iostream>
 #include <algorithm>
 

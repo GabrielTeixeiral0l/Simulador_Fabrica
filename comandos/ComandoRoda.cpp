@@ -1,7 +1,7 @@
 #include "ComandoRoda.h"
-#include "Fabrica.h"
-#include "Solo.h"
-#include "Maquina.h"
+#include "../Fabrica.h"
+#include "../terreno/Solo.h"
+#include "../maquinas/Maquina.h"
 #include <utility>
 
 ComandoRoda::ComandoRoda(std::string coord, std::string dir, std::string resto) noexcept

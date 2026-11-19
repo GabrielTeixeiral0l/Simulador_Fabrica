@@ -1,5 +1,5 @@
 #include "Refinaria.h"
-#include "Settings.h"
+#include "../Settings.h"
 
 Refinaria::Refinaria(Orientacao orientacao) noexcept
     : Maquina(Settings::refinaria_custo, orientacao) {}

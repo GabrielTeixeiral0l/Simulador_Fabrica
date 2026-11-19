@@ -1,13 +1,13 @@
 #include "Fabrica.h"
-#include "Solo.h"
-#include "Cratera.h"
-#include "Deposito.h"
-#include "Perfuradora.h"
-#include "Transportador.h"
-#include "Refinaria.h"
-#include "Oficina.h"
-#include "MaquinaSilo.h"
-#include "Lancador.h"
+#include "terreno/Solo.h"
+#include "terreno/Cratera.h"
+#include "terreno/Deposito.h"
+#include "maquinas/Perfuradora.h"
+#include "maquinas/Transportador.h"
+#include "maquinas/Refinaria.h"
+#include "maquinas/Oficina.h"
+#include "maquinas/MaquinaSilo.h"
+#include "maquinas/Lancador.h"
 #include <fstream>
 #include <random>
 

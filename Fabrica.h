@@ -3,9 +3,9 @@
 
 #include <string>
 #include "Settings.h"
-#include "Terreno.h"
+#include "terreno/Terreno.h"
 #include "Silo.h"
-#include "Maquina.h"
+#include "maquinas/Maquina.h"
 
 class Fabrica {
     int linhas;

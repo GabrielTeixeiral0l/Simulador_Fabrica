@@ -1,5 +1,5 @@
 #include "ComandoLPosicao.h"
-#include "Fabrica.h"
+#include "../Fabrica.h"
 #include <sstream>
 #include <utility>
 

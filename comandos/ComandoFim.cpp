@@ -1,5 +1,5 @@
 #include "ComandoFim.h"
-#include "Simulador.h"
+#include "../Simulador.h"
 #include <utility>
 
 ComandoFim::ComandoFim(std::string resto) noexcept

@@ -1,5 +1,5 @@
 #include "Lancador.h"
-#include "Settings.h"
+#include "../Settings.h"
 
 Lancador::Lancador(Orientacao orientacao) noexcept
     : Maquina(Settings::lancador_custo, orientacao) {}

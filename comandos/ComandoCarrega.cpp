@@ -1,5 +1,5 @@
 #include "ComandoCarrega.h"
-#include "Fabrica.h"
+#include "../Fabrica.h"
 #include <utility>
 
 ComandoCarrega::ComandoCarrega(std::string ficheiro, std::string resto) noexcept
