@@ -36,7 +36,7 @@ std::string ComandoLPosicao::getAjuda() const {
            "  Exemplo: lposicao df 2";
 }
 
-std::string ComandoLPosicao::executar(Fabrica& fabrica, [[maybe_unused]] Simulador& simulador) {
+std::string ComandoLPosicao::executar(Fabrica& fabrica, Simulador&) {
     if (argRaio.empty()) {
         return fabrica.getInfoPosicao(coord);
     }

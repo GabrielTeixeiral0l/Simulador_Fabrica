@@ -28,7 +28,7 @@ std::string ComandoAvanca::getAjuda() const {
            "  Exemplo: avanca 10";
 }
 
-std::string ComandoAvanca::executar(Fabrica& fabrica, [[maybe_unused]] Simulador& simulador) {
+std::string ComandoAvanca::executar(Fabrica& fabrica, Simulador&) {
     int n = argN.empty() ? 1 : std::stoi(argN);
     fabrica.avancarInstante(n);
     return "Avancados " + std::to_string(n) + " instante(s). Instante atual: " + std::to_string(fabrica.getInstante()) + ".";

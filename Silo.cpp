@@ -8,19 +8,6 @@ Silo::~Silo() {
     libertarItens();
 }
 
-Silo::Silo(const Silo& outro)
-    : primeiro(nullptr), ultimo(nullptr), quantidade(0) {
-    copiarDe(outro);
-}
-
-Silo& Silo::operator=(const Silo& outro) {
-    if (this != &outro) {
-        libertarItens();
-        copiarDe(outro);
-    }
-    return *this;
-}
-
 void Silo::libertarItens() noexcept {
     ElementoItem* atual = primeiro;
     while (atual != nullptr) {
@@ -31,14 +18,6 @@ void Silo::libertarItens() noexcept {
     primeiro = nullptr;
     ultimo = nullptr;
     quantidade = 0;
-}
-
-void Silo::copiarDe(const Silo& outro) {
-    ElementoItem* atual = outro.primeiro;
-    while (atual != nullptr) {
-        adicionarItem(atual->tipo);
-        atual = atual->proximo;
-    }
 }
 
 bool Silo::adicionarItem(const std::string& tipo) {

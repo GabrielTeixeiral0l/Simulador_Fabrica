@@ -10,10 +10,9 @@ public:
 
     virtual char getSimbolo() const noexcept = 0;
     virtual std::string getDescricao() const = 0;
-    virtual Terreno* clone() const = 0;
 
     virtual bool podeConstruir() const noexcept;
-    virtual bool extrair(int quantidadeExtrair = 1) noexcept;
+    virtual bool extrair(int quantidade = 1) noexcept;
     virtual int getQuantidade() const noexcept;
 };
 

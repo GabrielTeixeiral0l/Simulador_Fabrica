@@ -21,6 +21,6 @@ std::string ComandoMelhora::getAjuda() const {
            "  Exemplo: melhora hi";
 }
 
-std::string ComandoMelhora::executar([[maybe_unused]] Fabrica& fabrica, [[maybe_unused]] Simulador& simulador) {
+std::string ComandoMelhora::executar(Fabrica&, Simulador&) {
     return "Comando 'melhora' validado com sucesso (funcionalidade reservada para a entrega final).";
 }

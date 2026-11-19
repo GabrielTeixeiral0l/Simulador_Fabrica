@@ -16,7 +16,7 @@ std::string ComandoCarrega::getAjuda() const {
            "  Exemplo: carrega mapa1.txt";
 }
 
-std::string ComandoCarrega::executar(Fabrica& fabrica, [[maybe_unused]] Simulador& simulador) {
+std::string ComandoCarrega::executar(Fabrica& fabrica, Simulador&) {
     if (fabrica.carregarFicheiro(ficheiro)) {
         return "Ficheiro '" + ficheiro + "' carregado com sucesso.";
     }

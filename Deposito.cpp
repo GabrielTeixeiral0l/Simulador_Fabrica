@@ -26,7 +26,3 @@ bool Deposito::extrair(int quantidadeExtrair) noexcept {
     quantidade -= quantidadeExtrair;
     return true;
 }
-
-Terreno* Deposito::clone() const {
-    return new Deposito(*this);
-}

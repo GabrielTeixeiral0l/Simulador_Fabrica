@@ -8,17 +8,6 @@ Solo::~Solo() noexcept {
     maquina = nullptr;
 }
 
-Solo::Solo(const Solo& outro)
-    : Terreno(outro), maquina(outro.maquina != nullptr ? outro.maquina->clone() : nullptr) {}
-
-Solo& Solo::operator=(const Solo& outro) {
-    if (this != &outro) {
-        delete maquina;
-        maquina = (outro.maquina != nullptr) ? outro.maquina->clone() : nullptr;
-    }
-    return *this;
-}
-
 char Solo::getSimbolo() const noexcept {
     if (maquina != nullptr) {
         return maquina->getSimbolo();
@@ -35,10 +24,6 @@ std::string Solo::getDescricao() const {
 
 bool Solo::podeConstruir() const noexcept {
     return maquina == nullptr;
-}
-
-Terreno* Solo::clone() const {
-    return new Solo(*this);
 }
 
 bool Solo::colocarMaquina(Maquina* novaMaquina) noexcept {

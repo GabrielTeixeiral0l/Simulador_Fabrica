@@ -24,6 +24,6 @@ std::string ComandoDespede::getAjuda() const {
            "  Exemplo: despede 2";
 }
 
-std::string ComandoDespede::executar([[maybe_unused]] Fabrica& fabrica, [[maybe_unused]] Simulador& simulador) {
+std::string ComandoDespede::executar(Fabrica&, Simulador&) {
     return "Comando 'despede' validado com sucesso (funcionalidade de engenheiros reservada para a entrega final).";
 }

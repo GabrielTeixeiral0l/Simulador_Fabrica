@@ -37,7 +37,7 @@ std::string ComandoRoda::getAjuda() const {
            "  Exemplo: roda ce b";
 }
 
-std::string ComandoRoda::executar(Fabrica& fabrica, [[maybe_unused]] Simulador& simulador) {
+std::string ComandoRoda::executar(Fabrica& fabrica, Simulador&) {
     if (dir.empty()) {
         if (fabrica.rodarMaquina(coord)) {
             return "Maquina rodada em " + coord + ".";

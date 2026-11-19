@@ -18,7 +18,6 @@ public:
     std::string getDescricao() const override;
     int getQuantidade() const noexcept override;
     bool extrair(int quantidadeExtrair = 1) noexcept override;
-    Terreno* clone() const override;
 };
 
 #endif // SIMULADOR_DEPOSITO_H

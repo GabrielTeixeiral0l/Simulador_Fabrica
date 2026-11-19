@@ -15,6 +15,6 @@ std::string ComandoContrata::getAjuda() const {
            "  Exemplo: contrata joaquim";
 }
 
-std::string ComandoContrata::executar([[maybe_unused]] Fabrica& fabrica, [[maybe_unused]] Simulador& simulador) {
+std::string ComandoContrata::executar(Fabrica&, Simulador&) {
     return "Comando 'contrata' validado com sucesso (funcionalidade de engenheiros reservada para a entrega final).";
 }

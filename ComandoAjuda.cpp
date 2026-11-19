@@ -16,7 +16,7 @@ std::string ComandoAjuda::getAjuda() const {
            "  Exemplo: ajuda compra";
 }
 
-std::string ComandoAjuda::executar([[maybe_unused]] Fabrica& fabrica, [[maybe_unused]] Simulador& simulador) {
+std::string ComandoAjuda::executar(Fabrica&, Simulador&) {
     if (comandoAlvo.empty()) {
         std::ostringstream oss;
         oss << "Comandos disponiveis no simulador:\n";

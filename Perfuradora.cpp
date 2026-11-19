@@ -12,10 +12,6 @@ std::string Perfuradora::getDescricao() const {
     return "Perfuradora (direcao " + getOrientacaoNome() + ")";
 }
 
-void Perfuradora::atuar([[maybe_unused]] Fabrica& fabrica, [[maybe_unused]] int linha, [[maybe_unused]] int coluna) {
+void Perfuradora::atuar(Fabrica&, int, int) {
     // Mecanismo base de atuacao iniciado para Checkpoint 2
-}
-
-Maquina* Perfuradora::clone() const {
-    return new Perfuradora(*this);
 }

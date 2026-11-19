@@ -15,6 +15,6 @@ std::string ComandoRecupera::getAjuda() const {
            "  Exemplo: recupera antes";
 }
 
-std::string ComandoRecupera::executar([[maybe_unused]] Fabrica& fabrica, [[maybe_unused]] Simulador& simulador) {
+std::string ComandoRecupera::executar(Fabrica&, Simulador&) {
     return "Comando 'recupera' validado com sucesso (funcionalidade de snapshots reservada para a entrega final).";
 }

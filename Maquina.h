@@ -28,7 +28,6 @@ public:
     virtual char getSimbolo() const noexcept = 0;
     virtual std::string getDescricao() const = 0;
     virtual void atuar(Fabrica& fabrica, int linha, int coluna) = 0;
-    virtual Maquina* clone() const = 0;
 
     void rodar() noexcept;
     void setOrientacao(Orientacao novaOrientacao) noexcept;

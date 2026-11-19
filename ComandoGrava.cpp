@@ -15,6 +15,6 @@ std::string ComandoGrava::getAjuda() const {
            "  Exemplo: grava antes";
 }
 
-std::string ComandoGrava::executar([[maybe_unused]] Fabrica& fabrica, [[maybe_unused]] Simulador& simulador) {
+std::string ComandoGrava::executar(Fabrica&, Simulador&) {
     return "Comando 'grava' validado com sucesso (funcionalidade de snapshots reservada para a entrega final).";
 }

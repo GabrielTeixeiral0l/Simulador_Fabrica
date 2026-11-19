@@ -12,10 +12,6 @@ std::string Oficina::getDescricao() const {
     return "Oficina (direcao " + getOrientacaoNome() + ")";
 }
 
-void Oficina::atuar([[maybe_unused]] Fabrica& fabrica, [[maybe_unused]] int linha, [[maybe_unused]] int coluna) {
+void Oficina::atuar(Fabrica&, int, int) {
     // Mecanismo base de atuacao iniciado para Checkpoint 2
-}
-
-Maquina* Oficina::clone() const {
-    return new Oficina(*this);
 }

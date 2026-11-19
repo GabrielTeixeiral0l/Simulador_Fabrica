@@ -12,10 +12,6 @@ std::string MaquinaSilo::getDescricao() const {
     return "Silo (direcao " + getOrientacaoNome() + ")";
 }
 
-void MaquinaSilo::atuar([[maybe_unused]] Fabrica& fabrica, [[maybe_unused]] int linha, [[maybe_unused]] int coluna) {
+void MaquinaSilo::atuar(Fabrica&, int, int) {
     // Mecanismo base de atuacao iniciado para Checkpoint 2
-}
-
-Maquina* MaquinaSilo::clone() const {
-    return new MaquinaSilo(*this);
 }

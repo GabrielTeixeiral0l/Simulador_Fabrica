@@ -22,7 +22,7 @@ std::string ComandoVende::getAjuda() const {
            "  Exemplo: vende ce";
 }
 
-std::string ComandoVende::executar(Fabrica& fabrica, [[maybe_unused]] Simulador& simulador) {
+std::string ComandoVende::executar(Fabrica& fabrica, Simulador&) {
     if (fabrica.venderMaquina(coord)) {
         return "Maquina vendida na posicao " + coord + ".";
     }

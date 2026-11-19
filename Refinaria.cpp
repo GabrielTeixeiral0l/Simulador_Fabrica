@@ -12,10 +12,6 @@ std::string Refinaria::getDescricao() const {
     return "Refinaria (direcao " + getOrientacaoNome() + ")";
 }
 
-void Refinaria::atuar([[maybe_unused]] Fabrica& fabrica, [[maybe_unused]] int linha, [[maybe_unused]] int coluna) {
+void Refinaria::atuar(Fabrica&, int, int) {
     // Mecanismo base de atuacao iniciado para Checkpoint 2
-}
-
-Maquina* Refinaria::clone() const {
-    return new Refinaria(*this);
 }

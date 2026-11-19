@@ -18,7 +18,7 @@ std::string ComandoEstado::getAjuda() const {
            "  Exemplo: estado";
 }
 
-std::string ComandoEstado::executar(Fabrica& fabrica, [[maybe_unused]] Simulador& simulador) {
+std::string ComandoEstado::executar(Fabrica& fabrica, Simulador&) {
     std::ostringstream oss;
     oss << "Estado da Fabrica:\n"
         << "  Instante: " << fabrica.getInstante() << "\n"

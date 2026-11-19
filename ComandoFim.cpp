@@ -16,7 +16,7 @@ std::string ComandoFim::getAjuda() const {
            "  Exemplo: fim";
 }
 
-std::string ComandoFim::executar([[maybe_unused]] Fabrica& fabrica, Simulador& simulador) {
+std::string ComandoFim::executar(Fabrica&, Simulador& simulador) {
     simulador.parar();
     return "A encerrar o simulador com saida limpa...";
 }

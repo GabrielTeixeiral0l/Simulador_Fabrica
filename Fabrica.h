@@ -18,7 +18,6 @@ private:
 
     void inicializarGrelha() noexcept;
     void libertarGrelha() noexcept;
-    void copiarDe(const Fabrica& outra);
     void limparGrelha();
     bool estaDentroDosLimites(int linha, int coluna) const noexcept;
     static int gerarNumeroAleatorio(int min, int max);
@@ -30,8 +29,8 @@ private:
 public:
     explicit Fabrica(int numLinhas = Settings::fabrica_max_linhas, int numColunas = Settings::fabrica_max_colunas);
     ~Fabrica();
-    Fabrica(const Fabrica& outra);
-    Fabrica& operator=(const Fabrica& outra);
+    Fabrica(const Fabrica&) = delete;
+    Fabrica& operator=(const Fabrica&) = delete;
 
     bool gerarAleatoria(int numLinhas, int numColunas);
     bool carregarFicheiro(const std::string& nomeFicheiro);

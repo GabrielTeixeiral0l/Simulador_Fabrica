@@ -33,25 +33,6 @@ Fabrica::~Fabrica() {
     libertarGrelha();
 }
 
-Fabrica::Fabrica(const Fabrica& outra)
-    : linhas(outra.linhas), colunas(outra.colunas), creditos(outra.creditos), instante(outra.instante), silo(outra.silo) {
-    inicializarGrelha();
-    copiarDe(outra);
-}
-
-Fabrica& Fabrica::operator=(const Fabrica& outra) {
-    if (this != &outra) {
-        libertarGrelha();
-        linhas = outra.linhas;
-        colunas = outra.colunas;
-        creditos = outra.creditos;
-        instante = outra.instante;
-        silo = outra.silo;
-        copiarDe(outra);
-    }
-    return *this;
-}
-
 void Fabrica::inicializarGrelha() noexcept {
     for (int l = 0; l < Settings::fabrica_max_linhas; ++l) {
         for (int c = 0; c < Settings::fabrica_max_colunas; ++c) {
@@ -65,18 +46,6 @@ void Fabrica::libertarGrelha() noexcept {
         for (int c = 0; c < Settings::fabrica_max_colunas; ++c) {
             delete grelha[l][c];
             grelha[l][c] = nullptr;
-        }
-    }
-}
-
-void Fabrica::copiarDe(const Fabrica& outra) {
-    for (int l = 0; l < Settings::fabrica_max_linhas; ++l) {
-        for (int c = 0; c < Settings::fabrica_max_colunas; ++c) {
-            if (outra.grelha[l][c] != nullptr) {
-                grelha[l][c] = outra.grelha[l][c]->clone();
-            } else {
-                grelha[l][c] = nullptr;
-            }
         }
     }
 }

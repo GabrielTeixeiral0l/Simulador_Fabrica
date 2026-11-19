@@ -31,6 +31,6 @@ std::string ComandoAtribui::getAjuda() const {
            "  Exemplo: atribui 2 hr";
 }
 
-std::string ComandoAtribui::executar([[maybe_unused]] Fabrica& fabrica, [[maybe_unused]] Simulador& simulador) {
+std::string ComandoAtribui::executar(Fabrica&, Simulador&) {
     return "Comando 'atribui' validado com sucesso (funcionalidade de engenheiros reservada para a entrega final).";
 }

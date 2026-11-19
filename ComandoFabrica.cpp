@@ -30,7 +30,7 @@ std::string ComandoFabrica::getAjuda() const {
            "  Exemplo: fabrica 12 20";
 }
 
-std::string ComandoFabrica::executar(Fabrica& fabrica, [[maybe_unused]] Simulador& simulador) {
+std::string ComandoFabrica::executar(Fabrica& fabrica, Simulador&) {
     int l = std::stoi(argLinhas);
     int c = std::stoi(argColunas);
     if (fabrica.gerarAleatoria(l, c)) {

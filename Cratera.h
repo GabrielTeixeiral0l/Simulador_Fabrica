@@ -10,7 +10,6 @@ public:
 
     char getSimbolo() const noexcept override;
     std::string getDescricao() const override;
-    Terreno* clone() const override;
 };
 
 #endif // SIMULADOR_CRATERA_H

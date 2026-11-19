@@ -22,10 +22,6 @@ std::string Transportador::getDescricao() const {
     return "Transportador (direcao " + getOrientacaoNome() + ")";
 }
 
-void Transportador::atuar([[maybe_unused]] Fabrica& fabrica, [[maybe_unused]] int linha, [[maybe_unused]] int coluna) {
+void Transportador::atuar(Fabrica&, int, int) {
     // Mecanismo base de atuacao iniciado para Checkpoint 2
-}
-
-Maquina* Transportador::clone() const {
-    return new Transportador(*this);
 }

@@ -17,7 +17,7 @@ std::string ComandoExecuta::getAjuda() const {
            "  Exemplo: executa teste1.txt";
 }
 
-std::string ComandoExecuta::executar([[maybe_unused]] Fabrica& fabrica, Simulador& simulador) {
+std::string ComandoExecuta::executar(Fabrica&, Simulador& simulador) {
     std::ifstream f(ficheiro);
     if (!f.is_open()) {
         return "Erro ao abrir ficheiro '" + ficheiro + "'.";

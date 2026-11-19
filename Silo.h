@@ -15,13 +15,12 @@ private:
     int quantidade;
 
     void libertarItens() noexcept;
-    void copiarDe(const Silo& outro);
 
 public:
     Silo() noexcept;
     ~Silo();
-    Silo(const Silo& outro);
-    Silo& operator=(const Silo& outro);
+    Silo(const Silo&) = delete;
+    Silo& operator=(const Silo&) = delete;
 
     bool adicionarItem(const std::string& tipo);
     bool removerItemMaisAntigo(std::string& tipoRemovido);

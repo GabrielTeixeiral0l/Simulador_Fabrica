@@ -34,7 +34,7 @@ std::string ComandoCompra::getAjuda() const {
            "  Exemplo: compra t ce d";
 }
 
-std::string ComandoCompra::executar(Fabrica& fabrica, [[maybe_unused]] Simulador& simulador) {
+std::string ComandoCompra::executar(Fabrica& fabrica, Simulador&) {
     char d = dir.empty() ? 'c' : dir[0];
     if (fabrica.comprarMaquina(tipo, coord, d)) {
         return "Maquina '" + tipo + "' comprada na posicao " + coord + ".";

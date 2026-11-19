@@ -11,13 +11,12 @@ private:
 public:
     Solo() noexcept;
     ~Solo() noexcept override;
-    Solo(const Solo& outro);
-    Solo& operator=(const Solo& outro);
+    Solo(const Solo&) = delete;
+    Solo& operator=(const Solo&) = delete;
 
     char getSimbolo() const noexcept override;
     std::string getDescricao() const override;
     bool podeConstruir() const noexcept override;
-    Terreno* clone() const override;
 
     bool colocarMaquina(Maquina* novaMaquina) noexcept;
     Maquina* removerMaquina() noexcept;
