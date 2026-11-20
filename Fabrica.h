@@ -37,7 +37,7 @@ public:
 
     bool comprarMaquina(const std::string& tipo, const std::string& coord, char dir = 'c');
     bool venderMaquina(const std::string& coord);
-    bool rodarMaquina(const std::string& coord);
+    bool rodarMaquina(const std::string& coord) ;
     void avancarInstante(int n = 1);
 
     std::string getInfoPosicao(int linha, int coluna) const;
