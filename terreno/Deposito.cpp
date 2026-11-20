@@ -2,14 +2,16 @@
 #include <sstream>
 #include <utility>
 
-Deposito::Deposito(char simbolo, std::string nome, int quantidade) noexcept
+using std::string;
+
+Deposito::Deposito(char simbolo, string nome, int quantidade) noexcept
     : simbolo(simbolo), nome(std::move(nome)), quantidade(quantidade) {}
 
 char Deposito::getSimbolo() const noexcept {
     return simbolo;
 }
 
-std::string Deposito::getDescricao() const {
+string Deposito::getDescricao() const {
     std::ostringstream oss;
     oss << "Deposito de " << nome << " (" << quantidade << " unidades)";
     return oss.str();

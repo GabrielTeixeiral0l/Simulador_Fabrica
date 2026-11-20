@@ -2,7 +2,9 @@
 #include "../Fabrica.h"
 #include <utility>
 
-ComandoCompra::ComandoCompra(std::string tipo, std::string coord, std::string dir, std::string resto) noexcept
+using std::string;
+
+ComandoCompra::ComandoCompra(string tipo, string coord, string dir, string resto) noexcept
     : tipo(std::move(tipo)), coord(std::move(coord)), dir(std::move(dir)), resto(std::move(resto)) {}
 
 bool ComandoCompra::validar() const {
@@ -27,14 +29,14 @@ bool ComandoCompra::validar() const {
     return (d == 'c' || d == 'b' || d == 'e' || d == 'd');
 }
 
-std::string ComandoCompra::getAjuda() const {
+string ComandoCompra::getAjuda() const {
     return "compra <tipo> <lc> [dir]\n"
            "  Significado: Compra maquina do tipo indicado (p, t, r, o, s, l) na posicao lc e direcao dir (c, b, e, d).\n"
            "  Condicoes em que falha: tipo invalido, posicao invalida/ocupada/cratera, falta de creditos ou direcao invalida.\n"
            "  Exemplo: compra t ce d";
 }
 
-std::string ComandoCompra::executar(Fabrica& fabrica, Simulador&) {
+string ComandoCompra::executar(Fabrica& fabrica, Simulador&) {
     char d = dir.empty() ? 'c' : dir[0];
     if (fabrica.comprarMaquina(tipo, coord, d)) {
         return "Maquina '" + tipo + "' comprada na posicao " + coord + ".";

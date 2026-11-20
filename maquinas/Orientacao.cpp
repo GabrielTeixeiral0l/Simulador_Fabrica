@@ -1,5 +1,7 @@
 #include "Orientacao.h"
 
+using std::string;
+
 Orientacao::Orientacao(char dir) noexcept {
     if (dir == Norte || dir == Este || dir == Sul || dir == Oeste) {
         direcao = dir;
@@ -12,7 +14,7 @@ char Orientacao::getDirecao() const noexcept {
     return direcao;
 }
 
-std::string Orientacao::getNome() const {
+string Orientacao::getNome() const {
     switch (direcao) {
         case Norte: return "Cima";
         case Este:  return "Direita";

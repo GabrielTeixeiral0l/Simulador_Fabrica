@@ -1,5 +1,7 @@
 #include "Solo.h"
 
+using std::string;
+
 Solo::Solo() noexcept
     : maquina(nullptr) {}
 
@@ -15,7 +17,7 @@ char Solo::getSimbolo() const noexcept {
     return ' ';
 }
 
-std::string Solo::getDescricao() const {
+string Solo::getDescricao() const {
     if (maquina != nullptr) {
         return "Solo com " + maquina->getDescricao();
     }

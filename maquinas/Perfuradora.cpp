@@ -1,6 +1,8 @@
 #include "Perfuradora.h"
 #include "../Settings.h"
 
+using std::string;
+
 Perfuradora::Perfuradora(Orientacao orientacao) noexcept
     : Maquina(Settings::perfuradora_custo, orientacao) {}
 
@@ -8,7 +10,7 @@ char Perfuradora::getSimbolo() const noexcept {
     return 'P';
 }
 
-std::string Perfuradora::getDescricao() const {
+string Perfuradora::getDescricao() const {
     return "Perfuradora (direcao " + getOrientacaoNome() + ")";
 }
 

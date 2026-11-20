@@ -17,7 +17,6 @@ class Simulador {
 
 public:
     Simulador();
-    ~Simulador() noexcept = default;
 
     void executar();
     std::string processarLinha(const std::string& linha);

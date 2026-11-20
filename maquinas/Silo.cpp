@@ -1,6 +1,8 @@
 #include "Silo.h"
 #include "../Settings.h"
 
+using std::string;
+
 Silo::Silo(Orientacao orientacao) noexcept
     : Maquina(Settings::silo_custo, orientacao) {}
 
@@ -8,7 +10,7 @@ char Silo::getSimbolo() const noexcept {
     return 'S';
 }
 
-std::string Silo::getDescricao() const {
+string Silo::getDescricao() const {
     return "Armazem (direcao " + getOrientacaoNome() + ")";
 }
 

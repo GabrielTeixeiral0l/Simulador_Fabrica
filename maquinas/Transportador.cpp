@@ -1,6 +1,8 @@
 #include "Transportador.h"
 #include "../Settings.h"
 
+using std::string;
+
 Transportador::Transportador(Orientacao orientacao) noexcept
     : Maquina(Settings::transportador_custo, orientacao) {}
 
@@ -18,7 +20,7 @@ char Transportador::getSimbolo() const noexcept {
     return '>';
 }
 
-std::string Transportador::getDescricao() const {
+string Transportador::getDescricao() const {
     return "Transportador (direcao " + getOrientacaoNome() + ")";
 }
 

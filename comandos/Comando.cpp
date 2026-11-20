@@ -19,8 +19,10 @@
 
 #include <sstream>
 
-const std::vector<std::string>& Comando::getListaNomesComandos() {
-    static const std::vector<std::string> lista = {
+using std::string;
+
+const std::vector<string>& Comando::getListaNomesComandos() {
+    static const std::vector<string> lista = {
         "fabrica",
         "carrega",
         "avanca",
@@ -42,7 +44,7 @@ const std::vector<std::string>& Comando::getListaNomesComandos() {
     return lista;
 }
 
-std::string Comando::obterAjudaComando(const std::string& nome) {
+string Comando::obterAjudaComando(const string& nome) {
     if (nome == "fabrica") {
         ComandoFabrica c("", "");
         return c.getAjuda();
@@ -114,37 +116,37 @@ std::string Comando::obterAjudaComando(const std::string& nome) {
     return "";
 }
 
-Comando* Comando::criar(const std::string& linhaComando) {
+Comando* Comando::criar(const string& linhaComando) {
     std::istringstream iss(linhaComando);
-    std::string nomeCmd;
+    string nomeCmd;
 
     if (!(iss >> nomeCmd)) {
         return nullptr;
     }
 
     if (nomeCmd == "fabrica") {
-        std::string nl, nc, resto;
+        string nl, nc, resto;
         iss >> nl >> nc;
         iss >> resto;
         return new ComandoFabrica(nl, nc, resto);
     }
 
     if (nomeCmd == "carrega") {
-        std::string fich, resto;
+        string fich, resto;
         iss >> fich;
         iss >> resto;
         return new ComandoCarrega(fich, resto);
     }
 
     if (nomeCmd == "executa") {
-        std::string fich, resto;
+        string fich, resto;
         iss >> fich;
         iss >> resto;
         return new ComandoExecuta(fich, resto);
     }
 
     if (nomeCmd == "compra") {
-        std::string tipo, coord, dir, resto;
+        string tipo, coord, dir, resto;
         iss >> tipo >> coord;
         if (iss >> dir) {
             iss >> resto;
@@ -155,14 +157,14 @@ Comando* Comando::criar(const std::string& linhaComando) {
     }
 
     if (nomeCmd == "vende") {
-        std::string coord, resto;
+        string coord, resto;
         iss >> coord;
         iss >> resto;
         return new ComandoVende(coord, resto);
     }
 
     if (nomeCmd == "roda") {
-        std::string coord, dir, resto;
+        string coord, dir, resto;
         iss >> coord;
         if (iss >> dir) {
             iss >> resto;
@@ -171,7 +173,7 @@ Comando* Comando::criar(const std::string& linhaComando) {
     }
 
     if (nomeCmd == "avanca") {
-        std::string n, resto;
+        string n, resto;
         if (iss >> n) {
             iss >> resto;
         }
@@ -179,13 +181,13 @@ Comando* Comando::criar(const std::string& linhaComando) {
     }
 
     if (nomeCmd == "estado") {
-        std::string resto;
+        string resto;
         iss >> resto;
         return new ComandoEstado(resto);
     }
 
     if (nomeCmd == "lposicao") {
-        std::string coord, raio, resto;
+        string coord, raio, resto;
         iss >> coord;
         if (iss >> raio) {
             iss >> resto;
@@ -194,7 +196,7 @@ Comando* Comando::criar(const std::string& linhaComando) {
     }
 
     if (nomeCmd == "ajuda") {
-        std::string cmdAlvo, resto;
+        string cmdAlvo, resto;
         if (iss >> cmdAlvo) {
             iss >> resto;
         }
@@ -202,48 +204,48 @@ Comando* Comando::criar(const std::string& linhaComando) {
     }
 
     if (nomeCmd == "fim") {
-        std::string resto;
+        string resto;
         iss >> resto;
         return new ComandoFim(resto);
     }
 
     if (nomeCmd == "melhora") {
-        std::string coord, resto;
+        string coord, resto;
         iss >> coord;
         iss >> resto;
         return new ComandoMelhora(coord, resto);
     }
 
     if (nomeCmd == "contrata") {
-        std::string nome, resto;
+        string nome, resto;
         iss >> nome;
         iss >> resto;
         return new ComandoContrata(nome, resto);
     }
 
     if (nomeCmd == "atribui") {
-        std::string id, coord, resto;
+        string id, coord, resto;
         iss >> id >> coord;
         iss >> resto;
         return new ComandoAtribui(id, coord, resto);
     }
 
     if (nomeCmd == "despede") {
-        std::string id, resto;
+        string id, resto;
         iss >> id;
         iss >> resto;
         return new ComandoDespede(id, resto);
     }
 
     if (nomeCmd == "grava") {
-        std::string nome, resto;
+        string nome, resto;
         iss >> nome;
         iss >> resto;
         return new ComandoGrava(nome, resto);
     }
 
     if (nomeCmd == "recupera") {
-        std::string nome, resto;
+        string nome, resto;
         iss >> nome;
         iss >> resto;
         return new ComandoRecupera(nome, resto);

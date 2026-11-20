@@ -4,7 +4,9 @@
 #include "../maquinas/Maquina.h"
 #include <utility>
 
-ComandoRoda::ComandoRoda(std::string coord, std::string dir, std::string resto) noexcept
+using std::string;
+
+ComandoRoda::ComandoRoda(string coord, string dir, string resto) noexcept
     : coord(std::move(coord)), dir(std::move(dir)), resto(std::move(resto)) {}
 
 bool ComandoRoda::validar() const {
@@ -30,14 +32,14 @@ bool ComandoRoda::validar() const {
     return true;
 }
 
-std::string ComandoRoda::getAjuda() const {
+string ComandoRoda::getAjuda() const {
     return "roda <lc> [dir]\n"
            "  Significado: Muda a direcao de saida da maquina em lc (para dir ou sentido horario se omitido).\n"
            "  Condicoes em que falha: posicao sem maquina ou argumentos invalidos.\n"
            "  Exemplo: roda ce b";
 }
 
-std::string ComandoRoda::executar(Fabrica& fabrica, Simulador&) {
+string ComandoRoda::executar(Fabrica& fabrica, Simulador&) {
     if (dir.empty()) {
         if (fabrica.rodarMaquina(coord)) {
             return "Maquina rodada em " + coord + ".";

@@ -1,6 +1,8 @@
 #include "Oficina.h"
 #include "../Settings.h"
 
+using std::string;
+
 Oficina::Oficina(Orientacao orientacao) noexcept
     : Maquina(Settings::oficina_custo, orientacao) {}
 
@@ -8,7 +10,7 @@ char Oficina::getSimbolo() const noexcept {
     return 'O';
 }
 
-std::string Oficina::getDescricao() const {
+string Oficina::getDescricao() const {
     return "Oficina (direcao " + getOrientacaoNome() + ")";
 }
 

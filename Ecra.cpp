@@ -1,6 +1,9 @@
 #include "Ecra.h"
 #include <iostream>
 
+using std::string;
+using std::cout;
+
 Ecra::Ecra(int numLinhas, int numColunas) noexcept
     : linhas(numLinhas), colunas(numColunas), linhaCursor(0), colunaCursor(0) {
     if (linhas < 1) {
@@ -65,7 +68,7 @@ void Ecra::escrever(char caractere) noexcept {
     }
 }
 
-void Ecra::escrever(const std::string& texto) {
+void Ecra::escrever(const string& texto) {
     for (int i = 0; i < static_cast<int>(texto.length()); ++i) {
         escrever(texto[i]);
     }
@@ -77,7 +80,7 @@ void Ecra::escrever(int linha, int coluna, char caractere) noexcept {
     }
 }
 
-void Ecra::escrever(int linha, int coluna, const std::string& texto) {
+void Ecra::escrever(int linha, int coluna, const string& texto) {
     if (gotoxy(linha, coluna)) {
         escrever(texto);
     }
@@ -108,7 +111,7 @@ void Ecra::desenharMoldura(int linhaInicio, int colunaInicio, int altura, int la
 }
 
 void Ecra::mostrar() const {
-    std::string saida;
+    string saida;
 
     for (int l = 0; l < linhas; ++l) {
         for (int c = 0; c < colunas; ++c) {
@@ -117,7 +120,7 @@ void Ecra::mostrar() const {
         saida += '\n';
     }
 
-    std::cout << saida;
+    cout << saida;
 }
 
 void Ecra::setDimensoes(int numLinhas, int numColunas) noexcept { // Forma de redefinir o tamanho do ecra

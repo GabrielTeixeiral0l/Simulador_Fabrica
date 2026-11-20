@@ -2,21 +2,23 @@
 #include "../Simulador.h"
 #include <utility>
 
-ComandoFim::ComandoFim(std::string resto) noexcept
+using std::string;
+
+ComandoFim::ComandoFim(string resto) noexcept
     : resto(std::move(resto)) {}
 
 bool ComandoFim::validar() const {
     return resto.empty();
 }
 
-std::string ComandoFim::getAjuda() const {
+string ComandoFim::getAjuda() const {
     return "fim\n"
            "  Significado: Encerra a simulacao e o programa de forma limpa.\n"
            "  Condicoes em que falha: argumentos extra inesperados.\n"
            "  Exemplo: fim";
 }
 
-std::string ComandoFim::executar(Fabrica&, Simulador& simulador) {
+string ComandoFim::executar(Fabrica&, Simulador& simulador) {
     simulador.parar();
     return "A encerrar o simulador com saida limpa...";
 }

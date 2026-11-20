@@ -4,21 +4,23 @@
 #include <sstream>
 #include <utility>
 
-ComandoEstado::ComandoEstado(std::string resto) noexcept
+using std::string;
+
+ComandoEstado::ComandoEstado(string resto) noexcept
     : resto(std::move(resto)) {}
 
 bool ComandoEstado::validar() const {
     return resto.empty();
 }
 
-std::string ComandoEstado::getAjuda() const {
+string ComandoEstado::getAjuda() const {
     return "estado\n"
            "  Significado: Apresenta o estado geral da simulacao (instante, creditos, maquinas e armazem).\n"
            "  Condicoes em que falha: parametros adicionais inesperados.\n"
            "  Exemplo: estado";
 }
 
-std::string ComandoEstado::executar(Fabrica& fabrica, Simulador&) {
+string ComandoEstado::executar(Fabrica& fabrica, Simulador&) {
     std::ostringstream oss;
     oss << "Estado da Fabrica:\n"
         << "  Instante: " << fabrica.getInstante() << "\n"

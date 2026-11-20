@@ -1,6 +1,8 @@
 #include "Refinaria.h"
 #include "../Settings.h"
 
+using std::string;
+
 Refinaria::Refinaria(Orientacao orientacao) noexcept
     : Maquina(Settings::refinaria_custo, orientacao) {}
 
@@ -8,7 +10,7 @@ char Refinaria::getSimbolo() const noexcept {
     return 'R';
 }
 
-std::string Refinaria::getDescricao() const {
+string Refinaria::getDescricao() const {
     return "Refinaria (direcao " + getOrientacaoNome() + ")";
 }
 

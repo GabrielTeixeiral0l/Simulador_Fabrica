@@ -1,6 +1,8 @@
 #include "Armazem.h"
 #include <sstream>
 
+using std::string;
+
 Armazem::Armazem() noexcept
     : primeiro(nullptr), ultimo(nullptr), quantidade(0) {}
 
@@ -20,7 +22,7 @@ void Armazem::libertarItens() noexcept {
     quantidade = 0;
 }
 
-bool Armazem::adicionarItem(const std::string& tipo) {
+bool Armazem::adicionarItem(const string& tipo) {
     if (tipo.empty()) {
         return false;
     }
@@ -37,7 +39,7 @@ bool Armazem::adicionarItem(const std::string& tipo) {
     return true;
 }
 
-bool Armazem::removerItemMaisAntigo(std::string& tipoRemovido) {
+bool Armazem::removerItemMaisAntigo(string& tipoRemovido) {
     if (primeiro == nullptr) {
         return false;
     }
@@ -54,7 +56,7 @@ bool Armazem::removerItemMaisAntigo(std::string& tipoRemovido) {
     return true;
 }
 
-bool Armazem::removerItem(const std::string& tipo) {
+bool Armazem::removerItem(const string& tipo) {
     ElementoItem* anterior = nullptr;
     ElementoItem* atual = primeiro;
 
@@ -85,7 +87,7 @@ int Armazem::getQuantidadeTotal() const noexcept {
     return quantidade;
 }
 
-int Armazem::getQuantidadePorTipo(const std::string& tipo) const noexcept {
+int Armazem::getQuantidadePorTipo(const string& tipo) const noexcept {
     int contagem = 0;
     ElementoItem* atual = primeiro;
     while (atual != nullptr) {
@@ -97,7 +99,7 @@ int Armazem::getQuantidadePorTipo(const std::string& tipo) const noexcept {
     return contagem;
 }
 
-std::string Armazem::getInfoEstado() const {
+string Armazem::getInfoEstado() const {
     std::ostringstream oss;
     oss << "Armazem (" << quantidade << " itens guardados)";
     if (quantidade == 0) {
@@ -107,7 +109,7 @@ std::string Armazem::getInfoEstado() const {
 
     oss << ":";
     struct TipoContagem {
-        std::string tipo;
+        string tipo;
         int count;
     };
 

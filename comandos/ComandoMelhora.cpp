@@ -1,7 +1,9 @@
 #include "ComandoMelhora.h"
 #include <utility>
 
-ComandoMelhora::ComandoMelhora(std::string coord, std::string resto) noexcept
+using std::string;
+
+ComandoMelhora::ComandoMelhora(string coord, string resto) noexcept
     : coord(std::move(coord)), resto(std::move(resto)) {}
 
 bool ComandoMelhora::validar() const {
@@ -14,13 +16,13 @@ bool ComandoMelhora::validar() const {
             ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')));
 }
 
-std::string ComandoMelhora::getAjuda() const {
+string ComandoMelhora::getAjuda() const {
     return "melhora <lc>\n"
            "  Significado: Melhora a maquina na posicao lc pagando o respetivo custo.\n"
            "  Condicoes em que falha: posicao sem maquina ou coordenadas invalidas.\n"
            "  Exemplo: melhora hi";
 }
 
-std::string ComandoMelhora::executar(Fabrica&, Simulador&) {
+string ComandoMelhora::executar(Fabrica&, Simulador&) {
     return "Comando 'melhora' validado com sucesso (funcionalidade reservada para a entrega final).";
 }

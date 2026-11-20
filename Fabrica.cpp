@@ -11,6 +11,8 @@
 #include <fstream>
 #include <random>
 
+using std::string;
+
 Fabrica::Fabrica() noexcept
     : linhas(0), colunas(0), creditos(Settings::fabrica_creditos_iniciais), instante(1), armazem() {
     inicializarGrelha();
@@ -76,7 +78,7 @@ void Fabrica::criarCrateras(int numCrateras) {
     }
 }
 
-void Fabrica::criarDepositos(int numDepositos, const std::string& nome, char simbolo) {
+void Fabrica::criarDepositos(int numDepositos, const string& nome, char simbolo) {
     int linha, coluna;
     for (int i = 0; i < numDepositos; ++i) {
         if (!sortearPosicaoLivre(linha, coluna)) break;
@@ -86,7 +88,7 @@ void Fabrica::criarDepositos(int numDepositos, const std::string& nome, char sim
     }
 }
 
-bool Fabrica::parseCoordenadas(const std::string& coord, int& linha, int& coluna) noexcept {
+bool Fabrica::parseCoordenadas(const string& coord, int& linha, int& coluna) noexcept {
     if (coord.length() != 2) {
         return false;
     }
@@ -124,7 +126,7 @@ bool Fabrica::gerarAleatoria(int numLinhas, int numColunas) {
     return true;
 }
 
-bool Fabrica::carregarFicheiro(const std::string& nomeFicheiro) {
+bool Fabrica::carregarFicheiro(const string& nomeFicheiro) {
     std::ifstream fich(nomeFicheiro);
     if (!fich.is_open()) {
         return false;
@@ -147,7 +149,7 @@ bool Fabrica::carregarFicheiro(const std::string& nomeFicheiro) {
     }
 
     for (int i = 0; i < linhasFich; ++i) {
-        std::string linhaMapa;
+        string linhaMapa;
         fich >> linhaMapa;
         if (static_cast<int>(linhaMapa.length()) != colunasFich) {
             limparGrelhaTemp(temp);
@@ -193,7 +195,7 @@ bool Fabrica::carregarFicheiro(const std::string& nomeFicheiro) {
     return true;
 }
 
-bool Fabrica::comprarMaquina(const std::string& tipo, const std::string& coord, char dir) {
+bool Fabrica::comprarMaquina(const string& tipo, const string& coord, char dir) {
     int l, c;
     if (!parseCoordenadas(coord, l, c) || !estaDentroDosLimites(l, c)) {
         return false;
@@ -233,7 +235,7 @@ bool Fabrica::comprarMaquina(const std::string& tipo, const std::string& coord, 
     return true;
 }
 
-bool Fabrica::venderMaquina(const std::string& coord) {
+bool Fabrica::venderMaquina(const string& coord) {
     int l, c;
     if (!parseCoordenadas(coord, l, c) || !estaDentroDosLimites(l, c)) {
         return false;
@@ -255,7 +257,7 @@ bool Fabrica::venderMaquina(const std::string& coord) {
     return true;
 }
 
-bool Fabrica::rodarMaquina(const std::string& coord) {
+bool Fabrica::rodarMaquina(const string& coord) {
     int l, c;
     if (!parseCoordenadas(coord, l, c) || !estaDentroDosLimites(l, c)) {
         return false;
@@ -296,14 +298,14 @@ void Fabrica::avancarInstante(int n) {
     }
 }
 
-std::string Fabrica::getInfoPosicao(int linha, int coluna) const {
+string Fabrica::getInfoPosicao(int linha, int coluna) const {
     if (!estaDentroDosLimites(linha, coluna)) {
         return "Posicao fora dos limites da fabrica";
     }
 
     char lChar = static_cast<char>('a' + linha);
     char cChar = static_cast<char>('a' + coluna);
-    std::string pos;
+    string pos;
     pos += lChar;
     pos += cChar;
 
@@ -320,7 +322,7 @@ std::string Fabrica::getInfoPosicao(int linha, int coluna) const {
     return "Posicao " + pos + ": " + grelha[linha][coluna]->getDescricao();
 }
 
-std::string Fabrica::getInfoPosicao(const std::string& coordenadas) const {
+string Fabrica::getInfoPosicao(const string& coordenadas) const {
     int l, c;
     if (!parseCoordenadas(coordenadas, l, c)) {
         return "Coordenadas invalidas (devem ter 2 letras, ex: ce)";

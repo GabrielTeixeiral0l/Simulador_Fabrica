@@ -1,5 +1,7 @@
 #include "Maquina.h"
 
+using std::string;
+
 int Maquina::proximoId = 1;
 
 Maquina::Maquina(int custo, Orientacao orientacao) noexcept
@@ -21,7 +23,7 @@ char Maquina::getOrientacaoChar() const noexcept {
     return orientacao.getDirecao();
 }
 
-std::string Maquina::getOrientacaoNome() const {
+string Maquina::getOrientacaoNome() const {
     return orientacao.getNome();
 }
 

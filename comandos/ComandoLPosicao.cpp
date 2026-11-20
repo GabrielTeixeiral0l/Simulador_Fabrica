@@ -3,7 +3,9 @@
 #include <sstream>
 #include <utility>
 
-ComandoLPosicao::ComandoLPosicao(std::string coord, std::string argRaio, std::string resto) noexcept
+using std::string;
+
+ComandoLPosicao::ComandoLPosicao(string coord, string argRaio, string resto) noexcept
     : coord(std::move(coord)), argRaio(std::move(argRaio)), resto(std::move(resto)) {}
 
 bool ComandoLPosicao::validar() const {
@@ -29,14 +31,14 @@ bool ComandoLPosicao::validar() const {
     return true;
 }
 
-std::string ComandoLPosicao::getAjuda() const {
+string ComandoLPosicao::getAjuda() const {
     return "lposicao <lc> [n]\n"
            "  Significado: Mostra informacao detalhada da posicao lc (ou quadrado centrado de raio n).\n"
            "  Condicoes em que falha: coordenadas invalidas, n negativo/invalido ou argumentos extra.\n"
            "  Exemplo: lposicao df 2";
 }
 
-std::string ComandoLPosicao::executar(Fabrica& fabrica, Simulador&) {
+string ComandoLPosicao::executar(Fabrica& fabrica, Simulador&) {
     if (argRaio.empty()) {
         return fabrica.getInfoPosicao(coord);
     }

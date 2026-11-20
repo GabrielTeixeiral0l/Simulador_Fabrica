@@ -2,6 +2,10 @@
 #include "comandos/Comando.h"
 #include <iostream>
 
+using std::string;
+using std::cout;
+using std::cin;
+
 Simulador::Simulador()
     : fabrica(), ecra(), emExecucao(false), ultimaMensagem("Simulacao iniciada") {}
 
@@ -29,9 +33,9 @@ void Simulador::desenharPainel() {
     ecra.escrever(3, colunaPainel + 2, "Maquinas: " + std::to_string(fabrica.getNumMaquinas()));
     ecra.escrever(4, colunaPainel + 2, "Engenheiros: 0");
     ecra.escrever(6, colunaPainel + 2, "No ultimo instante:");
-    std::string msgPainel = ultimaMensagem;
+    string msgPainel = ultimaMensagem;
     std::size_t posQuebra = msgPainel.find('\n');
-    if (posQuebra != std::string::npos) msgPainel = msgPainel.substr(0, posQuebra);
+    if (posQuebra != string::npos) msgPainel = msgPainel.substr(0, posQuebra);
     if (msgPainel.length() > 26) msgPainel = msgPainel.substr(0, 26);
     ecra.escrever(7, colunaPainel + 2, msgPainel);
 }
@@ -51,9 +55,9 @@ void Simulador::desenharFabrica() {
         ecra.escrever(4, 3, "Use um dos seguintes comandos:");
         ecra.escrever(5, 5, "fabrica <linhas> <colunas>");
         ecra.escrever(6, 5, "carrega <ficheiro>");
-        std::string msg = ultimaMensagem;
+        string msg = ultimaMensagem;
         std::size_t pos = msg.find('\n');
-        if (pos != std::string::npos) msg = msg.substr(0, pos);
+        if (pos != string::npos) msg = msg.substr(0, pos);
         if (msg.length() > 40) msg = msg.substr(0, 40);
         ecra.escrever(9, 3, "Estado: " + msg);
         return;
@@ -86,7 +90,7 @@ void Simulador::desenharFabrica() {
     desenharPainel();
 }
 
-std::string Simulador::processarLinha(const std::string& linha) {
+string Simulador::processarLinha(const string& linha) {
     if (linha.empty()) {
         return "";
     }
@@ -98,13 +102,13 @@ std::string Simulador::processarLinha(const std::string& linha) {
     }
 
     if (!cmd->validar()) {
-        std::string erroMsg = "Parametros invalidos para o comando.\nAjuda:\n" + cmd->getAjuda();
+        string erroMsg = "Parametros invalidos para o comando.\nAjuda:\n" + cmd->getAjuda();
         delete cmd;
         ultimaMensagem = "Erro de parametros";
         return erroMsg;
     }
 
-    std::string resultado = cmd->executar(fabrica, *this);
+    string resultado = cmd->executar(fabrica, *this);
     delete cmd;
 
     ultimaMensagem = resultado;
@@ -120,10 +124,10 @@ void Simulador::executar() {
     desenharFabrica();
     ecra.mostrar();
 
-    std::string linha;
+    string linha;
     while (emExecucao) {
-        std::cout << "\nComando: ";
-        if (!std::getline(std::cin, linha)) {
+        cout << "\nComando: ";
+        if (!std::getline(cin, linha)) {
             break;
         }
 
@@ -131,9 +135,9 @@ void Simulador::executar() {
             continue;
         }
 
-        std::string resultado = processarLinha(linha);
+        string resultado = processarLinha(linha);
         if (!resultado.empty()) {
-            std::cout << resultado << '\n';
+            cout << resultado << '\n';
         }
 
         if (emExecucao) {
@@ -143,6 +147,6 @@ void Simulador::executar() {
     }
 }
 
-bool Simulador::carregarFicheiro(const std::string& nomeFicheiro) {
+bool Simulador::carregarFicheiro(const string& nomeFicheiro) {
     return fabrica.carregarFicheiro(nomeFicheiro);
 }
