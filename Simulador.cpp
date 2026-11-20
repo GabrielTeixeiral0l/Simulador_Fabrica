@@ -2,8 +2,8 @@
 #include "comandos/Comando.h"
 #include <iostream>
 
-Simulador::Simulador(int numLinhas, int numColunas)
-    : fabrica(numLinhas, numColunas), ecra(), emExecucao(false), ultimaMensagem("Simulacao iniciada") {}
+Simulador::Simulador()
+    : fabrica(), ecra(), emExecucao(false), ultimaMensagem("Simulacao iniciada") {}
 
 void Simulador::desenharRegua() noexcept {
     int colunas = fabrica.getColunas();
@@ -41,6 +41,23 @@ void Simulador::desenharFabrica() {
 
     int linhas = fabrica.getLinhas();
     int colunas = fabrica.getColunas();
+
+    if (linhas == 0 || colunas == 0) {
+        const int larguraAviso = 46;
+        const int alturaAviso = 12;
+        ecra.setDimensoes(alturaAviso, larguraAviso);
+        ecra.desenharMoldura(0, 0, alturaAviso, larguraAviso);
+        ecra.escrever(2, 3, "Nenhuma fabrica ativa.");
+        ecra.escrever(4, 3, "Use um dos seguintes comandos:");
+        ecra.escrever(5, 5, "fabrica <linhas> <colunas>");
+        ecra.escrever(6, 5, "carrega <ficheiro>");
+        std::string msg = ultimaMensagem;
+        std::size_t pos = msg.find('\n');
+        if (pos != std::string::npos) msg = msg.substr(0, pos);
+        if (msg.length() > 40) msg = msg.substr(0, 40);
+        ecra.escrever(9, 3, "Estado: " + msg);
+        return;
+    }
 
     int alturaFabrica = linhas + 3;
     int larguraFabrica = colunas + 4;

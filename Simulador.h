@@ -16,7 +16,7 @@ class Simulador {
     void desenharFabrica();
 
 public:
-    explicit Simulador(int numLinhas = Settings::fabrica_max_linhas, int numColunas = Settings::fabrica_max_colunas);
+    Simulador();
     ~Simulador() noexcept = default;
 
     void executar();

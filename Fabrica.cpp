@@ -11,22 +11,9 @@
 #include <fstream>
 #include <random>
 
-Fabrica::Fabrica(int numLinhas, int numColunas)
-    : linhas(numLinhas), colunas(numColunas), creditos(Settings::fabrica_creditos_iniciais), instante(1), armazem() {
-    if (linhas < 1) {
-        linhas = 1;
-    } else if (linhas > Settings::fabrica_max_linhas) {
-        linhas = Settings::fabrica_max_linhas;
-    }
-
-    if (colunas < 1) {
-        colunas = 1;
-    } else if (colunas > Settings::fabrica_max_colunas) {
-        colunas = Settings::fabrica_max_colunas;
-    }
-
+Fabrica::Fabrica() noexcept
+    : linhas(0), colunas(0), creditos(Settings::fabrica_creditos_iniciais), instante(1), armazem() {
     inicializarGrelha();
-    gerarAleatoria(linhas, colunas);
 }
 
 Fabrica::~Fabrica() {

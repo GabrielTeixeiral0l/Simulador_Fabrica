@@ -27,7 +27,7 @@ class Fabrica {
     static bool parseCoordenadas(const std::string& coord, int& linha, int& coluna) noexcept;
 
 public:
-    explicit Fabrica(int numLinhas = Settings::fabrica_max_linhas, int numColunas = Settings::fabrica_max_colunas);
+    Fabrica() noexcept;
     ~Fabrica();
     Fabrica(const Fabrica&) = delete;
     Fabrica& operator=(const Fabrica&) = delete;
