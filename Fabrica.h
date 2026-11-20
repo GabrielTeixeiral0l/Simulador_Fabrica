@@ -17,7 +17,7 @@ class Fabrica {
     void limparGrelha();
     bool estaDentroDosLimites(int linha, int coluna) const noexcept;
     static int gerarNumeroAleatorio(int min, int max);
-    bool sortearPosicaoLivre(int& linha, int& coluna) const;
+    void sortearPosicaoLivre(int& linha, int& coluna) const;
     void criarCrateras(int numCrateras);
     void criarDepositos(int numDepositos, const std::string& nome, char simbolo);
     static bool parseCoordenadas(const std::string& coord, int& linha, int& coluna) noexcept;

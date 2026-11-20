@@ -44,32 +44,17 @@ int Fabrica::gerarNumeroAleatorio(int min, int max) {
     return distribuicao(gerador);
 }
 
-bool Fabrica::sortearPosicaoLivre(int& linha, int& coluna) const {
-    for (int t = 0; t < linhas * colunas * 4; ++t) {
-        int l = gerarNumeroAleatorio(0, linhas - 1);
-        int c = gerarNumeroAleatorio(0, colunas - 1);
-        if (!grelha[l][c] || grelha[l][c]->getSimbolo() == ' ') {
-            linha = l;
-            coluna = c;
-            return true;
-        }
-    }
-    for (int l = 0; l < linhas; ++l) {
-        for (int c = 0; c < colunas; ++c) {
-            if (!grelha[l][c] || grelha[l][c]->getSimbolo() == ' ') {
-                linha = l;
-                coluna = c;
-                return true;
-            }
-        }
-    }
-    return false;
+void Fabrica::sortearPosicaoLivre(int& linha, int& coluna) const {
+    do {
+        linha = gerarNumeroAleatorio(0, linhas - 1);
+        coluna = gerarNumeroAleatorio(0, colunas - 1);
+    } while (grelha[linha][coluna] != nullptr && !grelha[linha][coluna]->podeConstruir());
 }
 
 void Fabrica::criarCrateras(int numCrateras) {
     int linha, coluna;
     for (int i = 0; i < numCrateras; ++i) {
-        if (!sortearPosicaoLivre(linha, coluna)) break;
+        sortearPosicaoLivre(linha, coluna);
         delete grelha[linha][coluna];
         grelha[linha][coluna] = new Cratera();
     }
@@ -78,7 +63,7 @@ void Fabrica::criarCrateras(int numCrateras) {
 void Fabrica::criarDepositos(int numDepositos, const string& nome, char simbolo) {
     int linha, coluna;
     for (int i = 0; i < numDepositos; ++i) {
-        if (!sortearPosicaoLivre(linha, coluna)) break;
+        sortearPosicaoLivre(linha, coluna);
         int qtd = gerarNumeroAleatorio(Settings::deposito_quantidade_min, Settings::deposito_quantidade_max);
         delete grelha[linha][coluna];
         grelha[linha][coluna] = new Deposito(simbolo, nome, qtd);
