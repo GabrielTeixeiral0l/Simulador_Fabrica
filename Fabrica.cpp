@@ -48,7 +48,7 @@ void Fabrica::sortearPosicaoLivre(int& linha, int& coluna) const {
     do {
         linha = gerarNumeroAleatorio(0, linhas - 1);
         coluna = gerarNumeroAleatorio(0, colunas - 1);
-    } while (grelha[linha][coluna] != nullptr && !grelha[linha][coluna]->podeConstruir());
+    } while (grelha[linha][coluna] != nullptr && !grelha[linha][coluna]->isSolo());
 }
 
 void Fabrica::criarCrateras(int numCrateras) {

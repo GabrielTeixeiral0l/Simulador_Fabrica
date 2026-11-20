@@ -12,6 +12,7 @@ public:
 
     std::string getDescricao() const override;
     bool podeConstruir() const noexcept override;
+    bool isSolo() const noexcept override { return true; }
 };
 
 #endif // SIMULADOR_SOLO_H
