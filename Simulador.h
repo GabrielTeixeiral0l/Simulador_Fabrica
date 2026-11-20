@@ -11,8 +11,10 @@ class Simulador {
     bool emExecucao;
     std::string ultimaMensagem;
 
+    void desenharEcraInicial();
     void desenharRegua() noexcept;
-    void desenharPainel();
+    void desenharGrelha() noexcept;
+    void desenharPainel(int colunaPainel);
     void desenharFabrica();
 
 public:

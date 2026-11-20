@@ -80,9 +80,16 @@ void Ecra::escrever(int linha, int coluna, char caractere) noexcept {
     }
 }
 
-void Ecra::escrever(int linha, int coluna, const string& texto) {
-    if (gotoxy(linha, coluna)) {
-        escrever(texto);
+void Ecra::escrever(int linha, int coluna, const string& texto, int maxLargura) {
+    if (!gotoxy(linha, coluna)) {
+        return;
+    }
+    int limite = static_cast<int>(texto.length());
+    if (maxLargura >= 0 && maxLargura < limite) {
+        limite = maxLargura;
+    }
+    for (int i = 0; i < limite && texto[i] != '\n'; ++i) {
+        colocarCaractere(linha, coluna + i, texto[i]);
     }
 }
 

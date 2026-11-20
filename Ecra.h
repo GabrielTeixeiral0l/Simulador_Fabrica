@@ -22,7 +22,7 @@ public:
     void escrever(char caractere) noexcept;
     void escrever(const std::string& texto);
     void escrever(int linha, int coluna, char caractere) noexcept;
-    void escrever(int linha, int coluna, const std::string& texto);
+    void escrever(int linha, int coluna, const std::string& texto, int maxLargura = -1);
     void desenharMoldura(int linhaInicio, int colunaInicio, int altura, int largura) noexcept;
     void mostrar() const;
 
