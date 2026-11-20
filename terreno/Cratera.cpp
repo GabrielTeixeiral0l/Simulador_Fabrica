@@ -1,11 +1,9 @@
 #include "Cratera.h"
 
-using std::string;
-
-char Cratera::getSimbolo() const noexcept {
+char Cratera::getSimboloTerreno() const noexcept {
     return '#';
 }
 
-string Cratera::getDescricao() const {
+std::string Cratera::getDescricao() const {
     return "Cratera";
 }

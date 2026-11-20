@@ -4,11 +4,12 @@
 #include "Terreno.h"
 
 class Cratera : public Terreno {
+    char getSimboloTerreno() const noexcept override;
+
 public:
     Cratera() noexcept = default;
     ~Cratera() noexcept override = default;
 
-    char getSimbolo() const noexcept override;
     std::string getDescricao() const override;
 };
 

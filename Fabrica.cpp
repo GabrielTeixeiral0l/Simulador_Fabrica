@@ -201,8 +201,8 @@ bool Fabrica::comprarMaquina(const string& tipo, const string& coord, char dir) 
         return false;
     }
 
-    Solo* solo = dynamic_cast<Solo*>(grelha[l][c]);
-    if (solo == nullptr || !solo->podeConstruir()) {
+    Terreno* terreno = grelha[l][c];
+    if (terreno == nullptr || !terreno->podeConstruir()) {
         return false;
     }
 
@@ -231,7 +231,7 @@ bool Fabrica::comprarMaquina(const string& tipo, const string& coord, char dir) 
     }
 
     creditos -= novaMaquina->getCusto();
-    solo->colocarMaquina(novaMaquina);
+    terreno->colocarMaquina(novaMaquina);
     return true;
 }
 
@@ -241,12 +241,11 @@ bool Fabrica::venderMaquina(const string& coord) {
         return false;
     }
 
-    Solo* solo = dynamic_cast<Solo*>(grelha[l][c]);
-    if (solo == nullptr) {
+    if (grelha[l][c] == nullptr) {
         return false;
     }
 
-    Maquina* maq = solo->removerMaquina();
+    Maquina* maq = grelha[l][c]->removerMaquina();
     if (maq == nullptr) {
         return false;
     }
@@ -263,12 +262,11 @@ bool Fabrica::rodarMaquina(const string& coord) {
         return false;
     }
 
-    Solo* solo = dynamic_cast<Solo*>(grelha[l][c]);
-    if (solo == nullptr) {
+    if (grelha[l][c] == nullptr) {
         return false;
     }
 
-    Maquina* maq = solo->getMaquina();
+    Maquina* maq = grelha[l][c]->getMaquina();
     if (maq == nullptr) {
         return false;
     }
@@ -286,9 +284,8 @@ void Fabrica::avancarInstante(int n) {
         ++instante;
         for (int l = 0; l < linhas; ++l) {
             for (int c = 0; c < colunas; ++c) {
-                Solo* solo = dynamic_cast<Solo*>(grelha[l][c]);
-                if (solo != nullptr) {
-                    Maquina* maq = solo->getMaquina();
+                if (grelha[l][c] != nullptr) {
+                    Maquina* maq = grelha[l][c]->getMaquina();
                     if (maq != nullptr && maq->isAtivo()) {
                         maq->atuar(*this, l, c);
                     }
@@ -313,10 +310,9 @@ string Fabrica::getInfoPosicao(int linha, int coluna) const {
         return "Posicao " + pos + ": Vazia";
     }
 
-    const Solo* solo = dynamic_cast<const Solo*>(grelha[linha][coluna]);
-    if (solo != nullptr && solo->getMaquina() != nullptr) {
-        const Maquina* maq = solo->getMaquina();
-        return "Posicao " + pos + ": Solo com " + maq->getDescricao() + " [ID: " + std::to_string(maq->getId()) + "]";
+    const Maquina* maq = grelha[linha][coluna]->getMaquina();
+    if (maq != nullptr) {
+        return "Posicao " + pos + ": " + grelha[linha][coluna]->getDescricao() + " [ID: " + std::to_string(maq->getId()) + "]";
     }
 
     return "Posicao " + pos + ": " + grelha[linha][coluna]->getDescricao();
@@ -350,8 +346,7 @@ int Fabrica::getNumMaquinas() const noexcept {
     int total = 0;
     for (int l = 0; l < linhas; ++l) {
         for (int c = 0; c < colunas; ++c) {
-            const Solo* solo = dynamic_cast<const Solo*>(grelha[l][c]);
-            if (solo != nullptr && solo->getMaquina() != nullptr) {
+            if (grelha[l][c] != nullptr && grelha[l][c]->getMaquina() != nullptr) {
                 ++total;
             }
         }

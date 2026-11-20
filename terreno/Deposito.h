@@ -8,13 +8,14 @@ class Deposito : public Terreno {
     char simbolo;
     std::string nome;
     int quantidade;
+    char getSimboloTerreno() const noexcept override;
 
 public:
-    Deposito(char simbolo, std::string nome, int quantidade) noexcept;
+    Deposito(char simbolo, const std::string& nome, int quantidade);
     ~Deposito() noexcept override = default;
 
-    char getSimbolo() const noexcept override;
     std::string getDescricao() const override;
+    bool podeConstruir() const noexcept override;
     int getQuantidade() const noexcept override;
     bool extrair(int quantidadeExtrair = 1) noexcept override;
 };
