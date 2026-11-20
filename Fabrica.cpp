@@ -2,12 +2,6 @@
 #include "terreno/Solo.h"
 #include "terreno/Cratera.h"
 #include "terreno/Deposito.h"
-#include "maquinas/Perfuradora.h"
-#include "maquinas/Transportador.h"
-#include "maquinas/Refinaria.h"
-#include "maquinas/Oficina.h"
-#include "maquinas/Silo.h"
-#include "maquinas/Lancador.h"
 #include <fstream>
 #include <random>
 
@@ -51,22 +45,24 @@ int Fabrica::gerarNumeroAleatorio(int min, int max) {
 }
 
 bool Fabrica::sortearPosicaoLivre(int& linha, int& coluna) const {
-    for (int t=0;t<linhas*colunas*4;++t) {
-        int l=gerarNumeroAleatorio(0,linhas-1),
-        c=gerarNumeroAleatorio(0,colunas-1);
-        if (!grelha[l][c] || grelha[l][c]->getSimbolo()==' ') {
-            linha=l;
-            coluna=c;
+    for (int t = 0; t < linhas * colunas * 4; ++t) {
+        int l = gerarNumeroAleatorio(0, linhas - 1);
+        int c = gerarNumeroAleatorio(0, colunas - 1);
+        if (!grelha[l][c] || grelha[l][c]->getSimbolo() == ' ') {
+            linha = l;
+            coluna = c;
             return true;
         }
     }
-    for (int l=0;l<linhas;++l)
-        for (int c=0;c<colunas;++c)
-            if (!grelha[l][c] || grelha[l][c]->getSimbolo()==' ') {
-                linha=l;
-                coluna=c;
+    for (int l = 0; l < linhas; ++l) {
+        for (int c = 0; c < colunas; ++c) {
+            if (!grelha[l][c] || grelha[l][c]->getSimbolo() == ' ') {
+                linha = l;
+                coluna = c;
                 return true;
             }
+        }
+    }
     return false;
 }
 
@@ -99,14 +95,22 @@ bool Fabrica::parseCoordenadas(const string& coord, int& linha, int& coluna) noe
     return true;
 }
 
+Terreno* Fabrica::obterTerrenoPorCoord(const string& coord) noexcept {
+    int l, c;
+    if (!parseCoordenadas(coord, l, c) || !estaDentroDosLimites(l, c)) {
+        return nullptr;
+    }
+    return grelha[l][c];
+}
+
 bool Fabrica::gerarAleatoria(int numLinhas, int numColunas) {
     if (numLinhas < 1 || numLinhas > Settings::fabrica_max_linhas || numColunas < 1 || numColunas > Settings::fabrica_max_colunas) {
         return false;
     }
 
-    limparGrelha();
     linhas = numLinhas;
     colunas = numColunas;
+    limparGrelha();
     creditos = Settings::fabrica_creditos_iniciais;
     instante = 1;
 
@@ -141,12 +145,7 @@ bool Fabrica::carregarFicheiro(const string& nomeFicheiro) {
         return false;
     }
 
-    Terreno* temp[Settings::fabrica_max_linhas][Settings::fabrica_max_colunas];
-    for (int i = 0; i < Settings::fabrica_max_linhas; ++i) {
-        for (int j = 0; j < Settings::fabrica_max_colunas; ++j) {
-            temp[i][j] = nullptr;
-        }
-    }
+    Terreno* temp[Settings::fabrica_max_linhas][Settings::fabrica_max_colunas]{};
 
     for (int i = 0; i < linhasFich; ++i) {
         string linhaMapa;
@@ -160,24 +159,19 @@ bool Fabrica::carregarFicheiro(const string& nomeFicheiro) {
             char ch = linhaMapa[j];
             int qtd = gerarNumeroAleatorio(Settings::deposito_quantidade_min, Settings::deposito_quantidade_max);
 
-            if (ch == '.') {
-                temp[i][j] = new Solo();
-            } else if (ch == '#') {
-                temp[i][j] = new Cratera();
-            } else if (ch == '%') {
-                temp[i][j] = new Deposito('%', "Ferro", qtd);
-            } else if (ch == '$') {
-                temp[i][j] = new Deposito('$', "Silicio", qtd);
-            } else if (ch == '~') {
-                temp[i][j] = new Deposito('~', "Gelo", qtd);
-            } else {
+            if (ch == '.') temp[i][j] = new Solo();
+            else if (ch == '#') temp[i][j] = new Cratera();
+            else if (ch == '%') temp[i][j] = new Deposito('%', "Ferro", qtd);
+            else if (ch == '$') temp[i][j] = new Deposito('$', "Silicio", qtd);
+            else if (ch == '~') temp[i][j] = new Deposito('~', "Gelo", qtd);
+            else {
                 libertarMatrizTerreno(temp);
                 return false;
             }
         }
     }
 
-    limparGrelha();
+    libertarMatrizTerreno(grelha);
     linhas = linhasFich;
     colunas = colunasFich;
     creditos = Settings::fabrica_creditos_iniciais;
@@ -185,43 +179,22 @@ bool Fabrica::carregarFicheiro(const string& nomeFicheiro) {
 
     for (int i = 0; i < linhas; ++i) {
         for (int j = 0; j < colunas; ++j) {
-            delete grelha[i][j];
             grelha[i][j] = temp[i][j];
             temp[i][j] = nullptr;
         }
     }
 
-    libertarMatrizTerreno(temp);
     return true;
 }
 
 bool Fabrica::comprarMaquina(const string& tipo, const string& coord, char dir) {
-    int l, c;
-    if (!parseCoordenadas(coord, l, c) || !estaDentroDosLimites(l, c)) {
-        return false;
-    }
-
-    Terreno* terreno = grelha[l][c];
+    Terreno* terreno = obterTerrenoPorCoord(coord);
     if (terreno == nullptr || !terreno->podeConstruir()) {
         return false;
     }
 
-    Orientacao orientacao = Maquina::charParaOrientacao(dir);
-    Maquina* novaMaquina = nullptr;
-
-    if (tipo == "p" || tipo == "perfuradora" || tipo == "P") {
-        novaMaquina = new Perfuradora(orientacao);
-    } else if (tipo == "t" || tipo == "transportador" || tipo == "T") {
-        novaMaquina = new Transportador(orientacao);
-    } else if (tipo == "r" || tipo == "refinaria" || tipo == "R") {
-        novaMaquina = new Refinaria(orientacao);
-    } else if (tipo == "o" || tipo == "oficina" || tipo == "O") {
-        novaMaquina = new Oficina(orientacao);
-    } else if (tipo == "s" || tipo == "silo" || tipo == "S") {
-        novaMaquina = new Silo(orientacao);
-    } else if (tipo == "l" || tipo == "lancador" || tipo == "L") {
-        novaMaquina = new Lancador(orientacao);
-    } else {
+    Maquina* novaMaquina = Maquina::criar(tipo, Maquina::charParaOrientacao(dir));
+    if (novaMaquina == nullptr) {
         return false;
     }
 
@@ -236,34 +209,30 @@ bool Fabrica::comprarMaquina(const string& tipo, const string& coord, char dir) 
 }
 
 bool Fabrica::venderMaquina(const string& coord) {
-    int l, c;
-    if (!parseCoordenadas(coord, l, c) || !estaDentroDosLimites(l, c)) {
+    Terreno* terreno = obterTerrenoPorCoord(coord);
+    if (terreno == nullptr) {
         return false;
     }
 
-    if (grelha[l][c] == nullptr) {
-        return false;
-    }
-
-    Maquina* maq = grelha[l][c]->removerMaquina();
+    Maquina* maq = terreno->removerMaquina();
     if (maq == nullptr) {
         return false;
     }
 
-    int reembolso = (maq->getCusto() * Settings::maquina_percentagem_venda) / 100;
-    creditos += reembolso;
+    creditos += (maq->getCusto() * Settings::maquina_percentagem_venda) / 100;
     delete maq;
     return true;
 }
 
 bool Fabrica::rodarMaquina(const string& coord, char dir) {
-    int l, c;
-    if (!parseCoordenadas(coord, l, c) || !estaDentroDosLimites(l, c)) return false;
-    if (dir != 'c' && dir != 'b' && dir != 'e' && dir != 'd') return false;
-    if (grelha[l][c] == nullptr) return false;
-    Maquina* maq = grelha[l][c]->getMaquina();
-    if (maq == nullptr) return false;
-    maq->setOrientacao(Maquina::charParaOrientacao(dir));
+    if (dir != 'c' && dir != 'b' && dir != 'e' && dir != 'd') {
+        return false;
+    }
+    Terreno* terreno = obterTerrenoPorCoord(coord);
+    if (terreno == nullptr || terreno->getMaquina() == nullptr) {
+        return false;
+    }
+    terreno->getMaquina()->setOrientacao(Maquina::charParaOrientacao(dir));
     return true;
 }
 
@@ -292,11 +261,9 @@ string Fabrica::getInfoPosicao(int linha, int coluna) const {
         return "Posicao fora dos limites da fabrica";
     }
 
-    char lChar = static_cast<char>('a' + linha);
-    char cChar = static_cast<char>('a' + coluna);
     string pos;
-    pos += lChar;
-    pos += cChar;
+    pos += static_cast<char>('a' + linha);
+    pos += static_cast<char>('a' + coluna);
 
     if (grelha[linha][coluna] == nullptr) {
         return "Posicao " + pos + ": Vazia";
@@ -318,21 +285,10 @@ string Fabrica::getInfoPosicao(const string& coordenadas) const {
     return getInfoPosicao(l, c);
 }
 
-int Fabrica::getLinhas() const noexcept {
-    return linhas;
-}
-
-int Fabrica::getColunas() const noexcept {
-    return colunas;
-}
-
-int Fabrica::getCreditos() const noexcept {
-    return creditos;
-}
-
-int Fabrica::getInstante() const noexcept {
-    return instante;
-}
+int Fabrica::getLinhas() const noexcept { return linhas; }
+int Fabrica::getColunas() const noexcept { return colunas; }
+int Fabrica::getCreditos() const noexcept { return creditos; }
+int Fabrica::getInstante() const noexcept { return instante; }
 
 int Fabrica::getNumMaquinas() const noexcept {
     int total = 0;
@@ -347,37 +303,31 @@ int Fabrica::getNumMaquinas() const noexcept {
 }
 
 const Terreno* Fabrica::getTerreno(int linha, int coluna) const noexcept {
-    if (estaDentroDosLimites(linha, coluna)) {
-        return grelha[linha][coluna];
-    }
-    return nullptr;
+    return estaDentroDosLimites(linha, coluna) ? grelha[linha][coluna] : nullptr;
 }
 
 Terreno* Fabrica::getTerreno(int linha, int coluna) noexcept {
-    if (estaDentroDosLimites(linha, coluna)) {
-        return grelha[linha][coluna];
+    return estaDentroDosLimites(linha, coluna) ? grelha[linha][coluna] : nullptr;
+}
+
+bool Fabrica::alterarEstadoMaquina(int id, bool ativo) noexcept {
+    for (int l = 0; l < linhas; ++l) {
+        for (int c = 0; c < colunas; ++c) {
+            if (grelha[l][c] != nullptr && grelha[l][c]->getMaquina() != nullptr && grelha[l][c]->getMaquina()->getId() == id) {
+                grelha[l][c]->getMaquina()->setAtivo(ativo);
+                return true;
+            }
+        }
     }
-    return nullptr;
+    return false;
 }
 
 bool Fabrica::ativarMaquina(int id) noexcept {
-    for (int l = 0; l < linhas; ++l)
-        for (int c = 0; c < colunas; ++c)
-            if (grelha[l][c] != nullptr && grelha[l][c]->getMaquina() != nullptr && grelha[l][c]->getMaquina()->getId() == id) {
-                grelha[l][c]->getMaquina()->setAtivo(true);
-                return true;
-            }
-    return false;
+    return alterarEstadoMaquina(id, true);
 }
 
 bool Fabrica::desativarMaquina(int id) noexcept {
-    for (int l = 0; l < linhas; ++l)
-        for (int c = 0; c < colunas; ++c)
-            if (grelha[l][c] != nullptr && grelha[l][c]->getMaquina() != nullptr && grelha[l][c]->getMaquina()->getId() == id) {
-                grelha[l][c]->getMaquina()->setAtivo(false);
-                return true;
-            }
-    return false;
+    return alterarEstadoMaquina(id, false);
 }
 
 void Fabrica::adicionarCreditos(int valor) noexcept {
@@ -400,11 +350,13 @@ void Fabrica::getPosicaoAdjacente(int linha, int coluna, const Orientacao& dir, 
 
 string Fabrica::getInfoMaquinas() const {
     string res;
-    for (int l = 0; l < linhas; ++l)
-        for (int c = 0; c < colunas; ++c)
+    for (int l = 0; l < linhas; ++l) {
+        for (int c = 0; c < colunas; ++c) {
             if (grelha[l][c] != nullptr && grelha[l][c]->getMaquina() != nullptr) {
                 if (!res.empty()) res += '\n';
                 res += getInfoPosicao(l, c);
             }
+        }
+    }
     return res.empty() ? "Nenhuma maquina na fabrica" : res;
 }

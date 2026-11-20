@@ -1,3 +1,9 @@
+#include "Perfuradora.h"
+#include "Transportador.h"
+#include "Refinaria.h"
+#include "Oficina.h"
+#include "Silo.h"
+#include "Lancador.h"
 #include "Maquina.h"
 
 using std::string;
@@ -49,4 +55,14 @@ Orientacao Maquina::charParaOrientacao(char c) noexcept {
 
 bool Maquina::aceitarItem(const std::string&) {
     return false;
+}
+
+Maquina* Maquina::criar(const std::string& tipo, Orientacao orientacao) {
+    if (tipo == "p" || tipo == "perfuradora" || tipo == "P") return new Perfuradora(orientacao);
+    if (tipo == "t" || tipo == "transportador" || tipo == "T") return new Transportador(orientacao);
+    if (tipo == "r" || tipo == "refinaria" || tipo == "R") return new Refinaria(orientacao);
+    if (tipo == "o" || tipo == "oficina" || tipo == "O") return new Oficina(orientacao);
+    if (tipo == "s" || tipo == "silo" || tipo == "S") return new Silo(orientacao);
+    if (tipo == "l" || tipo == "lancador" || tipo == "L") return new Lancador(orientacao);
+    return nullptr;
 }

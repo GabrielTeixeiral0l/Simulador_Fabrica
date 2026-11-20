@@ -21,6 +21,8 @@ class Fabrica {
     void criarCrateras(int numCrateras);
     void criarDepositos(int numDepositos, const std::string& nome, char simbolo);
     static bool parseCoordenadas(const std::string& coord, int& linha, int& coluna) noexcept;
+    Terreno* obterTerrenoPorCoord(const std::string& coord) noexcept;
+    bool alterarEstadoMaquina(int id, bool ativo) noexcept;
 
 public:
     Fabrica() noexcept;
@@ -36,6 +38,7 @@ public:
     bool rodarMaquina(const std::string& coord, char dir);
     bool ativarMaquina(int id) noexcept;
     bool desativarMaquina(int id) noexcept;
+
     void avancarInstante(int n = 1);
 
     void adicionarCreditos(int valor) noexcept;
