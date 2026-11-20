@@ -4,7 +4,6 @@
 #include <string>
 #include "Settings.h"
 #include "terreno/Terreno.h"
-#include "Armazem.h"
 #include "maquinas/Maquina.h"
 
 class Fabrica {
@@ -12,13 +11,10 @@ class Fabrica {
     int colunas;
     int creditos;
     int instante;
-    Terreno* grelha[Settings::fabrica_max_linhas][Settings::fabrica_max_colunas];
-    Armazem armazem;
+    Terreno* grelha[Settings::fabrica_max_linhas][Settings::fabrica_max_colunas]{};
 
-    void inicializarGrelha() noexcept;
-    void libertarGrelha() noexcept;
+    static void libertarMatrizTerreno(Terreno* matriz[Settings::fabrica_max_linhas][Settings::fabrica_max_colunas]) noexcept;
     void limparGrelha();
-    static void limparGrelhaTemp(Terreno* temp[Settings::fabrica_max_linhas][Settings::fabrica_max_colunas]) noexcept;
     bool estaDentroDosLimites(int linha, int coluna) const noexcept;
     static int gerarNumeroAleatorio(int min, int max);
     bool sortearPosicaoLivre(int& linha, int& coluna) const;
@@ -37,11 +33,18 @@ public:
 
     bool comprarMaquina(const std::string& tipo, const std::string& coord, char dir = 'c');
     bool venderMaquina(const std::string& coord);
-    bool rodarMaquina(const std::string& coord) ;
+    bool rodarMaquina(const std::string& coord, char dir);
+    bool ativarMaquina(int id) noexcept;
+    bool desativarMaquina(int id) noexcept;
     void avancarInstante(int n = 1);
+
+    void adicionarCreditos(int valor) noexcept;
+    bool substituirPorSolo(int linha, int coluna);
+    static void getPosicaoAdjacente(int linha, int coluna, const Orientacao& dir, int& destLinha, int& destColuna) noexcept;
 
     std::string getInfoPosicao(int linha, int coluna) const;
     std::string getInfoPosicao(const std::string& coordenadas) const;
+    std::string getInfoMaquinas() const;
 
     int getLinhas() const noexcept;
     int getColunas() const noexcept;
@@ -51,8 +54,6 @@ public:
     const Terreno* getTerreno(int linha, int coluna) const noexcept;
     Terreno* getTerreno(int linha, int coluna) noexcept;
 
-    const Armazem& getArmazem() const noexcept;
-    Armazem& getArmazem() noexcept;
 };
 
 #endif // SIMULADOR_FABRICA_H

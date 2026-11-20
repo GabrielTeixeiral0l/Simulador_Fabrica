@@ -22,9 +22,9 @@ string ComandoAjuda::executar(Fabrica&, Simulador&) {
     if (comandoAlvo.empty()) {
         std::ostringstream oss;
         oss << "Comandos disponiveis no simulador:\n";
-        const auto& lista = Comando::getListaNomesComandos();
-        for (const auto& nome : lista) {
-            string detalhe = Comando::obterAjudaComando(nome);
+        int total = Comando::getTotalComandos();
+        for (int i = 0; i < total; ++i) {
+            string detalhe = Comando::obterAjudaComando(Comando::getNomeComando(i));
             size_t primLinha = detalhe.find('\n');
             string resumo = (primLinha != string::npos) ? detalhe.substr(0, primLinha) : detalhe;
             oss << "  - " << resumo << "\n";

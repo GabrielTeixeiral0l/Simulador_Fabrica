@@ -2,14 +2,18 @@
 #define SIMULADOR_SILO_H
 
 #include "Maquina.h"
+#include "../Armazem.h"
 
 class Silo : public Maquina {
+    Armazem armazenamento;
+
 public:
     explicit Silo(Orientacao orientacao = Orientacao::Este) noexcept;
     ~Silo() noexcept override = default;
 
     char getSimbolo() const noexcept override;
     std::string getDescricao() const override;
+    bool aceitarItem(const std::string& item) override;
     void atuar(Fabrica& fabrica, int linha, int coluna) override;
 };
 

@@ -21,27 +21,22 @@
 
 using std::string;
 
-const std::vector<string>& Comando::getListaNomesComandos() {
-    static const std::vector<string> lista = {
-        "fabrica",
-        "carrega",
-        "avanca",
-        "compra",
-        "vende",
-        "roda",
-        "melhora",
-        "contrata",
-        "atribui",
-        "despede",
-        "estado",
-        "lposicao",
-        "grava",
-        "recupera",
-        "executa",
-        "ajuda",
-        "fim"
+namespace {
+    const char* const NOMES_COMANDOS[] = {
+        "fabrica", "carrega", "avanca", "compra", "vende", "roda",
+        "melhora", "contrata", "atribui", "despede", "estado",
+        "lposicao", "grava", "recupera", "executa", "ajuda", "fim"
     };
-    return lista;
+    constexpr int TOTAL_COMANDOS = static_cast<int>(sizeof(NOMES_COMANDOS) / sizeof(NOMES_COMANDOS[0]));
+}
+
+int Comando::getTotalComandos() noexcept {
+    return TOTAL_COMANDOS;
+}
+
+string Comando::getNomeComando(int indice) {
+    if (indice < 0 || indice >= TOTAL_COMANDOS) return "";
+    return NOMES_COMANDOS[indice];
 }
 
 string Comando::obterAjudaComando(const string& nome) {
@@ -147,12 +142,7 @@ Comando* Comando::criar(const string& linhaComando) {
 
     if (nomeCmd == "compra") {
         string tipo, coord, dir, resto;
-        iss >> tipo >> coord;
-        if (iss >> dir) {
-            iss >> resto;
-        } else {
-            dir = "c";
-        }
+        iss >> tipo >> coord >> dir >> resto;
         return new ComandoCompra(tipo, coord, dir, resto);
     }
 

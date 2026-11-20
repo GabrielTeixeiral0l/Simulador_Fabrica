@@ -39,6 +39,12 @@ bool Armazem::adicionarItem(const string& tipo) {
     return true;
 }
 
+bool Armazem::obterItemMaisAntigo(string& tipo) const {
+    if (primeiro == nullptr) return false;
+    tipo = primeiro->tipo;
+    return true;
+}
+
 bool Armazem::removerItemMaisAntigo(string& tipoRemovido) {
     if (primeiro == nullptr) {
         return false;
@@ -101,7 +107,7 @@ int Armazem::getQuantidadePorTipo(const string& tipo) const noexcept {
 
 string Armazem::getInfoEstado() const {
     std::ostringstream oss;
-    oss << "Armazem (" << quantidade << " itens guardados)";
+    oss << "Silo (" << quantidade << " itens guardados)";
     if (quantidade == 0) {
         oss << ": vazio";
         return oss.str();

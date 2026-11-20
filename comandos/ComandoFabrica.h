@@ -16,6 +16,7 @@ public:
     bool validar() const override;
     std::string getAjuda() const override;
     std::string executar(Fabrica& fabrica, Simulador& simulador) override;
+    bool requerFabrica() const noexcept override { return false; }
 };
 
 #endif // SIMULADOR_COMANDOFABRICA_H

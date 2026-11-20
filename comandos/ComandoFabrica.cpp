@@ -33,6 +33,7 @@ string ComandoFabrica::getAjuda() const {
 }
 
 string ComandoFabrica::executar(Fabrica& fabrica, Simulador&) {
+    if (fabrica.getLinhas() > 0) return "Erro: a fabrica ja foi criada e nao pode ser recriada.";
     int l = std::stoi(argLinhas);
     int c = std::stoi(argColunas);
     if (fabrica.gerarAleatoria(l, c)) {

@@ -19,6 +19,7 @@ string ComandoCarrega::getAjuda() const {
 }
 
 string ComandoCarrega::executar(Fabrica& fabrica, Simulador&) {
+    if (fabrica.getLinhas() > 0) return "Erro: a fabrica ja foi criada e nao pode ser recriada.";
     if (fabrica.carregarFicheiro(ficheiro)) {
         return "Ficheiro '" + ficheiro + "' carregado com sucesso.";
     }

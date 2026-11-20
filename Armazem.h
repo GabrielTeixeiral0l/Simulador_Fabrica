@@ -13,15 +13,15 @@ class Armazem {
     ElementoItem* ultimo;
     int quantidade;
 
+    public:
     void libertarItens() noexcept;
-
-public:
     Armazem() noexcept;
     ~Armazem();
     Armazem(const Armazem&) = delete;
     Armazem& operator=(const Armazem&) = delete;
 
     bool adicionarItem(const std::string& tipo);
+    bool obterItemMaisAntigo(std::string& tipo) const;
     bool removerItemMaisAntigo(std::string& tipoRemovido);
     bool removerItem(const std::string& tipo);
 

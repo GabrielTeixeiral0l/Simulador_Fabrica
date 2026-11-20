@@ -54,7 +54,6 @@ void Simulador::desenharPainel(int colunaPainel) {
     ecra.escrever(3, colTexto, "Maquinas: " + std::to_string(fabrica.getNumMaquinas()));
     ecra.escrever(4, colTexto, "Engenheiros: 0");
     ecra.escrever(6, colTexto, "No ultimo instante:");
-
     ecra.escrever(7, colTexto, ultimaMensagem, larguraUtil);
 }
 
@@ -101,6 +100,11 @@ string Simulador::processarLinha(const string& linha) {
         return erroMsg;
     }
 
+    if (cmd->requerFabrica() && fabrica.getLinhas() == 0) {
+        delete cmd;
+        ultimaMensagem = "Fabrica nao criada";
+        return "Erro: a fabrica ainda nao foi criada. Use 'fabrica' ou 'carrega' primeiro.";
+    }
     string resultado = cmd->executar(fabrica, *this);
     delete cmd;
     ultimaMensagem = resultado;

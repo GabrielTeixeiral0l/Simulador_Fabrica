@@ -46,3 +46,7 @@ void Maquina::setAtivo(bool estado) noexcept {
 Orientacao Maquina::charParaOrientacao(char c) noexcept {
     return Orientacao::deChar(c);
 }
+
+bool Maquina::aceitarItem(const std::string&) {
+    return false;
+}

@@ -30,7 +30,7 @@ bool ComandoCompra::validar() const {
 }
 
 string ComandoCompra::getAjuda() const {
-    return "compra <tipo> <lc> [dir]\n"
+    return "compra <tipo> <lc> <dir>\n"
            "  Significado: Compra maquina do tipo indicado (p, t, r, o, s, l) na posicao lc e direcao dir (c, b, e, d).\n"
            "  Condicoes em que falha: tipo invalido, posicao invalida/ocupada/cratera, falta de creditos ou direcao invalida.\n"
            "  Exemplo: compra t ce d";
