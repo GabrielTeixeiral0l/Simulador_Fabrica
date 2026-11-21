@@ -15,6 +15,17 @@ static const int MARGEM_LATERAL_PAINEL = 2; // 1 borda '|' + 1 espaco interior
 Simulador::Simulador()
     : fabrica(), ecra(), emExecucao(false), ultimaMensagem("Simulacao iniciada") {}
 
+string Simulador::extrairResumoPainel(const string& texto) {
+    string primeiraLinha;
+    for (std::size_t i = 0; i < texto.size(); ++i) {
+        if (texto[i] == '\n') {
+            break;
+        }
+        primeiraLinha += texto[i];
+    }
+    return primeiraLinha;
+}
+
 void Simulador::desenharEcraInicial() {
     const int larguraAviso = 46;
     ecra.setDimensoes(ALTURA_PAINEL, larguraAviso);
@@ -28,33 +39,34 @@ void Simulador::desenharEcraInicial() {
 }
 
 void Simulador::desenharRegua() noexcept {
-    for (int c = 0; c < fabrica.getColunas(); ++c) {
-        ecra.escrever(1, MARGEM_ESQ_GRELHA + c, static_cast<char>('A' + c));
+    for (int coluna = 0; coluna < fabrica.getColunas(); ++coluna) {
+        ecra.escrever(1, MARGEM_ESQ_GRELHA + coluna, static_cast<char>('A' + coluna));
     }
-    for (int l = 0; l < fabrica.getLinhas(); ++l) {
-        ecra.escrever(MARGEM_TOPO_GRELHA + l, 1, static_cast<char>('A' + l));
+    for (int linha = 0; linha < fabrica.getLinhas(); ++linha) {
+        ecra.escrever(MARGEM_TOPO_GRELHA + linha, 1, static_cast<char>('A' + linha));
     }
 }
 
 void Simulador::desenharGrelha() noexcept {
-    for (int l = 0; l < fabrica.getLinhas(); ++l) {
-        for (int c = 0; c < fabrica.getColunas(); ++c) {
-            const Terreno* terreno = fabrica.getTerreno(l, c);
+    for (int linha = 0; linha < fabrica.getLinhas(); ++linha) {
+        for (int coluna = 0; coluna < fabrica.getColunas(); ++coluna) {
+            const Terreno* terreno = fabrica.getTerreno(linha, coluna);
             char simbolo = (terreno != nullptr) ? terreno->getSimbolo() : ' ';
-            ecra.escrever(MARGEM_TOPO_GRELHA + l, MARGEM_ESQ_GRELHA + c, simbolo);
+            ecra.escrever(MARGEM_TOPO_GRELHA + linha, MARGEM_ESQ_GRELHA + coluna, simbolo);
         }
     }
 }
 
 void Simulador::desenharPainel(int colunaPainel) {
-    int colTexto = colunaPainel + MARGEM_LATERAL_PAINEL;
+    int colunaTexto = colunaPainel + MARGEM_LATERAL_PAINEL;
     int larguraUtil = LARGURA_PAINEL - (2 * MARGEM_LATERAL_PAINEL);
-    ecra.escrever(1, colTexto, "Instante: " + std::to_string(fabrica.getInstante()));
-    ecra.escrever(2, colTexto, "Creditos: " + std::to_string(fabrica.getCreditos()));
-    ecra.escrever(3, colTexto, "Maquinas: " + std::to_string(fabrica.getNumMaquinas()));
-    ecra.escrever(4, colTexto, "Engenheiros: 0");
-    ecra.escrever(6, colTexto, "No ultimo instante:");
-    ecra.escrever(7, colTexto, ultimaMensagem, larguraUtil);
+
+    ecra.escrever(1, colunaTexto, "Instante: " + std::to_string(fabrica.getInstante()));
+    ecra.escrever(2, colunaTexto, "Creditos: " + std::to_string(fabrica.getCreditos()));
+    ecra.escrever(3, colunaTexto, "Maquinas: " + std::to_string(fabrica.getNumMaquinas()));
+    ecra.escrever(4, colunaTexto, "Engenheiros: 0");
+    ecra.escrever(6, colunaTexto, "No ultimo instante:");
+    ecra.escrever(7, colunaTexto, ultimaMensagem, larguraUtil);
 }
 
 void Simulador::desenharFabrica() {
@@ -82,6 +94,11 @@ void Simulador::desenharFabrica() {
     desenharPainel(colunaPainel);
 }
 
+void Simulador::atualizarEcra() {
+    desenharFabrica();
+    ecra.mostrar();
+}
+
 string Simulador::processarLinha(const string& linha) {
     if (linha.empty()) {
         return "";
@@ -105,9 +122,10 @@ string Simulador::processarLinha(const string& linha) {
         ultimaMensagem = "Fabrica nao criada";
         return "Erro: a fabrica ainda nao foi criada. Use 'fabrica' ou 'carrega' primeiro.";
     }
+
     string resultado = cmd->executar(fabrica, *this);
     delete cmd;
-    ultimaMensagem = resultado;
+    ultimaMensagem = extrairResumoPainel(resultado);
     return resultado;
 }
 
@@ -117,8 +135,7 @@ void Simulador::parar() noexcept {
 
 void Simulador::executar() {
     emExecucao = true;
-    desenharFabrica();
-    ecra.mostrar();
+    atualizarEcra();
 
     string linha;
     while (emExecucao) {
@@ -131,17 +148,13 @@ void Simulador::executar() {
         }
 
         string resultado = processarLinha(linha);
+
+        if (emExecucao) {
+            atualizarEcra();
+        }
+
         if (!resultado.empty()) {
             cout << resultado << '\n';
         }
-
-        if (emExecucao) {
-            desenharFabrica();
-            ecra.mostrar();
-        }
     }
-}
-
-bool Simulador::carregarFicheiro(const string& nomeFicheiro) {
-    return fabrica.carregarFicheiro(nomeFicheiro);
 }

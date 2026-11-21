@@ -1,11 +1,12 @@
-#ifndef SIMULADOR_SIMULADOR_H
-#define SIMULADOR_SIMULADOR_H
+#ifndef SIMULADOR_H
+#define SIMULADOR_H
 
 #include "Fabrica.h"
 #include "Ecra.h"
 #include <string>
 
 class Simulador {
+private:
     Fabrica fabrica;
     Ecra ecra;
     bool emExecucao;
@@ -16,14 +17,15 @@ class Simulador {
     void desenharGrelha() noexcept;
     void desenharPainel(int colunaPainel);
     void desenharFabrica();
+    static std::string extrairResumoPainel(const std::string& texto);
 
 public:
     Simulador();
 
-    void executar();
+    void atualizarEcra();
     std::string processarLinha(const std::string& linha);
     void parar() noexcept;
-    bool carregarFicheiro(const std::string& nomeFicheiro);
+    void executar();
 };
 
-#endif // SIMULADOR_SIMULADOR_H
+#endif // SIMULADOR_H
