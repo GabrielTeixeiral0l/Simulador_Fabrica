@@ -10,3 +10,7 @@ std::string Solo::getDescricao() const {
 bool Solo::podeConstruir() const noexcept {
     return getMaquina() == nullptr;
 }
+
+bool Solo::isSolo() const noexcept {
+    return true;
+}
