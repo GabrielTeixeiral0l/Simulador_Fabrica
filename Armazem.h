@@ -2,31 +2,26 @@
 #define SIMULADOR_ARMAZEM_H
 
 #include <string>
+#include "itens/Item.h"
 
 class Armazem {
-    struct ElementoItem {
-        std::string tipo;
-        ElementoItem* proximo;
-    };
-
-    ElementoItem* primeiro;
-    ElementoItem* ultimo;
+    Item** itens;
     int quantidade;
 
-    public:
-    void libertarItens() noexcept;
+public:
     Armazem() noexcept;
     ~Armazem();
-    Armazem(const Armazem&) = delete;
-    Armazem& operator=(const Armazem&) = delete;
+    Armazem(const Armazem& outro);
+    Armazem& operator=(const Armazem& outro);
 
-    bool adicionarItem(const std::string& tipo);
-    bool obterItemMaisAntigo(std::string& tipo) const;
-    bool removerItemMaisAntigo(std::string& tipoRemovido);
-    bool removerItem(const std::string& tipo);
+    void libertarItens() noexcept;
+    bool adicionarItem(Item* item);
+    Item* obterItemMaisAntigo() const noexcept;
+    bool removerItemMaisAntigo(Item*& itemRemovido);
+    bool descartarItemMaisAntigo() noexcept;
 
     int getQuantidadeTotal() const noexcept;
-    int getQuantidadePorTipo(const std::string& tipo) const noexcept;
+    int getQuantidadePorTipo(const std::string& nome) const noexcept;
     std::string getInfoEstado() const;
 };
 

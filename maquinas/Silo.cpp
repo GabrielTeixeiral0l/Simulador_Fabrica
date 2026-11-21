@@ -8,6 +8,8 @@ using std::string;
 Silo::Silo(Orientacao orientacao) noexcept
     : Maquina(Settings::silo_custo, orientacao) {}
 
+Silo::~Silo() noexcept = default;
+
 char Silo::getSimbolo() const noexcept {
     return 'S';
 }
@@ -16,27 +18,28 @@ string Silo::getDescricao() const {
     return armazenamento.getInfoEstado() + " (direcao " + getOrientacaoNome() + ")";
 }
 
-bool Silo::aceitarItem(const string& item) {
+bool Silo::aceitarItem(Item* item) {
     return armazenamento.adicionarItem(item);
 }
 
 void Silo::operar(Fabrica& fabrica, int linha, int coluna) {
     if (armazenamento.getQuantidadeTotal() > 0 && FerramentasAuxiliares::probabilidadeOcorre(Settings::silo_prob_perda)) {
-        string perdido;
-        armazenamento.removerItemMaisAntigo(perdido);
+        armazenamento.descartarItemMaisAntigo();
     }
 
-    string maisAntigo;
-    if (!armazenamento.obterItemMaisAntigo(maisAntigo)) {
+    Item* maisAntigo = armazenamento.obterItemMaisAntigo();
+    if (maisAntigo == nullptr) {
         return;
     }
 
-    int destL = linha, destC = coluna;
+    int destL = linha;
+    int destC = coluna;
     Fabrica::getPosicaoAdjacente(linha, coluna, getOrientacao(), destL, destC);
     Terreno* destTerreno = fabrica.getTerreno(destL, destC);
     if (destTerreno != nullptr && destTerreno->getMaquina() != nullptr) {
         if (destTerreno->getMaquina()->aceitarItem(maisAntigo)) {
-            armazenamento.removerItemMaisAntigo(maisAntigo);
+            Item* transferido = nullptr;
+            armazenamento.removerItemMaisAntigo(transferido);
         }
     }
 }

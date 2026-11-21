@@ -4,88 +4,104 @@
 using std::string;
 
 Armazem::Armazem() noexcept
-    : primeiro(nullptr), ultimo(nullptr), quantidade(0) {}
+    : itens(nullptr), quantidade(0) {}
 
 Armazem::~Armazem() {
     libertarItens();
 }
 
-void Armazem::libertarItens() noexcept {
-    ElementoItem* atual = primeiro;
-    while (atual != nullptr) {
-        ElementoItem* seg = atual->proximo;
-        delete atual;
-        atual = seg;
+Armazem::Armazem(const Armazem& outro)
+    : itens(nullptr), quantidade(0) {
+    if (outro.quantidade > 0 && outro.itens != nullptr) {
+        itens = new Item*[outro.quantidade];
+        quantidade = outro.quantidade;
+        for (int i = 0; i < quantidade; ++i) {
+            itens[i] = outro.itens[i] != nullptr ? outro.itens[i]->clone() : nullptr;
+        }
     }
-    primeiro = nullptr;
-    ultimo = nullptr;
+}
+
+Armazem& Armazem::operator=(const Armazem& outro) {
+    if (this != &outro) {
+        libertarItens();
+        if (outro.quantidade > 0 && outro.itens != nullptr) {
+            itens = new Item*[outro.quantidade];
+            quantidade = outro.quantidade;
+            for (int i = 0; i < quantidade; ++i) {
+                itens[i] = outro.itens[i] != nullptr ? outro.itens[i]->clone() : nullptr;
+            }
+        }
+    }
+    return *this;
+}
+
+void Armazem::libertarItens() noexcept {
+    if (itens != nullptr) {
+        for (int i = 0; i < quantidade; ++i) {
+            delete itens[i];
+        }
+        delete[] itens;
+        itens = nullptr;
+    }
     quantidade = 0;
 }
 
-bool Armazem::adicionarItem(const string& tipo) {
-    if (tipo.empty()) {
+bool Armazem::adicionarItem(Item* item) {
+    if (item == nullptr) {
         return false;
     }
 
-    ElementoItem* novo = new ElementoItem{tipo, nullptr};
-    if (ultimo == nullptr) {
-        primeiro = novo;
-        ultimo = novo;
-    } else {
-        ultimo->proximo = novo;
-        ultimo = novo;
+    Item** novo = new Item*[quantidade + 1];
+    for (int i = 0; i < quantidade; ++i) {
+        novo[i] = itens[i];
     }
+    novo[quantidade] = item;
+
+    delete[] itens;
+    itens = novo;
     ++quantidade;
     return true;
 }
 
-bool Armazem::obterItemMaisAntigo(string& tipo) const {
-    if (primeiro == nullptr) return false;
-    tipo = primeiro->tipo;
-    return true;
+Item* Armazem::obterItemMaisAntigo() const noexcept {
+    if (quantidade == 0 || itens == nullptr) {
+        return nullptr;
+    }
+    return itens[0];
 }
 
-bool Armazem::removerItemMaisAntigo(string& tipoRemovido) {
-    if (primeiro == nullptr) {
+bool Armazem::removerItemMaisAntigo(Item*& itemRemovido) {
+    if (quantidade == 0 || itens == nullptr) {
+        itemRemovido = nullptr;
         return false;
     }
 
-    ElementoItem* aRemover = primeiro;
-    tipoRemovido = aRemover->tipo;
-    primeiro = primeiro->proximo;
-    if (primeiro == nullptr) {
-        ultimo = nullptr;
+    itemRemovido = itens[0];
+
+    if (quantidade == 1) {
+        delete[] itens;
+        itens = nullptr;
+        quantidade = 0;
+        return true;
     }
 
-    delete aRemover;
+    Item** novo = new Item*[quantidade - 1];
+    for (int i = 1; i < quantidade; ++i) {
+        novo[i - 1] = itens[i];
+    }
+
+    delete[] itens;
+    itens = novo;
     --quantidade;
     return true;
 }
 
-bool Armazem::removerItem(const string& tipo) {
-    ElementoItem* anterior = nullptr;
-    ElementoItem* atual = primeiro;
-
-    while (atual != nullptr) {
-        if (atual->tipo == tipo) {
-            if (anterior == nullptr) {
-                primeiro = atual->proximo;
-            } else {
-                anterior->proximo = atual->proximo;
-            }
-
-            if (atual == ultimo) {
-                ultimo = anterior;
-            }
-
-            delete atual;
-            --quantidade;
-            return true;
-        }
-        anterior = atual;
-        atual = atual->proximo;
+bool Armazem::descartarItemMaisAntigo() noexcept {
+    Item* descartado = nullptr;
+    if (removerItemMaisAntigo(descartado)) {
+        delete descartado;
+        return true;
     }
-
     return false;
 }
 
@@ -93,14 +109,12 @@ int Armazem::getQuantidadeTotal() const noexcept {
     return quantidade;
 }
 
-int Armazem::getQuantidadePorTipo(const string& tipo) const noexcept {
+int Armazem::getQuantidadePorTipo(const string& nome) const noexcept {
     int contagem = 0;
-    ElementoItem* atual = primeiro;
-    while (atual != nullptr) {
-        if (atual->tipo == tipo) {
+    for (int i = 0; i < quantidade; ++i) {
+        if (itens[i] != nullptr && itens[i]->getNome() == nome) {
             ++contagem;
         }
-        atual = atual->proximo;
     }
     return contagem;
 }
@@ -114,36 +128,34 @@ string Armazem::getInfoEstado() const {
     }
 
     oss << ":";
-    struct TipoContagem {
-        string tipo;
-        int count;
-    };
-
-    TipoContagem contagens[32];
+    string tiposRegistados[32];
+    int contagens[32];
     int totalTipos = 0;
 
-    ElementoItem* atual = primeiro;
-    while (atual != nullptr) {
+    for (int i = 0; i < quantidade; ++i) {
+        if (itens[i] == nullptr) {
+            continue;
+        }
+        string nomeItem = itens[i]->getNome();
         int encontrado = -1;
-        for (int i = 0; i < totalTipos; ++i) {
-            if (contagens[i].tipo == atual->tipo) {
-                encontrado = i;
+        for (int j = 0; j < totalTipos; ++j) {
+            if (tiposRegistados[j] == nomeItem) {
+                encontrado = j;
                 break;
             }
         }
 
         if (encontrado >= 0) {
-            contagens[encontrado].count++;
+            contagens[encontrado]++;
         } else if (totalTipos < 32) {
-            contagens[totalTipos].tipo = atual->tipo;
-            contagens[totalTipos].count = 1;
-            totalTipos++;
+            tiposRegistados[totalTipos] = nomeItem;
+            contagens[totalTipos] = 1;
+            ++totalTipos;
         }
-        atual = atual->proximo;
     }
 
     for (int i = 0; i < totalTipos; ++i) {
-        oss << " " << contagens[i].tipo << "=" << contagens[i].count;
+        oss << " " << tiposRegistados[i] << "=" << contagens[i];
     }
 
     return oss.str();

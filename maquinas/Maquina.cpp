@@ -1,10 +1,10 @@
+#include "Maquina.h"
 #include "Perfuradora.h"
 #include "Transportador.h"
 #include "Refinaria.h"
 #include "Oficina.h"
 #include "Silo.h"
 #include "Lancador.h"
-#include "Maquina.h"
 
 using std::string;
 
@@ -12,6 +12,8 @@ int Maquina::proximoId = 1;
 
 Maquina::Maquina(int custo, Orientacao orientacao) noexcept
     : id(proximoId++), orientacao(orientacao), custo(custo), ativo(true) {}
+
+Maquina::~Maquina() noexcept = default;
 
 void Maquina::rodar() noexcept {
     orientacao.rodar();
@@ -49,20 +51,26 @@ void Maquina::setAtivo(bool estado) noexcept {
     ativo = estado;
 }
 
-Orientacao Maquina::charParaOrientacao(char c) noexcept {
-    return Orientacao::deChar(c);
-}
-
-bool Maquina::aceitarItem(const std::string&) {
+bool Maquina::aceitarItem(Item*) {
     return false;
 }
 
-Maquina* Maquina::criar(const std::string& tipo, Orientacao orientacao) {
-    if (tipo == "p" || tipo == "perfuradora" || tipo == "P") return new Perfuradora(orientacao);
-    if (tipo == "t" || tipo == "transportador" || tipo == "T") return new Transportador(orientacao);
-    if (tipo == "r" || tipo == "refinaria" || tipo == "R") return new Refinaria(orientacao);
-    if (tipo == "o" || tipo == "oficina" || tipo == "O") return new Oficina(orientacao);
-    if (tipo == "s" || tipo == "silo" || tipo == "S") return new Silo(orientacao);
-    if (tipo == "l" || tipo == "lancador" || tipo == "L") return new Lancador(orientacao);
+Orientacao Maquina::charParaOrientacao(char c) noexcept {
+    switch (c) {
+        case 'c': return Orientacao(Orientacao::Norte);
+        case 'b': return Orientacao(Orientacao::Sul);
+        case 'e': return Orientacao(Orientacao::Oeste);
+        case 'd': return Orientacao(Orientacao::Este);
+        default: return Orientacao(Orientacao::Norte);
+    }
+}
+
+Maquina* Maquina::criar(const string& tipo, Orientacao orientacao) {
+    if (tipo == "p") return new Perfuradora(orientacao);
+    if (tipo == "t") return new Transportador(orientacao);
+    if (tipo == "r") return new Refinaria(orientacao);
+    if (tipo == "o") return new Oficina(orientacao);
+    if (tipo == "s") return new Silo(orientacao);
+    if (tipo == "l") return new Lancador(orientacao);
     return nullptr;
 }

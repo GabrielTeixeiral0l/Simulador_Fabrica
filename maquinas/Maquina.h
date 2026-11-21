@@ -5,6 +5,7 @@
 #include "Orientacao.h"
 
 class Fabrica;
+class Item;
 
 class Maquina {
     static int proximoId;
@@ -15,12 +16,12 @@ class Maquina {
 
 public:
     explicit Maquina(int custo, Orientacao orientacao = Orientacao::Norte) noexcept;
-    virtual ~Maquina() noexcept = default;
+    virtual ~Maquina() noexcept;
 
     virtual char getSimbolo() const noexcept = 0;
     virtual std::string getDescricao() const = 0;
     virtual void operar(Fabrica& fabrica, int linha, int coluna) = 0;
-    virtual bool aceitarItem(const std::string& item);
+    virtual bool aceitarItem(Item* item);
 
     void rodar() noexcept;
     void setOrientacao(Orientacao novaOrientacao) noexcept;

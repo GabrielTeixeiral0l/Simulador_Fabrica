@@ -9,11 +9,11 @@ class Silo : public Maquina {
 
 public:
     explicit Silo(Orientacao orientacao = Orientacao::Este) noexcept;
-    ~Silo() noexcept override = default;
+    ~Silo() noexcept override;
 
     char getSimbolo() const noexcept override;
     std::string getDescricao() const override;
-    bool aceitarItem(const std::string& item) override;
+    bool aceitarItem(Item* item) override;
     void operar(Fabrica& fabrica, int linha, int coluna) override;
 };
 

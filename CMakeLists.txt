@@ -17,6 +17,27 @@ add_executable(simulador
         Armazem.h
         Armazem.cpp
 
+        itens/Item.h
+        itens/Item.cpp
+        itens/MateriaPrima.h
+        itens/MateriaPrima.cpp
+        itens/ProdutoRefinado.h
+        itens/ProdutoRefinado.cpp
+        itens/MinerioFerro.h
+        itens/MinerioFerro.cpp
+        itens/SilicioBruto.h
+        itens/SilicioBruto.cpp
+        itens/Gelo.h
+        itens/Gelo.cpp
+        itens/PlacaFerro.h
+        itens/PlacaFerro.cpp
+        itens/SilicioPuro.h
+        itens/SilicioPuro.cpp
+        itens/Agua.h
+        itens/Agua.cpp
+        itens/KitHabitat.h
+        itens/KitHabitat.cpp
+
         terreno/Terreno.h
         terreno/Terreno.cpp
         terreno/Solo.h

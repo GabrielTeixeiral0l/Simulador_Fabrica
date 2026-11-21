@@ -12,12 +12,13 @@ class Deposito : public Terreno {
 
 public:
     Deposito(char simbolo, const std::string& nome, int quantidade);
-    ~Deposito() noexcept override = default;
+    ~Deposito() noexcept override;
 
     std::string getDescricao() const override;
     bool podeConstruir() const noexcept override;
     int getQuantidade() const noexcept override;
     bool extrair(int quantidadeExtrair = 1) noexcept override;
+    std::string getNome() const;
 };
 
 #endif // SIMULADOR_DEPOSITO_H
