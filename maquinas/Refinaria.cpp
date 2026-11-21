@@ -14,6 +14,6 @@ string Refinaria::getDescricao() const {
     return "Refinaria (direcao " + getOrientacaoNome() + ")";
 }
 
-void Refinaria::atuar(Fabrica&, int, int) {
-    // Mecanismo base de atuacao iniciado para Checkpoint 2
+void Refinaria::operar(Fabrica&, int, int) {
+    // TODO
 }

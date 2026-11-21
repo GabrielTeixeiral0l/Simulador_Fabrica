@@ -24,6 +24,6 @@ string Transportador::getDescricao() const {
     return "Transportador (direcao " + getOrientacaoNome() + ")";
 }
 
-void Transportador::atuar(Fabrica&, int, int) {
+void Transportador::operar(Fabrica&, int, int) {
     // Mecanismo base de atuacao iniciado para Checkpoint 2
 }

@@ -14,6 +14,6 @@ string Oficina::getDescricao() const {
     return "Oficina (direcao " + getOrientacaoNome() + ")";
 }
 
-void Oficina::atuar(Fabrica&, int, int) {
-    // Mecanismo base de atuacao iniciado para Checkpoint 2
+void Oficina::operar(Fabrica&, int, int) {
+    // TODO2
 }

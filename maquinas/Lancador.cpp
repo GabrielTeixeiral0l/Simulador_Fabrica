@@ -14,6 +14,6 @@ string Lancador::getDescricao() const {
     return "Lancador (direcao " + getOrientacaoNome() + ")";
 }
 
-void Lancador::atuar(Fabrica&, int, int) {
-    // Mecanismo base de atuacao iniciado para Checkpoint 2
+void Lancador::operar(Fabrica&, int, int) {
+    // TODO
 }

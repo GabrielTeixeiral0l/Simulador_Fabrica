@@ -233,7 +233,7 @@ void Fabrica::avancarInstante(int n) {
                 if (grelha[l][c] != nullptr) {
                     Maquina* maq = grelha[l][c]->getMaquina();
                     if (maq != nullptr && maq->isAtivo()) {
-                        maq->atuar(*this, l, c);
+                        maq->operar(*this, l, c);
                     }
                 }
             }

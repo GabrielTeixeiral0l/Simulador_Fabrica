@@ -19,7 +19,7 @@ public:
 
     virtual char getSimbolo() const noexcept = 0;
     virtual std::string getDescricao() const = 0;
-    virtual void atuar(Fabrica& fabrica, int linha, int coluna) = 0;
+    virtual void operar(Fabrica& fabrica, int linha, int coluna) = 0;
     virtual bool aceitarItem(const std::string& item);
 
     void rodar() noexcept;

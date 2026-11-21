@@ -14,6 +14,6 @@ string Perfuradora::getDescricao() const {
     return "Perfuradora (direcao " + getOrientacaoNome() + ")";
 }
 
-void Perfuradora::atuar(Fabrica&, int, int) {
-    // Mecanismo base de atuacao iniciado para Checkpoint 2
+void Perfuradora::operar(Fabrica&, int, int) {
+    // TODO
 }

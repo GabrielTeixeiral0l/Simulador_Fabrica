@@ -10,7 +10,7 @@ public:
 
     char getSimbolo() const noexcept override;
     std::string getDescricao() const override;
-    void atuar(Fabrica& fabrica, int linha, int coluna) override;
+    void operar(Fabrica& fabrica, int linha, int coluna) override;
 };
 
 #endif // SIMULADOR_TRANSPORTADOR_H

@@ -20,7 +20,7 @@ bool Silo::aceitarItem(const string& item) {
     return armazenamento.adicionarItem(item);
 }
 
-void Silo::atuar(Fabrica& fabrica, int linha, int coluna) {
+void Silo::operar(Fabrica& fabrica, int linha, int coluna) {
     if (armazenamento.getQuantidadeTotal() > 0 && Settings::silo_prob_perda > 0) {
         static std::random_device rd;
         static std::default_random_engine gen(rd());
