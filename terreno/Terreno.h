@@ -26,6 +26,8 @@ public:
     Maquina* removerMaquina() noexcept;
     const Maquina* getMaquina() const noexcept;
     Maquina* getMaquina() noexcept;
+
+    virtual Item* extrairItem();
 };
 
 #endif // SIMULADOR_TERRENO_H

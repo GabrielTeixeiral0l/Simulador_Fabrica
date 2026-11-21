@@ -56,3 +56,11 @@ Item* Deposito::criarItem() const {
     }
     return nullptr;
 }
+
+
+Item* Deposito::extrairItem() {
+    if (!extrair(1)) {
+        return nullptr;
+    }
+    return criarItem();
+}

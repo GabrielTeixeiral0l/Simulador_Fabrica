@@ -21,6 +21,9 @@ public:
     std::string getNome() const;
 
     Item* criarItem() const;
+
+
+    Item* extrairItem() override;
 };
 
 #endif // SIMULADOR_DEPOSITO_H

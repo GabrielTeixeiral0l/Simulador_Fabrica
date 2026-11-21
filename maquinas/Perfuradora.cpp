@@ -44,12 +44,11 @@ void Perfuradora::operar(Fabrica& fabrica, int linha, int coluna) {
     instantesPassados = 0;
 
     Terreno* terrenoAtual = fabrica.getTerreno(linha, coluna);
-    Deposito* deposito = dynamic_cast<Deposito*>(terrenoAtual);
-    if (deposito == nullptr || !deposito->extrair(1)) {
+    if (terrenoAtual == nullptr) {
         return;
     }
 
-    Item* novoItem = deposito->criarItem();
+    Item* novoItem = terrenoAtual->extrairItem();
     if (novoItem == nullptr) {
         return;
     }

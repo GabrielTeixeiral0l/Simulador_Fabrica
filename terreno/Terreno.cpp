@@ -53,3 +53,8 @@ Maquina* Terreno::getMaquina() noexcept {
 bool Terreno::isSolo() const noexcept {
     return false;
 }
+
+
+Item* Terreno::extrairItem() {
+    return nullptr;
+}
