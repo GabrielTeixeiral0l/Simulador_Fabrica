@@ -1,3 +1,4 @@
+#include <sstream>
 #include "ComandoGrava.h"
 #include <utility>
 
@@ -10,8 +11,12 @@ bool ComandoGrava::validar() const {
     return !nome.empty() && resto.empty();
 }
 
+string ComandoGrava::getAjudaSimples() const {
+    return "grava <nome>\n";
+}
+
 string ComandoGrava::getAjuda() const {
-    return "grava <nome>\n"
+    return getAjudaSimples() + "\n"
            "  Significado: Salvaguarda em memoria uma copia do estado completo da fabrica sob o nome indicado.\n"
            "  Condicoes em que falha: nome em falta ou argumentos extra.\n"
            "  Exemplo: grava antes";

@@ -1,46 +1,47 @@
 #include "ComandoAtribui.h"
+
+#include <sstream>
 #include <utility>
 
 using std::string;
 
-ComandoAtribui::ComandoAtribui(string argId, string coord, string resto) noexcept
-    : argId(std::move(argId)), coord(std::move(coord)), resto(std::move(resto)) {}
+static bool isLetra(char c) noexcept {
+    return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+}
+
+ComandoAtribui::ComandoAtribui(string idEngenheiro, string coord, string resto) noexcept
+    : idEngenheiro(std::move(idEngenheiro)), coord(std::move(coord)), resto(std::move(resto)) {}
 
 bool ComandoAtribui::validar() const {
-    if (!resto.empty() || coord.length() != 2) {
+    if (!resto.empty() || coord.size() != 2) {
         return false;
     }
-    char l = coord[0];
-    char c = coord[1];
-    if (!((l >= 'a' && l <= 'z') || (l >= 'A' && l <= 'Z')) ||
-        !((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))) {
+    if (!isLetra(coord[0]) || !isLetra(coord[1])) {
         return false;
     }
+    // TODO: validar id do engenheiro quando existirem engenheiros
+    return !idEngenheiro.empty();
+}
 
-    try {
-        size_t idx;
-        int id = std::stoi(argId, &idx);
-        return idx == argId.length() && id > 0;
-    } catch (...) {
-        return false;
-    }
+string ComandoAtribui::getAjudaSimples() const {
+    return "atribui <id> <lc>";
 }
 
 string ComandoAtribui::getAjuda() const {
-    return "atribui <id> <lc>\n"
+    return getAjudaSimples() + "\n"
            "  Significado: Atribui o engenheiro com numero id a maquina na posicao lc.\n"
            "  Condicoes em que falha: id invalido, posicao invalida ou sem maquina.\n"
            "  Exemplo: atribui 2 hr";
 }
 
 string ComandoAtribui::executar(Fabrica&, Simulador&) {
-    return "Comando 'atribui' validado com sucesso (funcionalidade de engenheiros reservada para a entrega final).";
+    return ""; // TODO
 }
 
 Comando* ComandoAtribui::criarDeStream(std::istringstream& iss) {
-    std::string id;
-    std::string coord;
-    std::string resto;
+    string id;
+    string coord;
+    string resto;
     iss >> id >> coord >> resto;
     return new ComandoAtribui(id, coord, resto);
 }

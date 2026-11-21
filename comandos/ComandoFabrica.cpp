@@ -1,3 +1,4 @@
+#include <sstream>
 #include "ComandoFabrica.h"
 #include "../Fabrica.h"
 #include "../Settings.h"
@@ -25,8 +26,12 @@ bool ComandoFabrica::validar() const {
     }
 }
 
+string ComandoFabrica::getAjudaSimples() const {
+    return "fabrica <nl> <nc>\n";
+}
+
 string ComandoFabrica::getAjuda() const {
-    return "fabrica <nl> <nc>\n"
+    return getAjudaSimples() + "\n"
            "  Significado: Cria fabrica aleatoria com nl linhas e nc colunas (maximo 26 cada).\n"
            "  Condicoes em que falha: argumentos nao numericos, dimensoes fora de [1, 26], ou argumentos extra.\n"
            "  Exemplo: fabrica 12 20";

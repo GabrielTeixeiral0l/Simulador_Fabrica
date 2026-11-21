@@ -1,3 +1,4 @@
+#include <sstream>
 #include "ComandoRecupera.h"
 #include <utility>
 
@@ -10,8 +11,12 @@ bool ComandoRecupera::validar() const {
     return !nome.empty() && resto.empty();
 }
 
+string ComandoRecupera::getAjudaSimples() const {
+    return "recupera <nome>\n";
+}
+
 string ComandoRecupera::getAjuda() const {
-    return "recupera <nome>\n"
+    return getAjudaSimples() + "\n"
            "  Significado: Recupera a copia da fabrica associada ao nome indicado.\n"
            "  Condicoes em que falha: nome em falta ou snapshot inexistente.\n"
            "  Exemplo: recupera antes";

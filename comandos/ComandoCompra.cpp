@@ -1,3 +1,4 @@
+#include <sstream>
 #include "ComandoCompra.h"
 #include "../Fabrica.h"
 #include <utility>
@@ -29,8 +30,12 @@ bool ComandoCompra::validar() const {
     return (d == 'c' || d == 'b' || d == 'e' || d == 'd');
 }
 
+string ComandoCompra::getAjudaSimples() const {
+    return "compra <tipo> <lc> <dir>\n";
+}
+
 string ComandoCompra::getAjuda() const {
-    return "compra <tipo> <lc> <dir>\n"
+    return getAjudaSimples() + "\n"
            "  Significado: Compra maquina do tipo indicado (p, t, r, o, s, l) na posicao lc e direcao dir (c, b, e, d).\n"
            "  Condicoes em que falha: tipo invalido, posicao invalida/ocupada/cratera, falta de creditos ou direcao invalida.\n"
            "  Exemplo: compra t ce d";

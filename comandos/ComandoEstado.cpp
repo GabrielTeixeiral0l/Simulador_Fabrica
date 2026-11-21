@@ -12,8 +12,12 @@ bool ComandoEstado::validar() const {
     return resto.empty();
 }
 
+string ComandoEstado::getAjudaSimples() const {
+    return "estado\n";
+}
+
 string ComandoEstado::getAjuda() const {
-    return "estado\n"
+    return getAjudaSimples() + "\n"
            "  Significado: Apresenta o estado geral da simulacao (instante, creditos e maquinas).\n"
            "  Condicoes em que falha: parametros adicionais inesperados.\n"
            "  Exemplo: estado";

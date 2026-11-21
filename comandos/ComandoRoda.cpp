@@ -1,3 +1,4 @@
+#include <sstream>
 #include "ComandoRoda.h"
 #include "../Fabrica.h"
 #include <utility>
@@ -15,8 +16,12 @@ bool ComandoRoda::validar() const {
     return d == 'c' || d == 'b' || d == 'e' || d == 'd';
 }
 
+string ComandoRoda::getAjudaSimples() const {
+    return "roda <lc> <dir>\n";
+}
+
 string ComandoRoda::getAjuda() const {
-    return "roda <lc> <dir>\n"
+    return getAjudaSimples() + "\n"
            "  Significado: Muda a direcao de saida da maquina em lc para dir (c, b, e, d).\n"
            "  Condicoes em que falha: posicao sem maquina ou argumentos invalidos.\n"
            "  Exemplo: roda ce b";

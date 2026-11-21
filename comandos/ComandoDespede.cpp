@@ -1,3 +1,4 @@
+#include <sstream>
 #include "ComandoDespede.h"
 #include <utility>
 
@@ -19,8 +20,12 @@ bool ComandoDespede::validar() const {
     }
 }
 
+string ComandoDespede::getAjudaSimples() const {
+    return "despede <id>\n";
+}
+
 string ComandoDespede::getAjuda() const {
-    return "despede <id>\n"
+    return getAjudaSimples() + "\n"
            "  Significado: Despede o engenheiro com o id indicado, cessando o pagamento de salario.\n"
            "  Condicoes em que falha: id invalido ou inexistente.\n"
            "  Exemplo: despede 2";

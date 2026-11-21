@@ -1,3 +1,4 @@
+#include <sstream>
 #include "ComandoContrata.h"
 #include <utility>
 
@@ -10,8 +11,12 @@ bool ComandoContrata::validar() const {
     return !nome.empty() && resto.empty();
 }
 
+string ComandoContrata::getAjudaSimples() const {
+    return "contrata <nome>\n";
+}
+
 string ComandoContrata::getAjuda() const {
-    return "contrata <nome>\n"
+    return getAjudaSimples() + "\n"
            "  Significado: Contrata um novo engenheiro com o nome indicado (salario e custo definidos em Settings).\n"
            "  Condicoes em que falha: nome em falta ou creditos insuficientes.\n"
            "  Exemplo: contrata joaquim";

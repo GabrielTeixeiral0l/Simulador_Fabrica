@@ -11,32 +11,32 @@ bool ComandoAjuda::validar() const {
     return resto.empty();
 }
 
+string ComandoAjuda::getAjudaSimples() const {
+    return "ajuda [comando]";
+}
+
 string ComandoAjuda::getAjuda() const {
-    return "ajuda [comando]\n"
+    return getAjudaSimples() + "\n"
            "  Significado: Apresenta resumo de todos os comandos ou a ajuda detalhada do comando indicado.\n"
            "  Condicoes em que falha: argumentos extra alem do nome do comando.\n"
            "  Exemplo: ajuda compra";
 }
 
 string ComandoAjuda::executar(Fabrica&, Simulador&) {
-    if (comandoAlvo.empty()) {
-        std::ostringstream oss;
-        oss << "Comandos disponiveis no simulador:\n";
-        int total = Comando::getTotalComandos();
-        for (int i = 0; i < total; ++i) {
-            string detalhe = Comando::obterAjudaComando(Comando::getNomeComando(i));
-            size_t primLinha = detalhe.find('\n');
-            string resumo = (primLinha != string::npos) ? detalhe.substr(0, primLinha) : detalhe;
-            oss << "  - " << resumo << "\n";
+    if (!comandoAlvo.empty()) {
+        string detalhe = obterAjudaComando(comandoAlvo);
+        if (detalhe.empty()) {
+            return "Comando '" + comandoAlvo + "' desconhecido. Escreva 'ajuda' para ver a lista.";
         }
-        return oss.str();
+        return "Ajuda para o comando '" + comandoAlvo + "':\n" + detalhe;
     }
 
-    string detalhe = Comando::obterAjudaComando(comandoAlvo);
-    if (detalhe.empty()) {
-        return "Comando '" + comandoAlvo + "' desconhecido. Escreva 'ajuda' para ver a lista.";
+    string out = "Comandos disponiveis:\n";
+    int total = getTotalComandos();
+    for (int i = 0; i < total; ++i) {
+        out += "  - " + obterAjudaSimplesComando(getNomeComando(i)) + "\n";
     }
-    return "Ajuda para o comando '" + comandoAlvo + "':\n" + detalhe;
+    return out;
 }
 
 Comando* ComandoAjuda::criarDeStream(std::istringstream& iss) {

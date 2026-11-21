@@ -1,3 +1,4 @@
+#include <sstream>
 #include "ComandoVende.h"
 #include "../Fabrica.h"
 #include <utility>
@@ -17,8 +18,12 @@ bool ComandoVende::validar() const {
             ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')));
 }
 
+string ComandoVende::getAjudaSimples() const {
+    return "vende <lc>\n";
+}
+
 string ComandoVende::getAjuda() const {
-    return "vende <lc>\n"
+    return getAjudaSimples() + "\n"
            "  Significado: Vende a maquina na posicao indicada, recuperando 50% do custo.\n"
            "  Condicoes em que falha: posicao sem maquina ou coordenadas invalidas.\n"
            "  Exemplo: vende ce";

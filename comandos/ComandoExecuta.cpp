@@ -1,3 +1,4 @@
+#include <sstream>
 #include "ComandoExecuta.h"
 #include "../Simulador.h"
 #include <fstream>
@@ -12,8 +13,12 @@ bool ComandoExecuta::validar() const {
     return !ficheiro.empty() && resto.empty();
 }
 
+string ComandoExecuta::getAjudaSimples() const {
+    return "executa <nome-do-ficheiro>\n";
+}
+
 string ComandoExecuta::getAjuda() const {
-    return "executa <nome-do-ficheiro>\n"
+    return getAjudaSimples() + "\n"
            "  Significado: Le e executa comandos linha a linha a partir do ficheiro indicado.\n"
            "  Condicoes em que falha: ficheiro em falta ou inacessivel.\n"
            "  Exemplo: executa teste1.txt";

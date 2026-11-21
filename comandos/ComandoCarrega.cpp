@@ -1,3 +1,4 @@
+#include <sstream>
 #include "ComandoCarrega.h"
 #include "../Fabrica.h"
 #include <utility>
@@ -11,8 +12,12 @@ bool ComandoCarrega::validar() const {
     return !ficheiro.empty() && resto.empty();
 }
 
+string ComandoCarrega::getAjudaSimples() const {
+    return "carrega <nome-do-ficheiro>\n";
+}
+
 string ComandoCarrega::getAjuda() const {
-    return "carrega <nome-do-ficheiro>\n"
+    return getAjudaSimples() + "\n"
            "  Significado: Cria fabrica a partir do ficheiro de mapa indicado.\n"
            "  Condicoes em que falha: ficheiro em falta, inexistente ou com formato invalido.\n"
            "  Exemplo: carrega mapa1.txt";

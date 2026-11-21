@@ -1,3 +1,4 @@
+#include <sstream>
 #include "ComandoAvanca.h"
 #include "../Fabrica.h"
 #include <utility>
@@ -23,8 +24,12 @@ bool ComandoAvanca::validar() const {
     }
 }
 
+string ComandoAvanca::getAjudaSimples() const {
+    return "avanca [n]\n";
+}
+
 string ComandoAvanca::getAjuda() const {
-    return "avanca [n]\n"
+    return getAjudaSimples() + "\n"
            "  Significado: Avanca n instantes no tempo da simulacao (1 por omissao).\n"
            "  Condicoes em que falha: n nao numerico ou n < 1.\n"
            "  Exemplo: avanca 10";

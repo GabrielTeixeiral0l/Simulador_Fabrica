@@ -17,7 +17,9 @@
 #include "ComandoGrava.h"
 #include "ComandoRecupera.h"
 
+#include <sstream>
 using std::string;
+
 
 static constexpr const char* NOMES_COMANDOS[] = {
     "fabrica", "carrega", "executa", "compra", "vende", "roda",
@@ -35,25 +37,21 @@ string Comando::getNomeComando(int indice) {
     return NOMES_COMANDOS[indice];
 }
 
+static string obterTextoAjuda(const string& nome, bool simples) {
+    if (nome.empty()) return "";
+    Comando* cmd = Comando::criar(nome);
+    if (!cmd) return "";
+    string out = simples ? cmd->getAjudaSimples() : cmd->getAjuda();
+    delete cmd;
+    return out;
+}
+
+string Comando::obterAjudaSimplesComando(const string& nome) {
+    return obterTextoAjuda(nome, true);
+}
+
 string Comando::obterAjudaComando(const string& nome) {
-    if (nome == "fabrica") return ComandoFabrica("", "").getAjuda();
-    if (nome == "carrega") return ComandoCarrega("").getAjuda();
-    if (nome == "executa") return ComandoExecuta("").getAjuda();
-    if (nome == "compra") return ComandoCompra("", "", "c").getAjuda();
-    if (nome == "vende") return ComandoVende("").getAjuda();
-    if (nome == "roda") return ComandoRoda("").getAjuda();
-    if (nome == "avanca") return ComandoAvanca("").getAjuda();
-    if (nome == "estado") return ComandoEstado().getAjuda();
-    if (nome == "lposicao") return ComandoLPosicao("").getAjuda();
-    if (nome == "ajuda") return ComandoAjuda("").getAjuda();
-    if (nome == "fim") return ComandoFim().getAjuda();
-    if (nome == "melhora") return ComandoMelhora("").getAjuda();
-    if (nome == "contrata") return ComandoContrata("").getAjuda();
-    if (nome == "atribui") return ComandoAtribui("", "").getAjuda();
-    if (nome == "despede") return ComandoDespede("").getAjuda();
-    if (nome == "grava") return ComandoGrava("").getAjuda();
-    if (nome == "recupera") return ComandoRecupera("").getAjuda();
-    return "";
+    return obterTextoAjuda(nome, false);
 }
 
 Comando* Comando::criar(const string& linhaComando) {

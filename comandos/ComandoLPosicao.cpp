@@ -31,8 +31,12 @@ bool ComandoLPosicao::validar() const {
     return true;
 }
 
+string ComandoLPosicao::getAjudaSimples() const {
+    return "lposicao <lc> [n]\n";
+}
+
 string ComandoLPosicao::getAjuda() const {
-    return "lposicao <lc> [n]\n"
+    return getAjudaSimples() + "\n"
            "  Significado: Mostra informacao detalhada da posicao lc (ou quadrado centrado de raio n).\n"
            "  Condicoes em que falha: coordenadas invalidas, n negativo/invalido ou argumentos extra.\n"
            "  Exemplo: lposicao df 2";

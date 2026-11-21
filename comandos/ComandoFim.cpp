@@ -1,3 +1,4 @@
+#include <sstream>
 #include "ComandoFim.h"
 #include "../Simulador.h"
 #include <utility>
@@ -11,8 +12,12 @@ bool ComandoFim::validar() const {
     return resto.empty();
 }
 
+string ComandoFim::getAjudaSimples() const {
+    return "fim\n";
+}
+
 string ComandoFim::getAjuda() const {
-    return "fim\n"
+    return getAjudaSimples() + "\n"
            "  Significado: Encerra a simulacao e o programa de forma limpa.\n"
            "  Condicoes em que falha: argumentos extra inesperados.\n"
            "  Exemplo: fim";

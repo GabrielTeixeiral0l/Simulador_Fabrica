@@ -1,3 +1,4 @@
+#include <sstream>
 #include "ComandoMelhora.h"
 #include <utility>
 
@@ -16,8 +17,12 @@ bool ComandoMelhora::validar() const {
             ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')));
 }
 
+string ComandoMelhora::getAjudaSimples() const {
+    return "melhora <lc>\n";
+}
+
 string ComandoMelhora::getAjuda() const {
-    return "melhora <lc>\n"
+    return getAjudaSimples() + "\n"
            "  Significado: Melhora a maquina na posicao lc pagando o respetivo custo.\n"
            "  Condicoes em que falha: posicao sem maquina ou coordenadas invalidas.\n"
            "  Exemplo: melhora hi";
