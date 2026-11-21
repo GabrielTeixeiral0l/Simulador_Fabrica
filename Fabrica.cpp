@@ -314,7 +314,8 @@ void Fabrica::adicionarCreditos(int valor) noexcept {
 }
 
 bool Fabrica::substituirPorSolo(int linha, int coluna) {
-    if (!estaDentroDosLimites(linha, coluna) || grelha[linha][coluna] == nullptr) return false;
+    if (!estaDentroDosLimites(linha, coluna) || grelha[linha][coluna] == nullptr)
+        return false;
     Maquina* maq = grelha[linha][coluna]->removerMaquina();
     delete grelha[linha][coluna];
     grelha[linha][coluna] = new Solo();

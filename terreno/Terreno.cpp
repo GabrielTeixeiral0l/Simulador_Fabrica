@@ -48,3 +48,8 @@ const Maquina* Terreno::getMaquina() const noexcept {
 Maquina* Terreno::getMaquina() noexcept {
     return maquina;
 }
+
+
+bool Terreno::isSolo() const noexcept {
+    return false;
+}

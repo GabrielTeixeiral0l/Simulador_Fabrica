@@ -18,7 +18,7 @@ public:
     virtual std::string getDescricao() const = 0;
 
     virtual bool podeConstruir() const noexcept;
-    virtual bool isSolo() const noexcept { return false; }
+    virtual bool isSolo() const noexcept;
     virtual bool extrair(int quantidade = 1) noexcept;
     virtual int getQuantidade() const noexcept;
 
