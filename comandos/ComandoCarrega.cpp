@@ -26,19 +26,9 @@ string ComandoCarrega::executar(Fabrica& fabrica, Simulador&) {
     return "Erro ao carregar ficheiro '" + ficheiro + "'.";
 }
 
-ComandoCarrega::ComandoCarrega(bool) : Comando(true) {}
-
-const char* ComandoCarrega::getNome() const noexcept {
-    return "carrega";
-}
-
-Comando* ComandoCarrega::criarComArgs(std::istringstream& iss) const {
+Comando* ComandoCarrega::criarDeStream(std::istringstream& iss) {
     std::string fich;
     std::string resto;
     iss >> fich >> resto;
     return new ComandoCarrega(fich, resto);
-}
-
-namespace {
-    ComandoCarrega prototipo_ComandoCarrega(true);
 }

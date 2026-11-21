@@ -11,12 +11,11 @@ class ComandoGrava : public Comando {
 public:
     ComandoGrava(std::string nome, std::string resto = "") noexcept;
     ~ComandoGrava() noexcept override = default;
-    explicit ComandoGrava(bool);
-    const char* getNome() const noexcept override;
-    Comando* criarComArgs(std::istringstream& iss) const override;
+    static Comando* criarDeStream(std::istringstream& iss);
 
     bool validar() const override;
     std::string getAjuda() const override;
+    static std::string ajuda();
     std::string executar(Fabrica& fabrica, Simulador& simulador) override;
 };
 

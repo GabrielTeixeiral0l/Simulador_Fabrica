@@ -27,19 +27,9 @@ string ComandoMelhora::executar(Fabrica&, Simulador&) {
     return "Comando 'melhora' validado com sucesso (funcionalidade reservada para a entrega final).";
 }
 
-ComandoMelhora::ComandoMelhora(bool) : Comando(true) {}
-
-const char* ComandoMelhora::getNome() const noexcept {
-    return "melhora";
-}
-
-Comando* ComandoMelhora::criarComArgs(std::istringstream& iss) const {
+Comando* ComandoMelhora::criarDeStream(std::istringstream& iss) {
     std::string coord;
     std::string resto;
     iss >> coord >> resto;
     return new ComandoMelhora(coord, resto);
-}
-
-namespace {
-    ComandoMelhora prototipo_ComandoMelhora(true);
 }

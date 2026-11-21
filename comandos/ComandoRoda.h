@@ -12,12 +12,11 @@ class ComandoRoda : public Comando {
 public:
     ComandoRoda(std::string coord, std::string dir = "", std::string resto = "") noexcept;
     ~ComandoRoda() noexcept override = default;
-    explicit ComandoRoda(bool);
-    const char* getNome() const noexcept override;
-    Comando* criarComArgs(std::istringstream& iss) const override;
+    static Comando* criarDeStream(std::istringstream& iss);
 
     bool validar() const override;
     std::string getAjuda() const override;
+    static std::string ajuda();
     std::string executar(Fabrica& fabrica, Simulador& simulador) override;
 };
 

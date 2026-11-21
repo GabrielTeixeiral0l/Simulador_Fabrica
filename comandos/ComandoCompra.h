@@ -13,12 +13,11 @@ class ComandoCompra : public Comando {
 public:
     ComandoCompra(std::string tipo, std::string coord, std::string dir = "c", std::string resto = "") noexcept;
     ~ComandoCompra() noexcept override = default;
-    explicit ComandoCompra(bool);
-    const char* getNome() const noexcept override;
-    Comando* criarComArgs(std::istringstream& iss) const override;
+    static Comando* criarDeStream(std::istringstream& iss);
 
     bool validar() const override;
     std::string getAjuda() const override;
+    static std::string ajuda();
     std::string executar(Fabrica& fabrica, Simulador& simulador) override;
 };
 

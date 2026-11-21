@@ -11,12 +11,11 @@ class ComandoAjuda : public Comando {
 public:
     ComandoAjuda(std::string comandoAlvo = "", std::string resto = "") noexcept;
     ~ComandoAjuda() noexcept override = default;
-    explicit ComandoAjuda(bool);
-    const char* getNome() const noexcept override;
-    Comando* criarComArgs(std::istringstream& iss) const override;
+    static Comando* criarDeStream(std::istringstream& iss);
 
     bool validar() const override;
     std::string getAjuda() const override;
+    static std::string ajuda();
     std::string executar(Fabrica& fabrica, Simulador& simulador) override;
     bool requerFabrica() const noexcept override { return false; }
 };

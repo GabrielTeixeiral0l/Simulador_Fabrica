@@ -23,18 +23,8 @@ string ComandoFim::executar(Fabrica&, Simulador& simulador) {
     return "A encerrar o simulador com saida limpa...";
 }
 
-ComandoFim::ComandoFim(bool) : Comando(true) {}
-
-const char* ComandoFim::getNome() const noexcept {
-    return "fim";
-}
-
-Comando* ComandoFim::criarComArgs(std::istringstream& iss) const {
+Comando* ComandoFim::criarDeStream(std::istringstream& iss) {
     std::string resto;
     iss >> resto;
     return new ComandoFim(resto);
-}
-
-namespace {
-    ComandoFim prototipo_ComandoFim(true);
 }

@@ -12,12 +12,11 @@ class ComandoAtribui : public Comando {
 public:
     ComandoAtribui(std::string argId, std::string coord, std::string resto = "") noexcept;
     ~ComandoAtribui() noexcept override = default;
-    explicit ComandoAtribui(bool);
-    const char* getNome() const noexcept override;
-    Comando* criarComArgs(std::istringstream& iss) const override;
+    static Comando* criarDeStream(std::istringstream& iss);
 
     bool validar() const override;
     std::string getAjuda() const override;
+    static std::string ajuda();
     std::string executar(Fabrica& fabrica, Simulador& simulador) override;
 };
 

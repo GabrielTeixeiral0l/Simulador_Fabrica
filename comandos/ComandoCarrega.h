@@ -11,12 +11,11 @@ class ComandoCarrega : public Comando {
 public:
     ComandoCarrega(std::string ficheiro, std::string resto = "") noexcept;
     ~ComandoCarrega() noexcept override = default;
-    explicit ComandoCarrega(bool);
-    const char* getNome() const noexcept override;
-    Comando* criarComArgs(std::istringstream& iss) const override;
+    static Comando* criarDeStream(std::istringstream& iss);
 
     bool validar() const override;
     std::string getAjuda() const override;
+    static std::string ajuda();
     std::string executar(Fabrica& fabrica, Simulador& simulador) override;
     bool requerFabrica() const noexcept override { return false; }
 };

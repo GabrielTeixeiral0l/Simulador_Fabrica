@@ -31,19 +31,9 @@ string ComandoVende::executar(Fabrica& fabrica, Simulador&) {
     return "Erro ao vender maquina: nenhuma maquina presente na posicao " + coord + ".";
 }
 
-ComandoVende::ComandoVende(bool) : Comando(true) {}
-
-const char* ComandoVende::getNome() const noexcept {
-    return "vende";
-}
-
-Comando* ComandoVende::criarComArgs(std::istringstream& iss) const {
+Comando* ComandoVende::criarDeStream(std::istringstream& iss) {
     std::string coord;
     std::string resto;
     iss >> coord >> resto;
     return new ComandoVende(coord, resto);
-}
-
-namespace {
-    ComandoVende prototipo_ComandoVende(true);
 }

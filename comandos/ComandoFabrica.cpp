@@ -42,20 +42,10 @@ string ComandoFabrica::executar(Fabrica& fabrica, Simulador&) {
     return "Erro ao criar fabrica com dimensoes fornecidas.";
 }
 
-ComandoFabrica::ComandoFabrica(bool) : Comando(true) {}
-
-const char* ComandoFabrica::getNome() const noexcept {
-    return "fabrica";
-}
-
-Comando* ComandoFabrica::criarComArgs(std::istringstream& iss) const {
+Comando* ComandoFabrica::criarDeStream(std::istringstream& iss) {
     std::string argLinhas;
     std::string argColunas;
     std::string resto;
     iss >> argLinhas >> argColunas >> resto;
     return new ComandoFabrica(argLinhas, argColunas, resto);
-}
-
-namespace {
-    ComandoFabrica prototipo_ComandoFabrica(true);
 }

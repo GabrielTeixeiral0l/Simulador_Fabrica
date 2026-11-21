@@ -21,19 +21,9 @@ string ComandoRecupera::executar(Fabrica&, Simulador&) {
     return "Comando 'recupera' validado com sucesso (funcionalidade de snapshots reservada para a entrega final).";
 }
 
-ComandoRecupera::ComandoRecupera(bool) : Comando(true) {}
-
-const char* ComandoRecupera::getNome() const noexcept {
-    return "recupera";
-}
-
-Comando* ComandoRecupera::criarComArgs(std::istringstream& iss) const {
+Comando* ComandoRecupera::criarDeStream(std::istringstream& iss) {
     std::string nome;
     std::string resto;
     iss >> nome >> resto;
     return new ComandoRecupera(nome, resto);
-}
-
-namespace {
-    ComandoRecupera prototipo_ComandoRecupera(true);
 }

@@ -30,19 +30,9 @@ string ComandoDespede::executar(Fabrica&, Simulador&) {
     return "Comando 'despede' validado com sucesso (funcionalidade de engenheiros reservada para a entrega final).";
 }
 
-ComandoDespede::ComandoDespede(bool) : Comando(true) {}
-
-const char* ComandoDespede::getNome() const noexcept {
-    return "despede";
-}
-
-Comando* ComandoDespede::criarComArgs(std::istringstream& iss) const {
+Comando* ComandoDespede::criarDeStream(std::istringstream& iss) {
     std::string id;
     std::string resto;
     iss >> id >> resto;
     return new ComandoDespede(id, resto);
-}
-
-namespace {
-    ComandoDespede prototipo_ComandoDespede(true);
 }

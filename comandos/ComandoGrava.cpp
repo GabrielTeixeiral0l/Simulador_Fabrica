@@ -21,19 +21,9 @@ string ComandoGrava::executar(Fabrica&, Simulador&) {
     return "Comando 'grava' validado com sucesso (funcionalidade de snapshots reservada para a entrega final).";
 }
 
-ComandoGrava::ComandoGrava(bool) : Comando(true) {}
-
-const char* ComandoGrava::getNome() const noexcept {
-    return "grava";
-}
-
-Comando* ComandoGrava::criarComArgs(std::istringstream& iss) const {
+Comando* ComandoGrava::criarDeStream(std::istringstream& iss) {
     std::string nome;
     std::string resto;
     iss >> nome >> resto;
     return new ComandoGrava(nome, resto);
-}
-
-namespace {
-    ComandoGrava prototipo_ComandoGrava(true);
 }
