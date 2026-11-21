@@ -4,7 +4,6 @@
 #include "terreno/Deposito.h"
 #include "FerramentasAuxiliares.h"
 #include <fstream>
-#include <utility>
 
 using std::string;
 
