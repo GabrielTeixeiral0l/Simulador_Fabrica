@@ -21,12 +21,12 @@
 using std::string;
 
 
-static constexpr const char* NOMES_COMANDOS[] = {
+static const char* NOMES_COMANDOS[] = {
     "fabrica", "carrega", "executa", "compra", "vende", "roda",
     "avanca", "estado", "lposicao", "ajuda", "fim", "melhora",
     "contrata", "atribui", "despede", "grava", "recupera"
 };
-static constexpr int TOTAL_COMANDOS = static_cast<int>(std::size(NOMES_COMANDOS));
+static const int TOTAL_COMANDOS = static_cast<int>(std::size(NOMES_COMANDOS));
 
 bool Comando::requerFabrica() const noexcept {
     return true;
