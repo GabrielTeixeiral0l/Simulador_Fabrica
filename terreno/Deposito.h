@@ -19,6 +19,8 @@ public:
     int getQuantidade() const noexcept override;
     bool extrair(int quantidadeExtrair = 1) noexcept override;
     std::string getNome() const;
+
+    Item* criarItem() const;
 };
 
 #endif // SIMULADOR_DEPOSITO_H

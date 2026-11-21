@@ -33,6 +33,9 @@ public:
 
     static Orientacao charParaOrientacao(char c) noexcept;
     static Maquina* criar(const std::string& tipo, Orientacao orientacao = Orientacao::Este);
+
+
+    void tentarEnviarItem(Fabrica& fabrica, int linha, int coluna, Item*& item) const;
 };
 
 #endif // SIMULADOR_MAQUINA_H

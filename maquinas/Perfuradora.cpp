@@ -28,57 +28,37 @@ string Perfuradora::getDescricao() const {
     return desc;
 }
 
+
+
 void Perfuradora::operar(Fabrica& fabrica, int linha, int coluna) {
-    if (itemArmazenado != nullptr) {
-        int destL = linha;
-        int destC = coluna;
-        Fabrica::getPosicaoAdjacente(linha, coluna, getOrientacao(), destL, destC);
-        Terreno* destTerreno = fabrica.getTerreno(destL, destC);
-        if (destTerreno != nullptr && destTerreno->getMaquina() != nullptr) {
-            if (destTerreno->getMaquina()->aceitaItem(itemArmazenado)) {
-                itemArmazenado = nullptr;
-            }
-        }
-    }
+    tentarEnviarItem(fabrica, linha, coluna, itemArmazenado);
 
     if (itemArmazenado != nullptr) {
         return;
     }
 
     ++instantesPassados;
-    if (instantesPassados >= Settings::perfuradora_periodo) {
-        instantesPassados = 0;
-        Terreno* terrenoAtual = fabrica.getTerreno(linha, coluna);
-        if (terrenoAtual != nullptr && terrenoAtual->getQuantidade() > 0) {
-            Deposito* dep = dynamic_cast<Deposito*>(terrenoAtual);
-            if (dep != nullptr && dep->extrair(1)) {
-                Item* novoItem = nullptr;
-                string nomeDep = dep->getNome();
-                if (nomeDep == "Ferro") {
-                    novoItem = new MinerioFerro();
-                } else if (nomeDep == "Silicio") {
-                    novoItem = new SilicioBruto();
-                } else if (nomeDep == "Gelo") {
-                    novoItem = new Gelo();
-                }
-
-                if (novoItem != nullptr) {
-                    if (FerramentasAuxiliares::probabilidadeOcorre(Settings::perfuradora_prob_perda)) {
-                        delete novoItem;
-                    } else {
-                        itemArmazenado = novoItem;
-                        int destL = linha;
-                        int destC = coluna;
-                        Fabrica::getPosicaoAdjacente(linha, coluna, getOrientacao(), destL, destC);
-                        Terreno* destTerreno = fabrica.getTerreno(destL, destC);
-                        if (destTerreno != nullptr && destTerreno->getMaquina() != nullptr) {
-                            if (destTerreno->getMaquina()->aceitaItem(itemArmazenado)) {
-                                itemArmazenado = nullptr;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    if (instantesPassados < Settings::perfuradora_periodo) {
+        return;
     }
+    instantesPassados = 0;
+
+    Terreno* terrenoAtual = fabrica.getTerreno(linha, coluna);
+    Deposito* deposito = dynamic_cast<Deposito*>(terrenoAtual);
+    if (deposito == nullptr || !deposito->extrair(1)) {
+        return;
+    }
+
+    Item* novoItem = deposito->criarItem();
+    if (novoItem == nullptr) {
+        return;
+    }
+
+    if (FerramentasAuxiliares::probabilidadeOcorre(Settings::perfuradora_prob_perda)) {
+        delete novoItem;
+        return;
+    }
+
+    itemArmazenado = novoItem;
+    tentarEnviarItem(fabrica, linha, coluna, itemArmazenado);
 }

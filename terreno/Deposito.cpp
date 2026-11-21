@@ -1,5 +1,8 @@
 #include "Deposito.h"
 #include <sstream>
+#include "../itens/MinerioFerro.h"
+#include "../itens/SilicioBruto.h"
+#include "../itens/Gelo.h"
 
 Deposito::Deposito(char simbolo, const std::string& nome, int quantidade)
     : simbolo(simbolo), nome(nome), quantidade(quantidade) {}
@@ -38,4 +41,18 @@ bool Deposito::extrair(int quantidadeExtrair) noexcept {
 
 std::string Deposito::getNome() const {
     return nome;
+}
+
+
+Item* Deposito::criarItem() const {
+    if (nome == "Ferro") {
+        return new MinerioFerro();
+    }
+    if (nome == "Silicio") {
+        return new SilicioBruto();
+    }
+    if (nome == "Gelo") {
+        return new Gelo();
+    }
+    return nullptr;
 }

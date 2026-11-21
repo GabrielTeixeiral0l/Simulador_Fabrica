@@ -46,17 +46,5 @@ bool Transportador::aceitaItem(Item* item) {
 }
 
 void Transportador::operar(Fabrica& fabrica, int linha, int coluna) {
-    if (itemArmazenado == nullptr) {
-        return;
-    }
-
-    int destL = linha;
-    int destC = coluna;
-    Fabrica::getPosicaoAdjacente(linha, coluna, getOrientacao(), destL, destC);
-    Terreno* destTerreno = fabrica.getTerreno(destL, destC);
-    if (destTerreno != nullptr && destTerreno->getMaquina() != nullptr) {
-        if (destTerreno->getMaquina()->aceitaItem(itemArmazenado)) {
-            itemArmazenado = nullptr;
-        }
-    }
+    tentarEnviarItem(fabrica, linha, coluna, itemArmazenado);
 }

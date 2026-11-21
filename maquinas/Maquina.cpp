@@ -6,6 +6,9 @@
 #include "Silo.h"
 #include "Lancador.h"
 
+#include "../Fabrica.h"
+#include "../terreno/Terreno.h"
+
 using std::string;
 
 int Maquina::proximoId = 1;
@@ -66,4 +69,24 @@ Maquina* Maquina::criar(const string& tipo, Orientacao orientacao) {
     if (tipo == "s") return new Silo(orientacao);
     if (tipo == "l") return new Lancador(orientacao);
     return nullptr;
+}
+
+
+void Maquina::tentarEnviarItem(Fabrica& fabrica, int linha, int coluna, Item*& item) const {
+    if (item == nullptr) {
+        return;
+    }
+
+    int linhaDestino = linha;
+    int colunaDestino = coluna;
+    Fabrica::getPosicaoAdjacente(linha, coluna, getOrientacao(), linhaDestino, colunaDestino);
+
+    Terreno* terrenoDestino = fabrica.getTerreno(linhaDestino, colunaDestino);
+    if (terrenoDestino == nullptr || terrenoDestino->getMaquina() == nullptr) {
+        return;
+    }
+
+    if (terrenoDestino->getMaquina()->aceitaItem(item)) {
+        item = nullptr;
+    }
 }
