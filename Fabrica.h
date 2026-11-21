@@ -51,7 +51,6 @@ public:
     int getNumMaquinas() const noexcept;
     const Terreno* getTerreno(int linha, int coluna) const noexcept;
     Terreno* getTerreno(int linha, int coluna) noexcept;
-
 };
 
 #endif // SIMULADOR_FABRICA_H
