@@ -17,10 +17,10 @@ class Fabrica {
     void limparGrelha();
     bool estaDentroDosLimites(int linha, int coluna) const noexcept;
     void sortearPosicaoLivre(int& linha, int& coluna) const;
-    void criarCrateras(int numCrateras);
-    void criarDepositos(int numDepositos, const std::string& nome, char simbolo);
-    static bool parseCoordenadas(const std::string& coord, int& linha, int& coluna) noexcept;
-    Terreno* obterTerrenoPorCoord(const std::string& coord) noexcept;
+    void criarCrateras(int numeroCrateras);
+    void criarDepositos(int numeroDepositos, const std::string& nome, char simbolo);
+    static bool parseCoordenadas(const std::string& coordenadas, int& linha, int& coluna) noexcept;
+    Terreno* obterTerrenoPorCoord(const std::string& coordenadas) noexcept;
 
 public:
     Fabrica() noexcept;
@@ -28,17 +28,17 @@ public:
     Fabrica(const Fabrica&) = delete;
     Fabrica& operator=(const Fabrica&) = delete;
 
-    bool gerarAleatoria(int numLinhas, int numColunas);
+    bool gerarAleatoria(int numeroLinhas, int numeroColunas);
     bool carregarFicheiro(const std::string& nomeFicheiro);
 
-    bool comprarMaquina(const std::string& tipo, const std::string& coord, char dir = 'c');
-    bool venderMaquina(const std::string& coord);
-    bool rodarMaquina(const std::string& coord, char dir);
+    bool comprarMaquina(const std::string& tipoMaquina, const std::string& coordenadas, char orientacao = 'c');
+    bool venderMaquina(const std::string& coordenadas);
+    bool rodarMaquina(const std::string& coordenadas, char orientacao);
 
-    void avancarInstante(int n = 1);
+    void avancarInstante(int numeroInstantes = 1);
 
     void adicionarCreditos(int valor) noexcept;
-    static void getPosicaoAdjacente(int linha, int coluna, const Orientacao& dir, int& destLinha, int& destColuna) noexcept;
+    static void getPosicaoAdjacente(int linha, int coluna, const Orientacao& orientacao, int& linhaDestino, int& colunaDestino) noexcept;
 
     std::string getInfoPosicao(int linha, int coluna) const;
     std::string getInfoPosicao(const std::string& coordenadas) const;
