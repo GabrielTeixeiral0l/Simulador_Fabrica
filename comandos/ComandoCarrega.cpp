@@ -1,19 +1,20 @@
-#include <sstream>
 #include "ComandoCarrega.h"
 #include "../Fabrica.h"
+
+#include <sstream>
 #include <utility>
 
 using std::string;
 
-ComandoCarrega::ComandoCarrega(string ficheiro, string resto) noexcept
-    : ficheiro(std::move(ficheiro)), resto(std::move(resto)) {}
+ComandoCarrega::ComandoCarrega(string nomeFicheiro, string resto) noexcept
+    : nomeFicheiro(std::move(nomeFicheiro)), resto(std::move(resto)) {}
 
 bool ComandoCarrega::validar() const {
-    return !ficheiro.empty() && resto.empty();
+    return !nomeFicheiro.empty() && resto.empty();
 }
 
 string ComandoCarrega::getAjudaSimples() const {
-    return "carrega <nome-do-ficheiro>\n";
+    return "carrega <nome-do-ficheiro>";
 }
 
 string ComandoCarrega::getAjuda() const {
@@ -24,16 +25,22 @@ string ComandoCarrega::getAjuda() const {
 }
 
 string ComandoCarrega::executar(Fabrica& fabrica, Simulador&) {
-    if (fabrica.getLinhas() > 0) return "Erro: a fabrica ja foi criada e nao pode ser recriada.";
-    if (fabrica.carregarFicheiro(ficheiro)) {
-        return "Ficheiro '" + ficheiro + "' carregado com sucesso.";
+    if (fabrica.getLinhas() > 0) {
+        return "Erro: a fabrica ja foi criada e nao pode ser recriada.";
     }
-    return "Erro ao carregar ficheiro '" + ficheiro + "'.";
+    if (fabrica.carregarFicheiro(nomeFicheiro)) {
+        return "Ficheiro '" + nomeFicheiro + "' carregado com sucesso.";
+    }
+    return "Erro ao carregar ficheiro '" + nomeFicheiro + "' (ficheiro inexistente ou formato invalido).";
 }
 
 Comando* ComandoCarrega::criarDeStream(std::istringstream& iss) {
-    std::string fich;
-    std::string resto;
-    iss >> fich >> resto;
-    return new ComandoCarrega(fich, resto);
+    string nomeFicheiro;
+    string resto;
+    iss >> nomeFicheiro >> resto;
+    return new ComandoCarrega(nomeFicheiro, resto);
+}
+
+bool ComandoCarrega::requerFabrica() const noexcept {
+    return false;
 }

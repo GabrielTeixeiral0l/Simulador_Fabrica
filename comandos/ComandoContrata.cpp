@@ -1,5 +1,6 @@
-#include <sstream>
 #include "ComandoContrata.h"
+
+#include <sstream>
 #include <utility>
 
 using std::string;
@@ -12,7 +13,7 @@ bool ComandoContrata::validar() const {
 }
 
 string ComandoContrata::getAjudaSimples() const {
-    return "contrata <nome>\n";
+    return "contrata <nome>";
 }
 
 string ComandoContrata::getAjuda() const {
@@ -27,8 +28,8 @@ string ComandoContrata::executar(Fabrica&, Simulador&) {
 }
 
 Comando* ComandoContrata::criarDeStream(std::istringstream& iss) {
-    std::string nome;
-    std::string resto;
+    string nome;
+    string resto;
     iss >> nome >> resto;
     return new ComandoContrata(nome, resto);
 }

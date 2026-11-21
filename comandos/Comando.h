@@ -15,7 +15,7 @@ public:
     virtual std::string getAjudaSimples() const = 0;
     virtual std::string getAjuda() const = 0;
     virtual std::string executar(Fabrica& fabrica, Simulador& simulador) = 0;
-    virtual bool requerFabrica() const noexcept { return true; }
+    virtual bool requerFabrica() const noexcept;
 
     static Comando* criar(const std::string& linhaComando);
     static int getTotalComandos() noexcept;

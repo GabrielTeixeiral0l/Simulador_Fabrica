@@ -2,6 +2,7 @@
 #define SIMULADOR_COMANDOFIM_H
 
 #include "Comando.h"
+#include <sstream>
 #include <string>
 
 class ComandoFim : public Comando {
@@ -15,9 +16,8 @@ public:
     bool validar() const override;
     std::string getAjudaSimples() const override;
     std::string getAjuda() const override;
-    static std::string ajuda();
     std::string executar(Fabrica& fabrica, Simulador& simulador) override;
-    bool requerFabrica() const noexcept override { return false; }
+    bool requerFabrica() const noexcept override;
 };
 
 #endif // SIMULADOR_COMANDOFIM_H

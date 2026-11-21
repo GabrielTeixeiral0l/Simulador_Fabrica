@@ -1,5 +1,6 @@
-#include <sstream>
 #include "ComandoGrava.h"
+
+#include <sstream>
 #include <utility>
 
 using std::string;
@@ -12,7 +13,7 @@ bool ComandoGrava::validar() const {
 }
 
 string ComandoGrava::getAjudaSimples() const {
-    return "grava <nome>\n";
+    return "grava <nome>";
 }
 
 string ComandoGrava::getAjuda() const {
@@ -27,8 +28,8 @@ string ComandoGrava::executar(Fabrica&, Simulador&) {
 }
 
 Comando* ComandoGrava::criarDeStream(std::istringstream& iss) {
-    std::string nome;
-    std::string resto;
+    string nome;
+    string resto;
     iss >> nome >> resto;
     return new ComandoGrava(nome, resto);
 }

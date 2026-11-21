@@ -1,23 +1,25 @@
-#include <sstream>
 #include "ComandoRoda.h"
+#include "FerramentasAuxiliares.h"
 #include "../Fabrica.h"
+
+#include <sstream>
 #include <utility>
 
 using std::string;
 
-ComandoRoda::ComandoRoda(string coord, string dir, string resto) noexcept
-    : coord(std::move(coord)), dir(std::move(dir)), resto(std::move(resto)) {}
+ComandoRoda::ComandoRoda(string coordenada, string direcao, string resto) noexcept
+    : coordenada(std::move(coordenada)), direcao(std::move(direcao)), resto(std::move(resto)) {}
 
 bool ComandoRoda::validar() const {
-    if (!resto.empty() || coord.length() != 2 || dir.length() != 1) return false;
-    char l = coord[0], c = coord[1], d = dir[0];
-    if (!((l >= 'a' && l <= 'z') || (l >= 'A' && l <= 'Z'))) return false;
-    if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))) return false;
+    if (!resto.empty() || !FerramentasAuxiliares::isCoordenada(coordenada) || direcao.length() != 1) {
+        return false;
+    }
+    char d = direcao[0];
     return d == 'c' || d == 'b' || d == 'e' || d == 'd';
 }
 
 string ComandoRoda::getAjudaSimples() const {
-    return "roda <lc> <dir>\n";
+    return "roda <lc> <dir>";
 }
 
 string ComandoRoda::getAjuda() const {
@@ -28,17 +30,19 @@ string ComandoRoda::getAjuda() const {
 }
 
 string ComandoRoda::executar(Fabrica& fabrica, Simulador&) {
-    if (fabrica.rodarMaquina(coord, dir[0])) {
-        return "Direcao da maquina em " + coord + " alterada para " + dir + ".";
+    if (fabrica.rodarMaquina(coordenada, direcao[0])) {
+        return "Direcao da maquina em " + coordenada + " alterada para " + direcao + ".";
     }
-    return "Erro ao rodar maquina: nenhuma maquina presente na posicao " + coord + ".";
+    return "Erro ao rodar maquina: nenhuma maquina presente na posicao " + coordenada + ".";
 }
 
 Comando* ComandoRoda::criarDeStream(std::istringstream& iss) {
-    std::string coord;
-    std::string dir;
-    std::string resto;
-    iss >> coord;
-    if (iss >> dir) { iss >> resto; }
-    return new ComandoRoda(coord, dir, resto);
+    string coordenada;
+    string direcao;
+    string resto;
+    iss >> coordenada;
+    if (iss >> direcao) {
+        iss >> resto;
+    }
+    return new ComandoRoda(coordenada, direcao, resto);
 }

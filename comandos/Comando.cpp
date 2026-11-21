@@ -28,6 +28,10 @@ static constexpr const char* NOMES_COMANDOS[] = {
 };
 static constexpr int TOTAL_COMANDOS = static_cast<int>(std::size(NOMES_COMANDOS));
 
+bool Comando::requerFabrica() const noexcept {
+    return true;
+}
+
 int Comando::getTotalComandos() noexcept {
     return TOTAL_COMANDOS;
 }

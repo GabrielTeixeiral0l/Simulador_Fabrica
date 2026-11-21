@@ -1,5 +1,6 @@
 #include "ComandoEstado.h"
 #include "../Fabrica.h"
+
 #include <sstream>
 #include <utility>
 
@@ -13,7 +14,7 @@ bool ComandoEstado::validar() const {
 }
 
 string ComandoEstado::getAjudaSimples() const {
-    return "estado\n";
+    return "estado";
 }
 
 string ComandoEstado::getAjuda() const {
@@ -53,7 +54,7 @@ string ComandoEstado::executar(Fabrica& fabrica, Simulador&) {
 }
 
 Comando* ComandoEstado::criarDeStream(std::istringstream& iss) {
-    std::string resto;
+    string resto;
     iss >> resto;
     return new ComandoEstado(resto);
 }

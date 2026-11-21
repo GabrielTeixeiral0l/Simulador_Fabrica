@@ -1,20 +1,21 @@
-#include <sstream>
 #include "ComandoExecuta.h"
 #include "../Simulador.h"
+
 #include <fstream>
+#include <sstream>
 #include <utility>
 
 using std::string;
 
-ComandoExecuta::ComandoExecuta(string ficheiro, string resto) noexcept
-    : ficheiro(std::move(ficheiro)), resto(std::move(resto)) {}
+ComandoExecuta::ComandoExecuta(string nomeFicheiro, string resto) noexcept
+    : nomeFicheiro(std::move(nomeFicheiro)), resto(std::move(resto)) {}
 
 bool ComandoExecuta::validar() const {
-    return !ficheiro.empty() && resto.empty();
+    return !nomeFicheiro.empty() && resto.empty();
 }
 
 string ComandoExecuta::getAjudaSimples() const {
-    return "executa <nome-do-ficheiro>\n";
+    return "executa <nome-do-ficheiro>";
 }
 
 string ComandoExecuta::getAjuda() const {
@@ -25,9 +26,9 @@ string ComandoExecuta::getAjuda() const {
 }
 
 string ComandoExecuta::executar(Fabrica&, Simulador& simulador) {
-    std::ifstream f(ficheiro);
+    std::ifstream f(nomeFicheiro);
     if (!f.is_open()) {
-        return "Erro ao abrir ficheiro '" + ficheiro + "'.";
+        return "Erro ao abrir ficheiro '" + nomeFicheiro + "'.";
     }
 
     string linha;
@@ -38,12 +39,16 @@ string ComandoExecuta::executar(Fabrica&, Simulador& simulador) {
             ++contador;
         }
     }
-    return "Ficheiro '" + ficheiro + "' executado (" + std::to_string(contador) + " linhas).";
+    return "Ficheiro '" + nomeFicheiro + "' executado (" + std::to_string(contador) + " linhas).";
 }
 
 Comando* ComandoExecuta::criarDeStream(std::istringstream& iss) {
-    std::string fich;
-    std::string resto;
-    iss >> fich >> resto;
-    return new ComandoExecuta(fich, resto);
+    string nomeFicheiro;
+    string resto;
+    iss >> nomeFicheiro >> resto;
+    return new ComandoExecuta(nomeFicheiro, resto);
+}
+
+bool ComandoExecuta::requerFabrica() const noexcept {
+    return false;
 }

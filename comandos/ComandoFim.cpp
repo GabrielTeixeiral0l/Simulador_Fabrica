@@ -1,6 +1,7 @@
-#include <sstream>
 #include "ComandoFim.h"
 #include "../Simulador.h"
+
+#include <sstream>
 #include <utility>
 
 using std::string;
@@ -13,7 +14,7 @@ bool ComandoFim::validar() const {
 }
 
 string ComandoFim::getAjudaSimples() const {
-    return "fim\n";
+    return "fim";
 }
 
 string ComandoFim::getAjuda() const {
@@ -29,7 +30,11 @@ string ComandoFim::executar(Fabrica&, Simulador& simulador) {
 }
 
 Comando* ComandoFim::criarDeStream(std::istringstream& iss) {
-    std::string resto;
+    string resto;
     iss >> resto;
     return new ComandoFim(resto);
+}
+
+bool ComandoFim::requerFabrica() const noexcept {
+    return false;
 }

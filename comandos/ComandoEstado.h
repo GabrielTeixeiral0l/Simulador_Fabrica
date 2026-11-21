@@ -2,6 +2,7 @@
 #define SIMULADOR_COMANDOESTADO_H
 
 #include "Comando.h"
+#include <sstream>
 #include <string>
 
 class ComandoEstado : public Comando {
@@ -15,7 +16,6 @@ public:
     bool validar() const override;
     std::string getAjudaSimples() const override;
     std::string getAjuda() const override;
-    static std::string ajuda();
     std::string executar(Fabrica& fabrica, Simulador& simulador) override;
 };
 

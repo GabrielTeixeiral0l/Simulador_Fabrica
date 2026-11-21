@@ -1,11 +1,12 @@
 #include "ComandoAjuda.h"
+
 #include <sstream>
 #include <utility>
 
 using std::string;
 
-ComandoAjuda::ComandoAjuda(string comandoAlvo, string resto) noexcept
-    : comandoAlvo(std::move(comandoAlvo)), resto(std::move(resto)) {}
+ComandoAjuda::ComandoAjuda(string comando, string resto) noexcept
+    : comando(std::move(comando)), resto(std::move(resto)) {}
 
 bool ComandoAjuda::validar() const {
     return resto.empty();
@@ -17,31 +18,36 @@ string ComandoAjuda::getAjudaSimples() const {
 
 string ComandoAjuda::getAjuda() const {
     return getAjudaSimples() + "\n"
-           "  Significado: Apresenta resumo de todos os comandos ou a ajuda detalhada do comando indicado.\n"
+           "  Significado: Apresenta resumo de todos os comandos ou a ajuda do comando indicado.\n"
            "  Condicoes em que falha: argumentos extra alem do nome do comando.\n"
            "  Exemplo: ajuda compra";
 }
 
 string ComandoAjuda::executar(Fabrica&, Simulador&) {
-    if (!comandoAlvo.empty()) {
-        string detalhe = obterAjudaComando(comandoAlvo);
+    if (!comando.empty()) {
+        string detalhe = obterAjudaComando(comando);
         if (detalhe.empty()) {
-            return "Comando '" + comandoAlvo + "' desconhecido. Escreva 'ajuda' para ver a lista.";
+            return "Comando '" + comando + "' desconhecido. Escreva 'ajuda' para ver a lista.";
         }
-        return "Ajuda para o comando '" + comandoAlvo + "':\n" + detalhe;
+        return "Ajuda para o comando '" + comando + "':\n" + detalhe;
     }
 
     string out = "Comandos disponiveis:\n";
     int total = getTotalComandos();
     for (int i = 0; i < total; ++i) {
-        out += "  - " + obterAjudaSimplesComando(getNomeComando(i)) + "\n";
+        string nome = getNomeComando(i);
+        out += "  " + obterAjudaSimplesComando(nome) + "\n";
     }
     return out;
 }
 
 Comando* ComandoAjuda::criarDeStream(std::istringstream& iss) {
-    std::string cmdAlvo;
-    std::string resto;
-    if (iss >> cmdAlvo) { iss >> resto; }
-    return new ComandoAjuda(cmdAlvo, resto);
+    string comando;
+    string resto;
+    iss >> comando >> resto;
+    return new ComandoAjuda(comando, resto);
+}
+
+bool ComandoAjuda::requerFabrica() const noexcept {
+    return false;
 }

@@ -1,37 +1,31 @@
-#include <sstream>
 #include "ComandoCompra.h"
+#include "FerramentasAuxiliares.h"
 #include "../Fabrica.h"
+
+#include <sstream>
 #include <utility>
 
 using std::string;
 
-ComandoCompra::ComandoCompra(string tipo, string coord, string dir, string resto) noexcept
-    : tipo(std::move(tipo)), coord(std::move(coord)), dir(std::move(dir)), resto(std::move(resto)) {}
+ComandoCompra::ComandoCompra(string tipo, string coordenada, string direcao, string resto) noexcept
+    : tipo(std::move(tipo)), coordenada(std::move(coordenada)), direcao(std::move(direcao)), resto(std::move(resto)) {}
 
 bool ComandoCompra::validar() const {
-    if (!resto.empty() || coord.length() != 2) {
+    if (!resto.empty() || !FerramentasAuxiliares::isCoordenada(coordenada)) {
         return false;
     }
-    char l = coord[0];
-    char c = coord[1];
-    if (!((l >= 'a' && l <= 'z') || (l >= 'A' && l <= 'Z')) ||
-        !((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))) {
-        return false;
-    }
-
     if (tipo != "p" && tipo != "t" && tipo != "r" && tipo != "o" && tipo != "s" && tipo != "l") {
         return false;
     }
-
-    if (dir.length() != 1) {
+    if (direcao.length() != 1) {
         return false;
     }
-    char d = dir[0];
+    char d = direcao[0];
     return (d == 'c' || d == 'b' || d == 'e' || d == 'd');
 }
 
 string ComandoCompra::getAjudaSimples() const {
-    return "compra <tipo> <lc> <dir>\n";
+    return "compra <tipo> <lc> <dir>";
 }
 
 string ComandoCompra::getAjuda() const {
@@ -42,18 +36,18 @@ string ComandoCompra::getAjuda() const {
 }
 
 string ComandoCompra::executar(Fabrica& fabrica, Simulador&) {
-    char d = dir.empty() ? 'c' : dir[0];
-    if (fabrica.comprarMaquina(tipo, coord, d)) {
-        return "Maquina '" + tipo + "' comprada na posicao " + coord + ".";
+    char d = direcao.empty() ? 'c' : direcao[0];
+    if (fabrica.comprarMaquina(tipo, coordenada, d)) {
+        return "Maquina '" + tipo + "' comprada na posicao " + coordenada + ".";
     }
     return "Erro ao comprar maquina: posicao ocupada, invalida ou creditos insuficientes.";
 }
 
 Comando* ComandoCompra::criarDeStream(std::istringstream& iss) {
-    std::string tipo;
-    std::string coord;
-    std::string dir;
-    std::string resto;
-    iss >> tipo >> coord >> dir >> resto;
-    return new ComandoCompra(tipo, coord, dir, resto);
+    string tipo;
+    string coordenada;
+    string direcao;
+    string resto;
+    iss >> tipo >> coordenada >> direcao >> resto;
+    return new ComandoCompra(tipo, coordenada, direcao, resto);
 }

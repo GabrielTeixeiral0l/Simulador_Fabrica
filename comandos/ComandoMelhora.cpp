@@ -1,24 +1,20 @@
-#include <sstream>
 #include "ComandoMelhora.h"
+#include "FerramentasAuxiliares.h"
+
+#include <sstream>
 #include <utility>
 
 using std::string;
 
-ComandoMelhora::ComandoMelhora(string coord, string resto) noexcept
-    : coord(std::move(coord)), resto(std::move(resto)) {}
+ComandoMelhora::ComandoMelhora(string coordenada, string resto) noexcept
+    : coordenada(std::move(coordenada)), resto(std::move(resto)) {}
 
 bool ComandoMelhora::validar() const {
-    if (!resto.empty() || coord.length() != 2) {
-        return false;
-    }
-    char l = coord[0];
-    char c = coord[1];
-    return (((l >= 'a' && l <= 'z') || (l >= 'A' && l <= 'Z')) &&
-            ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')));
+    return resto.empty() && FerramentasAuxiliares::isCoordenada(coordenada);
 }
 
 string ComandoMelhora::getAjudaSimples() const {
-    return "melhora <lc>\n";
+    return "melhora <lc>";
 }
 
 string ComandoMelhora::getAjuda() const {
@@ -33,8 +29,8 @@ string ComandoMelhora::executar(Fabrica&, Simulador&) {
 }
 
 Comando* ComandoMelhora::criarDeStream(std::istringstream& iss) {
-    std::string coord;
-    std::string resto;
-    iss >> coord >> resto;
-    return new ComandoMelhora(coord, resto);
+    string coordenada;
+    string resto;
+    iss >> coordenada >> resto;
+    return new ComandoMelhora(coordenada, resto);
 }

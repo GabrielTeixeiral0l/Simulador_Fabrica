@@ -1,25 +1,21 @@
-#include <sstream>
 #include "ComandoVende.h"
+#include "FerramentasAuxiliares.h"
 #include "../Fabrica.h"
+
+#include <sstream>
 #include <utility>
 
 using std::string;
 
-ComandoVende::ComandoVende(string coord, string resto) noexcept
-    : coord(std::move(coord)), resto(std::move(resto)) {}
+ComandoVende::ComandoVende(string coordenada, string resto) noexcept
+    : coordenada(std::move(coordenada)), resto(std::move(resto)) {}
 
 bool ComandoVende::validar() const {
-    if (!resto.empty() || coord.length() != 2) {
-        return false;
-    }
-    char l = coord[0];
-    char c = coord[1];
-    return (((l >= 'a' && l <= 'z') || (l >= 'A' && l <= 'Z')) &&
-            ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')));
+    return resto.empty() && FerramentasAuxiliares::isCoordenada(coordenada);
 }
 
 string ComandoVende::getAjudaSimples() const {
-    return "vende <lc>\n";
+    return "vende <lc>";
 }
 
 string ComandoVende::getAjuda() const {
@@ -30,15 +26,15 @@ string ComandoVende::getAjuda() const {
 }
 
 string ComandoVende::executar(Fabrica& fabrica, Simulador&) {
-    if (fabrica.venderMaquina(coord)) {
-        return "Maquina vendida na posicao " + coord + ".";
+    if (fabrica.venderMaquina(coordenada)) {
+        return "Maquina vendida na posicao " + coordenada + ".";
     }
-    return "Erro ao vender maquina: nenhuma maquina presente na posicao " + coord + ".";
+    return "Erro ao vender maquina: nenhuma maquina presente na posicao " + coordenada + ".";
 }
 
 Comando* ComandoVende::criarDeStream(std::istringstream& iss) {
-    std::string coord;
-    std::string resto;
-    iss >> coord >> resto;
-    return new ComandoVende(coord, resto);
+    string coordenada;
+    string resto;
+    iss >> coordenada >> resto;
+    return new ComandoVende(coordenada, resto);
 }

@@ -41,6 +41,8 @@ add_executable(simulador
         maquinas/Lancador.h
         maquinas/Lancador.cpp
 
+        comandos/FerramentasAuxiliares.h
+        comandos/FerramentasAuxiliares.cpp
         comandos/Comando.h
         comandos/Comando.cpp
         comandos/ComandoAjuda.h

@@ -1,5 +1,6 @@
-#include <sstream>
 #include "ComandoRecupera.h"
+
+#include <sstream>
 #include <utility>
 
 using std::string;
@@ -12,7 +13,7 @@ bool ComandoRecupera::validar() const {
 }
 
 string ComandoRecupera::getAjudaSimples() const {
-    return "recupera <nome>\n";
+    return "recupera <nome>";
 }
 
 string ComandoRecupera::getAjuda() const {
@@ -27,8 +28,8 @@ string ComandoRecupera::executar(Fabrica&, Simulador&) {
 }
 
 Comando* ComandoRecupera::criarDeStream(std::istringstream& iss) {
-    std::string nome;
-    std::string resto;
+    string nome;
+    string resto;
     iss >> nome >> resto;
     return new ComandoRecupera(nome, resto);
 }

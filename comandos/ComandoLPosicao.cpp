@@ -1,38 +1,27 @@
 #include "ComandoLPosicao.h"
+#include "FerramentasAuxiliares.h"
 #include "../Fabrica.h"
+
 #include <sstream>
 #include <utility>
 
 using std::string;
 
-ComandoLPosicao::ComandoLPosicao(string coord, string argRaio, string resto) noexcept
-    : coord(std::move(coord)), argRaio(std::move(argRaio)), resto(std::move(resto)) {}
+ComandoLPosicao::ComandoLPosicao(string coordenada, string raio, string resto) noexcept
+    : coordenada(std::move(coordenada)), raio(std::move(raio)), resto(std::move(resto)) {}
 
 bool ComandoLPosicao::validar() const {
-    if (!resto.empty() || coord.length() != 2) {
+    if (!resto.empty() || !FerramentasAuxiliares::isCoordenada(coordenada)) {
         return false;
     }
-    char l = coord[0];
-    char c = coord[1];
-    if (!((l >= 'a' && l <= 'z') || (l >= 'A' && l <= 'Z')) ||
-        !((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))) {
-        return false;
-    }
-
-    if (!argRaio.empty()) {
-        try {
-            size_t idx;
-            int r = std::stoi(argRaio, &idx);
-            return idx == argRaio.length() && r >= 0;
-        } catch (...) {
-            return false;
-        }
+    if (!raio.empty()) {
+        return FerramentasAuxiliares::isNumeroNaoNegativo(raio);
     }
     return true;
 }
 
 string ComandoLPosicao::getAjudaSimples() const {
-    return "lposicao <lc> [n]\n";
+    return "lposicao <lc> [n]";
 }
 
 string ComandoLPosicao::getAjuda() const {
@@ -43,18 +32,18 @@ string ComandoLPosicao::getAjuda() const {
 }
 
 string ComandoLPosicao::executar(Fabrica& fabrica, Simulador&) {
-    if (argRaio.empty()) {
-        return fabrica.getInfoPosicao(coord);
+    if (raio.empty()) {
+        return fabrica.getInfoPosicao(coordenada);
     }
 
-    int centroL = (coord[0] >= 'a' && coord[0] <= 'z') ? (coord[0] - 'a') : (coord[0] - 'A');
-    int centroC = (coord[1] >= 'a' && coord[1] <= 'z') ? (coord[1] - 'a') : (coord[1] - 'A');
-    int raio = std::stoi(argRaio);
+    int centroL = (coordenada[0] >= 'a' && coordenada[0] <= 'z') ? (coordenada[0] - 'a') : (coordenada[0] - 'A');
+    int centroC = (coordenada[1] >= 'a' && coordenada[1] <= 'z') ? (coordenada[1] - 'a') : (coordenada[1] - 'A');
+    int r = FerramentasAuxiliares::converterInteiro(raio);
 
     std::ostringstream oss;
-    oss << "Informacao de posicoes (raio " << raio << " em torno de " << coord << "):\n";
-    for (int l = centroL - raio; l <= centroL + raio; ++l) {
-        for (int c = centroC - raio; c <= centroC + raio; ++c) {
+    oss << "Informacao de posicoes (raio " << r << " em torno de " << coordenada << "):\n";
+    for (int l = centroL - r; l <= centroL + r; ++l) {
+        for (int c = centroC - r; c <= centroC + r; ++c) {
             if (l >= 0 && l < fabrica.getLinhas() && c >= 0 && c < fabrica.getColunas()) {
                 oss << "  " << fabrica.getInfoPosicao(l, c) << "\n";
             }
@@ -64,10 +53,12 @@ string ComandoLPosicao::executar(Fabrica& fabrica, Simulador&) {
 }
 
 Comando* ComandoLPosicao::criarDeStream(std::istringstream& iss) {
-    std::string coord;
-    std::string raio;
-    std::string resto;
-    iss >> coord;
-    if (iss >> raio) { iss >> resto; }
-    return new ComandoLPosicao(coord, raio, resto);
+    string coordenada;
+    string raio;
+    string resto;
+    iss >> coordenada;
+    if (iss >> raio) {
+        iss >> resto;
+    }
+    return new ComandoLPosicao(coordenada, raio, resto);
 }
