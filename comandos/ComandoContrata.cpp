@@ -20,3 +20,20 @@ string ComandoContrata::getAjuda() const {
 string ComandoContrata::executar(Fabrica&, Simulador&) {
     return "Comando 'contrata' validado com sucesso (funcionalidade de engenheiros reservada para a entrega final).";
 }
+
+ComandoContrata::ComandoContrata(bool) : Comando(true) {}
+
+const char* ComandoContrata::getNome() const noexcept {
+    return "contrata";
+}
+
+Comando* ComandoContrata::criarComArgs(std::istringstream& iss) const {
+    std::string nome;
+    std::string resto;
+    iss >> nome >> resto;
+    return new ComandoContrata(nome, resto);
+}
+
+namespace {
+    ComandoContrata prototipo_ComandoContrata(true);
+}

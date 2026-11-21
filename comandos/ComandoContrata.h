@@ -11,6 +11,9 @@ class ComandoContrata : public Comando {
 public:
     ComandoContrata(std::string nome, std::string resto = "") noexcept;
     ~ComandoContrata() noexcept override = default;
+    explicit ComandoContrata(bool);
+    const char* getNome() const noexcept override;
+    Comando* criarComArgs(std::istringstream& iss) const override;
 
     bool validar() const override;
     std::string getAjuda() const override;

@@ -47,3 +47,19 @@ string ComandoEstado::executar(Fabrica& fabrica, Simulador&) {
     }
     return oss.str();
 }
+
+ComandoEstado::ComandoEstado(bool) : Comando(true) {}
+
+const char* ComandoEstado::getNome() const noexcept {
+    return "estado";
+}
+
+Comando* ComandoEstado::criarComArgs(std::istringstream& iss) const {
+    std::string resto;
+    iss >> resto;
+    return new ComandoEstado(resto);
+}
+
+namespace {
+    ComandoEstado prototipo_ComandoEstado(true);
+}

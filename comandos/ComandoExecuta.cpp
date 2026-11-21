@@ -35,3 +35,20 @@ string ComandoExecuta::executar(Fabrica&, Simulador& simulador) {
     }
     return "Ficheiro '" + ficheiro + "' executado (" + std::to_string(contador) + " linhas).";
 }
+
+ComandoExecuta::ComandoExecuta(bool) : Comando(true) {}
+
+const char* ComandoExecuta::getNome() const noexcept {
+    return "executa";
+}
+
+Comando* ComandoExecuta::criarComArgs(std::istringstream& iss) const {
+    std::string fich;
+    std::string resto;
+    iss >> fich >> resto;
+    return new ComandoExecuta(fich, resto);
+}
+
+namespace {
+    ComandoExecuta prototipo_ComandoExecuta(true);
+}

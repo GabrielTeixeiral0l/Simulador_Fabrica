@@ -11,6 +11,9 @@ class ComandoMelhora : public Comando {
 public:
     ComandoMelhora(std::string coord, std::string resto = "") noexcept;
     ~ComandoMelhora() noexcept override = default;
+    explicit ComandoMelhora(bool);
+    const char* getNome() const noexcept override;
+    Comando* criarComArgs(std::istringstream& iss) const override;
 
     bool validar() const override;
     std::string getAjuda() const override;

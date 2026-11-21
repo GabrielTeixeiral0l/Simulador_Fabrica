@@ -11,6 +11,9 @@ class ComandoAvanca : public Comando {
 public:
     ComandoAvanca(std::string argN = "", std::string resto = "") noexcept;
     ~ComandoAvanca() noexcept override = default;
+    explicit ComandoAvanca(bool);
+    const char* getNome() const noexcept override;
+    Comando* criarComArgs(std::istringstream& iss) const override;
 
     bool validar() const override;
     std::string getAjuda() const override;

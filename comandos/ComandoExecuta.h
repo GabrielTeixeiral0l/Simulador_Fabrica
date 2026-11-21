@@ -11,6 +11,9 @@ class ComandoExecuta : public Comando {
 public:
     ComandoExecuta(std::string ficheiro, std::string resto = "") noexcept;
     ~ComandoExecuta() noexcept override = default;
+    explicit ComandoExecuta(bool);
+    const char* getNome() const noexcept override;
+    Comando* criarComArgs(std::istringstream& iss) const override;
 
     bool validar() const override;
     std::string getAjuda() const override;

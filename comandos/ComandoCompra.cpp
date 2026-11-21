@@ -43,3 +43,22 @@ string ComandoCompra::executar(Fabrica& fabrica, Simulador&) {
     }
     return "Erro ao comprar maquina: posicao ocupada, invalida ou creditos insuficientes.";
 }
+
+ComandoCompra::ComandoCompra(bool) : Comando(true) {}
+
+const char* ComandoCompra::getNome() const noexcept {
+    return "compra";
+}
+
+Comando* ComandoCompra::criarComArgs(std::istringstream& iss) const {
+    std::string tipo;
+    std::string coord;
+    std::string dir;
+    std::string resto;
+    iss >> tipo >> coord >> dir >> resto;
+    return new ComandoCompra(tipo, coord, dir, resto);
+}
+
+namespace {
+    ComandoCompra prototipo_ComandoCompra(true);
+}

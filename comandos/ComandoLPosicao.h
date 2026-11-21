@@ -12,6 +12,9 @@ class ComandoLPosicao : public Comando {
 public:
     ComandoLPosicao(std::string coord, std::string argRaio = "", std::string resto = "") noexcept;
     ~ComandoLPosicao() noexcept override = default;
+    explicit ComandoLPosicao(bool);
+    const char* getNome() const noexcept override;
+    Comando* criarComArgs(std::istringstream& iss) const override;
 
     bool validar() const override;
     std::string getAjuda() const override;

@@ -13,6 +13,9 @@ class ComandoCompra : public Comando {
 public:
     ComandoCompra(std::string tipo, std::string coord, std::string dir = "c", std::string resto = "") noexcept;
     ~ComandoCompra() noexcept override = default;
+    explicit ComandoCompra(bool);
+    const char* getNome() const noexcept override;
+    Comando* criarComArgs(std::istringstream& iss) const override;
 
     bool validar() const override;
     std::string getAjuda() const override;

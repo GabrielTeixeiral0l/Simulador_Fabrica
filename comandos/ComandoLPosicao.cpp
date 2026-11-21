@@ -58,3 +58,22 @@ string ComandoLPosicao::executar(Fabrica& fabrica, Simulador&) {
     }
     return oss.str();
 }
+
+ComandoLPosicao::ComandoLPosicao(bool) : Comando(true) {}
+
+const char* ComandoLPosicao::getNome() const noexcept {
+    return "lposicao";
+}
+
+Comando* ComandoLPosicao::criarComArgs(std::istringstream& iss) const {
+    std::string coord;
+    std::string raio;
+    std::string resto;
+    iss >> coord;
+    if (iss >> raio) { iss >> resto; }
+    return new ComandoLPosicao(coord, raio, resto);
+}
+
+namespace {
+    ComandoLPosicao prototipo_ComandoLPosicao(true);
+}

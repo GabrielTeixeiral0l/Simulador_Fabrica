@@ -10,6 +10,9 @@ class ComandoFim : public Comando {
 public:
     explicit ComandoFim(std::string resto = "") noexcept;
     ~ComandoFim() noexcept override = default;
+    explicit ComandoFim(bool);
+    const char* getNome() const noexcept override;
+    Comando* criarComArgs(std::istringstream& iss) const override;
 
     bool validar() const override;
     std::string getAjuda() const override;

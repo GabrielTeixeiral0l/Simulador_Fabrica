@@ -38,3 +38,20 @@ string ComandoAjuda::executar(Fabrica&, Simulador&) {
     }
     return "Ajuda para o comando '" + comandoAlvo + "':\n" + detalhe;
 }
+
+ComandoAjuda::ComandoAjuda(bool) : Comando(true) {}
+
+const char* ComandoAjuda::getNome() const noexcept {
+    return "ajuda";
+}
+
+Comando* ComandoAjuda::criarComArgs(std::istringstream& iss) const {
+    std::string cmdAlvo;
+    std::string resto;
+    if (iss >> cmdAlvo) { iss >> resto; }
+    return new ComandoAjuda(cmdAlvo, resto);
+}
+
+namespace {
+    ComandoAjuda prototipo_ComandoAjuda(true);
+}

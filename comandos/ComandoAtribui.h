@@ -12,6 +12,9 @@ class ComandoAtribui : public Comando {
 public:
     ComandoAtribui(std::string argId, std::string coord, std::string resto = "") noexcept;
     ~ComandoAtribui() noexcept override = default;
+    explicit ComandoAtribui(bool);
+    const char* getNome() const noexcept override;
+    Comando* criarComArgs(std::istringstream& iss) const override;
 
     bool validar() const override;
     std::string getAjuda() const override;

@@ -11,6 +11,9 @@ class ComandoVende : public Comando {
 public:
     ComandoVende(std::string coord, std::string resto = "") noexcept;
     ~ComandoVende() noexcept override = default;
+    explicit ComandoVende(bool);
+    const char* getNome() const noexcept override;
+    Comando* criarComArgs(std::istringstream& iss) const override;
 
     bool validar() const override;
     std::string getAjuda() const override;

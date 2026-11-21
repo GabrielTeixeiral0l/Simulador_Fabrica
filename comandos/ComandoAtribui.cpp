@@ -36,3 +36,21 @@ string ComandoAtribui::getAjuda() const {
 string ComandoAtribui::executar(Fabrica&, Simulador&) {
     return "Comando 'atribui' validado com sucesso (funcionalidade de engenheiros reservada para a entrega final).";
 }
+
+ComandoAtribui::ComandoAtribui(bool) : Comando(true) {}
+
+const char* ComandoAtribui::getNome() const noexcept {
+    return "atribui";
+}
+
+Comando* ComandoAtribui::criarComArgs(std::istringstream& iss) const {
+    std::string id;
+    std::string coord;
+    std::string resto;
+    iss >> id >> coord >> resto;
+    return new ComandoAtribui(id, coord, resto);
+}
+
+namespace {
+    ComandoAtribui prototipo_ComandoAtribui(true);
+}

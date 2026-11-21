@@ -12,6 +12,9 @@ class ComandoFabrica : public Comando {
 public:
     ComandoFabrica(std::string argLinhas, std::string argColunas, std::string resto = "") noexcept;
     ~ComandoFabrica() noexcept override = default;
+    explicit ComandoFabrica(bool);
+    const char* getNome() const noexcept override;
+    Comando* criarComArgs(std::istringstream& iss) const override;
 
     bool validar() const override;
     std::string getAjuda() const override;

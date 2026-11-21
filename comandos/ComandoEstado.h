@@ -10,6 +10,9 @@ class ComandoEstado : public Comando {
 public:
     explicit ComandoEstado(std::string resto = "") noexcept;
     ~ComandoEstado() noexcept override = default;
+    explicit ComandoEstado(bool);
+    const char* getNome() const noexcept override;
+    Comando* criarComArgs(std::istringstream& iss) const override;
 
     bool validar() const override;
     std::string getAjuda() const override;

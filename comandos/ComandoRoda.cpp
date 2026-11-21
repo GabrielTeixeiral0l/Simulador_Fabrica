@@ -28,3 +28,22 @@ string ComandoRoda::executar(Fabrica& fabrica, Simulador&) {
     }
     return "Erro ao rodar maquina: nenhuma maquina presente na posicao " + coord + ".";
 }
+
+ComandoRoda::ComandoRoda(bool) : Comando(true) {}
+
+const char* ComandoRoda::getNome() const noexcept {
+    return "roda";
+}
+
+Comando* ComandoRoda::criarComArgs(std::istringstream& iss) const {
+    std::string coord;
+    std::string dir;
+    std::string resto;
+    iss >> coord;
+    if (iss >> dir) { iss >> resto; }
+    return new ComandoRoda(coord, dir, resto);
+}
+
+namespace {
+    ComandoRoda prototipo_ComandoRoda(true);
+}

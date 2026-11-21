@@ -35,3 +35,20 @@ string ComandoAvanca::executar(Fabrica& fabrica, Simulador&) {
     fabrica.avancarInstante(n);
     return "Avancados " + std::to_string(n) + " instante(s). Instante atual: " + std::to_string(fabrica.getInstante()) + ".";
 }
+
+ComandoAvanca::ComandoAvanca(bool) : Comando(true) {}
+
+const char* ComandoAvanca::getNome() const noexcept {
+    return "avanca";
+}
+
+Comando* ComandoAvanca::criarComArgs(std::istringstream& iss) const {
+    std::string n;
+    std::string resto;
+    if (iss >> n) { iss >> resto; }
+    return new ComandoAvanca(n, resto);
+}
+
+namespace {
+    ComandoAvanca prototipo_ComandoAvanca(true);
+}
