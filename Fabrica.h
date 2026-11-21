@@ -16,7 +16,6 @@ class Fabrica {
     static void libertarMatrizTerreno(Terreno* matriz[Settings::fabrica_max_linhas][Settings::fabrica_max_colunas]) noexcept;
     void limparGrelha();
     bool estaDentroDosLimites(int linha, int coluna) const noexcept;
-    static int gerarNumeroAleatorio(int min, int max);
     void sortearPosicaoLivre(int& linha, int& coluna) const;
     void criarCrateras(int numCrateras);
     void criarDepositos(int numDepositos, const std::string& nome, char simbolo);

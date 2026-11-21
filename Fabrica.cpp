@@ -4,6 +4,7 @@
 #include "terreno/Deposito.h"
 #include "FerramentasAuxiliares.h"
 #include <fstream>
+#include <utility>
 
 using std::string;
 
@@ -37,14 +38,10 @@ bool Fabrica::estaDentroDosLimites(int linha, int coluna) const noexcept {
     return linha >= 0 && linha < linhas && coluna >= 0 && coluna < colunas;
 }
 
-int Fabrica::gerarNumeroAleatorio(int min, int max) {
-    return FerramentasAuxiliares::gerarInteiro(min, max);
-}
-
 void Fabrica::sortearPosicaoLivre(int& linha, int& coluna) const {
     do {
-        linha = gerarNumeroAleatorio(0, linhas - 1);
-        coluna = gerarNumeroAleatorio(0, colunas - 1);
+        linha = FerramentasAuxiliares::gerarInteiro(0, linhas - 1);
+        coluna = FerramentasAuxiliares::gerarInteiro(0, colunas - 1);
     } while (grelha[linha][coluna] != nullptr && !grelha[linha][coluna]->isSolo());
 }
 
@@ -61,17 +58,17 @@ void Fabrica::criarDepositos(int numDepositos, const string& nome, char simbolo)
     int linha, coluna;
     for (int i = 0; i < numDepositos; ++i) {
         sortearPosicaoLivre(linha, coluna);
-        int qtd = gerarNumeroAleatorio(Settings::deposito_quantidade_min, Settings::deposito_quantidade_max);
+        int qtd = FerramentasAuxiliares::gerarInteiro(Settings::deposito_quantidade_min, Settings::deposito_quantidade_max);
         delete grelha[linha][coluna];
         grelha[linha][coluna] = new Deposito(simbolo, nome, qtd);
     }
 }
 
 bool Fabrica::parseCoordenadas(const string& coord, int& linha, int& coluna) noexcept {
-    if (coord.length() != 2) return false;
+    if (!FerramentasAuxiliares::isCoordenada(coord)) {
+        return false;
+    }
     char l = coord[0], c = coord[1];
-    if (!((l >= 'a' && l <= 'z') || (l >= 'A' && l <= 'Z'))) return false;
-    if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))) return false;
     linha = (l >= 'a' && l <= 'z') ? (l - 'a') : (l - 'A');
     coluna = (c >= 'a' && c <= 'z') ? (c - 'a') : (c - 'A');
     return true;
@@ -139,7 +136,7 @@ bool Fabrica::carregarFicheiro(const string& nomeFicheiro) {
 
         for (int j = 0; j < colunasFich; ++j) {
             char ch = linhaMapa[j];
-            int qtd = gerarNumeroAleatorio(Settings::deposito_quantidade_min, Settings::deposito_quantidade_max);
+            int qtd = FerramentasAuxiliares::gerarInteiro(Settings::deposito_quantidade_min, Settings::deposito_quantidade_max);
 
             if (ch == '.') temp[i][j] = new Solo();
             else if (ch == '#') temp[i][j] = new Cratera();
@@ -289,7 +286,7 @@ const Terreno* Fabrica::getTerreno(int linha, int coluna) const noexcept {
 }
 
 Terreno* Fabrica::getTerreno(int linha, int coluna) noexcept {
-    return estaDentroDosLimites(linha, coluna) ? grelha[linha][coluna] : nullptr;
+    return const_cast<Terreno*>(std::as_const(*this).getTerreno(linha, coluna));
 }
 
 bool Fabrica::alterarEstadoMaquina(int id, bool ativo) noexcept {
