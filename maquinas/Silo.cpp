@@ -18,7 +18,7 @@ string Silo::getDescricao() const {
     return armazenamento.getInfoEstado() + " (direcao " + getOrientacaoNome() + ")";
 }
 
-bool Silo::aceitarItem(Item* item) {
+bool Silo::aceitaItem(Item* item) {
     return armazenamento.adicionarItem(item);
 }
 
@@ -32,14 +32,17 @@ void Silo::operar(Fabrica& fabrica, int linha, int coluna) {
         return;
     }
 
-    int destL = linha;
-    int destC = coluna;
-    Fabrica::getPosicaoAdjacente(linha, coluna, getOrientacao(), destL, destC);
-    Terreno* destTerreno = fabrica.getTerreno(destL, destC);
-    if (destTerreno != nullptr && destTerreno->getMaquina() != nullptr) {
-        if (destTerreno->getMaquina()->aceitarItem(maisAntigo)) {
-            Item* transferido = nullptr;
-            armazenamento.removerItemMaisAntigo(transferido);
-        }
+    int linhaDestino = linha;
+    int colunaDestino = coluna;
+    Fabrica::getPosicaoAdjacente(linha, coluna, getOrientacao(), linhaDestino, colunaDestino);
+
+    Terreno* terrenoDestino = fabrica.getTerreno(linhaDestino, colunaDestino);
+    if (terrenoDestino == nullptr || terrenoDestino->getMaquina() == nullptr) {
+        return;
+    }
+
+    if (terrenoDestino->getMaquina()->aceitaItem(maisAntigo)) {
+        Item* transferido = nullptr;
+        armazenamento.removerItemMaisAntigo(transferido);
     }
 }

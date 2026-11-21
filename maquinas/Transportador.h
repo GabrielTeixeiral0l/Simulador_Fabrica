@@ -14,7 +14,7 @@ public:
 
     char getSimbolo() const noexcept override;
     std::string getDescricao() const override;
-    bool aceitarItem(Item* item) override;
+    bool aceitaItem(Item* item) override;
     void operar(Fabrica& fabrica, int linha, int coluna) override;
 };
 

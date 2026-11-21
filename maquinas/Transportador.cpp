@@ -37,7 +37,7 @@ string Transportador::getDescricao() const {
     return desc;
 }
 
-bool Transportador::aceitarItem(Item* item) {
+bool Transportador::aceitaItem(Item* item) {
     if (itemArmazenado != nullptr || item == nullptr) {
         return false;
     }
@@ -55,7 +55,7 @@ void Transportador::operar(Fabrica& fabrica, int linha, int coluna) {
     Fabrica::getPosicaoAdjacente(linha, coluna, getOrientacao(), destL, destC);
     Terreno* destTerreno = fabrica.getTerreno(destL, destC);
     if (destTerreno != nullptr && destTerreno->getMaquina() != nullptr) {
-        if (destTerreno->getMaquina()->aceitarItem(itemArmazenado)) {
+        if (destTerreno->getMaquina()->aceitaItem(itemArmazenado)) {
             itemArmazenado = nullptr;
         }
     }

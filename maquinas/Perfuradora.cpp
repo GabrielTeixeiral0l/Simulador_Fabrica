@@ -35,7 +35,7 @@ void Perfuradora::operar(Fabrica& fabrica, int linha, int coluna) {
         Fabrica::getPosicaoAdjacente(linha, coluna, getOrientacao(), destL, destC);
         Terreno* destTerreno = fabrica.getTerreno(destL, destC);
         if (destTerreno != nullptr && destTerreno->getMaquina() != nullptr) {
-            if (destTerreno->getMaquina()->aceitarItem(itemArmazenado)) {
+            if (destTerreno->getMaquina()->aceitaItem(itemArmazenado)) {
                 itemArmazenado = nullptr;
             }
         }
@@ -72,7 +72,7 @@ void Perfuradora::operar(Fabrica& fabrica, int linha, int coluna) {
                         Fabrica::getPosicaoAdjacente(linha, coluna, getOrientacao(), destL, destC);
                         Terreno* destTerreno = fabrica.getTerreno(destL, destC);
                         if (destTerreno != nullptr && destTerreno->getMaquina() != nullptr) {
-                            if (destTerreno->getMaquina()->aceitarItem(itemArmazenado)) {
+                            if (destTerreno->getMaquina()->aceitaItem(itemArmazenado)) {
                                 itemArmazenado = nullptr;
                             }
                         }

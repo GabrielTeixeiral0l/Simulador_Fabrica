@@ -21,7 +21,7 @@ public:
     virtual char getSimbolo() const noexcept = 0;
     virtual std::string getDescricao() const = 0;
     virtual void operar(Fabrica& fabrica, int linha, int coluna) = 0;
-    virtual bool aceitarItem(Item* item);
+    virtual bool aceitaItem(Item* item);
 
     void rodar() noexcept;
     void setOrientacao(Orientacao novaOrientacao) noexcept;

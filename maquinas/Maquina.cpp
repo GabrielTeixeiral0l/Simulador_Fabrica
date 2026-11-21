@@ -51,7 +51,7 @@ void Maquina::setAtivo(bool estado) noexcept {
     ativo = estado;
 }
 
-bool Maquina::aceitarItem(Item*) {
+bool Maquina::aceitaItem(Item*) {
     return false;
 }
 
