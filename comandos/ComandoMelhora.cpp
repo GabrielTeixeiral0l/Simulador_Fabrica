@@ -1,5 +1,5 @@
 #include "ComandoMelhora.h"
-#include "FerramentasAuxiliares.h"
+#include "../FerramentasAuxiliares.h"
 
 #include <sstream>
 #include <utility>
@@ -25,7 +25,7 @@ string ComandoMelhora::getAjuda() const {
 }
 
 string ComandoMelhora::executar(Fabrica&, Simulador&) {
-    return "Comando 'melhora' validado com sucesso (funcionalidade reservada para a entrega final).";
+    return ""; // TODO
 }
 
 Comando* ComandoMelhora::criarDeStream(std::istringstream& iss) {

@@ -24,7 +24,7 @@ string ComandoRecupera::getAjuda() const {
 }
 
 string ComandoRecupera::executar(Fabrica&, Simulador&) {
-    return "Comando 'recupera' validado com sucesso (funcionalidade de snapshots reservada para a entrega final).";
+    return ""; // TODO
 }
 
 Comando* ComandoRecupera::criarDeStream(std::istringstream& iss) {

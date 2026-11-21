@@ -1,7 +1,7 @@
 #include "Silo.h"
 #include "../Fabrica.h"
 #include "../Settings.h"
-#include <random>
+#include "../FerramentasAuxiliares.h"
 
 using std::string;
 
@@ -21,14 +21,9 @@ bool Silo::aceitarItem(const string& item) {
 }
 
 void Silo::operar(Fabrica& fabrica, int linha, int coluna) {
-    if (armazenamento.getQuantidadeTotal() > 0 && Settings::silo_prob_perda > 0) {
-        static std::random_device rd;
-        static std::default_random_engine gen(rd());
-        std::uniform_int_distribution<int> dist(0, 99);
-        if (dist(gen) < Settings::silo_prob_perda) {
-            string perdido;
-            armazenamento.removerItemMaisAntigo(perdido);
-        }
+    if (armazenamento.getQuantidadeTotal() > 0 && FerramentasAuxiliares::probabilidadeOcorre(Settings::silo_prob_perda)) {
+        string perdido;
+        armazenamento.removerItemMaisAntigo(perdido);
     }
 
     string maisAntigo;

@@ -15,5 +15,5 @@ string Oficina::getDescricao() const {
 }
 
 void Oficina::operar(Fabrica&, int, int) {
-    // TODO2
+    // TODO
 }

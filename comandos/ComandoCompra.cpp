@@ -1,5 +1,5 @@
 #include "ComandoCompra.h"
-#include "FerramentasAuxiliares.h"
+#include "../FerramentasAuxiliares.h"
 #include "../Fabrica.h"
 
 #include <sstream>

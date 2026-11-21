@@ -18,13 +18,16 @@ string ComandoContrata::getAjudaSimples() const {
 
 string ComandoContrata::getAjuda() const {
     return getAjudaSimples() + "\n"
-           "  Significado: Contrata um novo engenheiro com o nome indicado (salario e custo definidos em Settings).\n"
+           "  Significado: Contrata um novo engenheiro com o nome indicado (custo: " +
+           std::to_string(Settings::engenheiro_custo_contratacao) +
+           " creditos; salario: " + std::to_string(Settings::engenheiro_salario) +
+           " creditos/instante).\n"
            "  Condicoes em que falha: nome em falta ou creditos insuficientes.\n"
            "  Exemplo: contrata joaquim";
 }
 
 string ComandoContrata::executar(Fabrica&, Simulador&) {
-    return "Comando 'contrata' validado com sucesso (funcionalidade de engenheiros reservada para a entrega final).";
+    return ""; // TODO
 }
 
 Comando* ComandoContrata::criarDeStream(std::istringstream& iss) {

@@ -2,8 +2,8 @@
 #include "terreno/Solo.h"
 #include "terreno/Cratera.h"
 #include "terreno/Deposito.h"
+#include "FerramentasAuxiliares.h"
 #include <fstream>
-#include <random>
 
 using std::string;
 
@@ -38,10 +38,7 @@ bool Fabrica::estaDentroDosLimites(int linha, int coluna) const noexcept {
 }
 
 int Fabrica::gerarNumeroAleatorio(int min, int max) {
-    static std::random_device rd;
-    static std::default_random_engine gerador(rd());
-    std::uniform_int_distribution<int> distribuicao(min, max);
-    return distribuicao(gerador);
+    return FerramentasAuxiliares::gerarInteiro(min, max);
 }
 
 void Fabrica::sortearPosicaoLivre(int& linha, int& coluna) const {

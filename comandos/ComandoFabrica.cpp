@@ -1,5 +1,5 @@
 #include "ComandoFabrica.h"
-#include "FerramentasAuxiliares.h"
+#include "../FerramentasAuxiliares.h"
 #include "../Fabrica.h"
 #include "../Settings.h"
 

@@ -24,7 +24,7 @@ string ComandoGrava::getAjuda() const {
 }
 
 string ComandoGrava::executar(Fabrica&, Simulador&) {
-    return "Comando 'grava' validado com sucesso (funcionalidade de snapshots reservada para a entrega final).";
+    return ""; // TODO
 }
 
 Comando* ComandoGrava::criarDeStream(std::istringstream& iss) {

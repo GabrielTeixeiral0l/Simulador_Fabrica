@@ -1,5 +1,5 @@
 #include "ComandoAtribui.h"
-#include "FerramentasAuxiliares.h"
+#include "../FerramentasAuxiliares.h"
 
 #include <sstream>
 #include <utility>
@@ -27,7 +27,7 @@ string ComandoAtribui::getAjuda() const {
 }
 
 string ComandoAtribui::executar(Fabrica&, Simulador&) {
-    return "Atribuicao de engenheiro '" + idEngenheiro + "' em '" + coordenada + "' pendente de implementacao.";
+    return ""; // TODO
 }
 
 Comando* ComandoAtribui::criarDeStream(std::istringstream& iss) {

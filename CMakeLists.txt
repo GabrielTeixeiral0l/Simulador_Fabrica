@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(simulador
         main.cpp
         Settings.h
+        FerramentasAuxiliares.h
+        FerramentasAuxiliares.cpp
         Ecra.h
         Ecra.cpp
         Simulador.h
@@ -41,8 +43,6 @@ add_executable(simulador
         maquinas/Lancador.h
         maquinas/Lancador.cpp
 
-        comandos/FerramentasAuxiliares.h
-        comandos/FerramentasAuxiliares.cpp
         comandos/Comando.h
         comandos/Comando.cpp
         comandos/ComandoAjuda.h

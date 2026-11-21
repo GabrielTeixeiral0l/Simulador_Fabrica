@@ -12,6 +12,9 @@ public:
     static bool isNumeroPositivo(const std::string& s) noexcept;
     static bool isNumeroNaoNegativo(const std::string& s) noexcept;
     static int converterInteiro(const std::string& s) noexcept;
+
+    static int gerarInteiro(int min, int max);
+    static bool probabilidadeOcorre(int percentagem);
 };
 
 #endif // SIMULADOR_FERRAMENTASAUXILIARES_H

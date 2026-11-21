@@ -1,5 +1,5 @@
 #include "ComandoDespede.h"
-#include "FerramentasAuxiliares.h"
+#include "../FerramentasAuxiliares.h"
 
 #include <sstream>
 #include <utility>
@@ -19,13 +19,13 @@ string ComandoDespede::getAjudaSimples() const {
 
 string ComandoDespede::getAjuda() const {
     return getAjudaSimples() + "\n"
-           "  Significado: Despede o engenheiro com o id indicado, cessando o pagamento de salario.\n"
+           "  Significado: Despede o engenheiro com o id indicado.\n"
            "  Condicoes em que falha: id invalido ou inexistente.\n"
            "  Exemplo: despede 2";
 }
 
 string ComandoDespede::executar(Fabrica&, Simulador&) {
-    return "Comando 'despede' validado com sucesso (funcionalidade de engenheiros reservada para a entrega final).";
+    return ""; // TODO
 }
 
 Comando* ComandoDespede::criarDeStream(std::istringstream& iss) {

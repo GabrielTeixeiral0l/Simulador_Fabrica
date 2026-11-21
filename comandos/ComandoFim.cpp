@@ -26,7 +26,7 @@ string ComandoFim::getAjuda() const {
 
 string ComandoFim::executar(Fabrica&, Simulador& simulador) {
     simulador.parar();
-    return "A encerrar o simulador com saida limpa...";
+    return "FIM";
 }
 
 Comando* ComandoFim::criarDeStream(std::istringstream& iss) {
