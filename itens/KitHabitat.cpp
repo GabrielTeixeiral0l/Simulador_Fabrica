@@ -6,6 +6,6 @@ KitHabitat::KitHabitat() noexcept
 
 KitHabitat::~KitHabitat() noexcept = default;
 
-Item* KitHabitat::clone() const {
+Item* KitHabitat::duplicar() const {
     return new KitHabitat(*this);
 }

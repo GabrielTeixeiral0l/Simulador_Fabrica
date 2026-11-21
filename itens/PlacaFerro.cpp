@@ -6,6 +6,6 @@ PlacaFerro::PlacaFerro() noexcept
 
 PlacaFerro::~PlacaFerro() noexcept = default;
 
-Item* PlacaFerro::clone() const {
+Item* PlacaFerro::duplicar() const {
     return new PlacaFerro(*this);
 }

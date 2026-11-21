@@ -6,6 +6,6 @@ MinerioFerro::MinerioFerro() noexcept
 
 MinerioFerro::~MinerioFerro() noexcept = default;
 
-Item* MinerioFerro::clone() const {
+Item* MinerioFerro::duplicar() const {
     return new MinerioFerro(*this);
 }

@@ -6,6 +6,6 @@ Gelo::Gelo() noexcept
 
 Gelo::~Gelo() noexcept = default;
 
-Item* Gelo::clone() const {
+Item* Gelo::duplicar() const {
     return new Gelo(*this);
 }

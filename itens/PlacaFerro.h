@@ -8,7 +8,7 @@ public:
     PlacaFerro() noexcept;
     ~PlacaFerro() noexcept override;
 
-    Item* clone() const override;
+    Item* duplicar() const override;
 };
 
 #endif // SIMULADOR_PLACAFERRO_H

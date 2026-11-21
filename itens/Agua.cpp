@@ -6,6 +6,6 @@ Agua::Agua() noexcept
 
 Agua::~Agua() noexcept = default;
 
-Item* Agua::clone() const {
+Item* Agua::duplicar() const {
     return new Agua(*this);
 }

@@ -18,7 +18,7 @@ public:
     char getSimbolo() const noexcept;
     int getValor() const noexcept;
 
-    virtual Item* clone() const = 0;
+    virtual Item* duplicar() const = 0;
 };
 
 #endif // SIMULADOR_ITEM_H

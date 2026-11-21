@@ -8,7 +8,7 @@ public:
     MinerioFerro() noexcept;
     ~MinerioFerro() noexcept override;
 
-    Item* clone() const override;
+    Item* duplicar() const override;
 };
 
 #endif // SIMULADOR_MINERIOFERRO_H

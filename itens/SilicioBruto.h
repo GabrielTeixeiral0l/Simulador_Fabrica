@@ -8,7 +8,7 @@ public:
     SilicioBruto() noexcept;
     ~SilicioBruto() noexcept override;
 
-    Item* clone() const override;
+    Item* duplicar() const override;
 };
 
 #endif // SIMULADOR_SILICIOBRUTO_H

@@ -6,6 +6,6 @@ SilicioPuro::SilicioPuro() noexcept
 
 SilicioPuro::~SilicioPuro() noexcept = default;
 
-Item* SilicioPuro::clone() const {
+Item* SilicioPuro::duplicar() const {
     return new SilicioPuro(*this);
 }

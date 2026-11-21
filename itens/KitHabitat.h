@@ -8,7 +8,7 @@ public:
     KitHabitat() noexcept;
     ~KitHabitat() noexcept override;
 
-    Item* clone() const override;
+    Item* duplicar() const override;
 };
 
 #endif // SIMULADOR_KITHABITAT_H

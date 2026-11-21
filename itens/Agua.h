@@ -8,7 +8,7 @@ public:
     Agua() noexcept;
     ~Agua() noexcept override;
 
-    Item* clone() const override;
+    Item* duplicar() const override;
 };
 
 #endif // SIMULADOR_AGUA_H

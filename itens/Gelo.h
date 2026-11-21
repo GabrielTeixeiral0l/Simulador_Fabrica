@@ -8,7 +8,7 @@ public:
     Gelo() noexcept;
     ~Gelo() noexcept override;
 
-    Item* clone() const override;
+    Item* duplicar() const override;
 };
 
 #endif // SIMULADOR_GELO_H

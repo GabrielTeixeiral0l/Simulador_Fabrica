@@ -11,8 +11,8 @@ class Armazem {
 public:
     Armazem() noexcept;
     ~Armazem();
-    Armazem(const Armazem& outro);
-    Armazem& operator=(const Armazem& outro);
+    Armazem(const Armazem&) = delete;
+    Armazem& operator=(const Armazem&) = delete;
 
     void libertarItens() noexcept;
     bool adicionarItem(Item* item);

@@ -6,6 +6,6 @@ SilicioBruto::SilicioBruto() noexcept
 
 SilicioBruto::~SilicioBruto() noexcept = default;
 
-Item* SilicioBruto::clone() const {
+Item* SilicioBruto::duplicar() const {
     return new SilicioBruto(*this);
 }
