@@ -241,8 +241,12 @@ string Fabrica::getInfoPosicao(int linha, int coluna) const {
     }
 
     string pos;
-    pos += static_cast<char>('a' + linha);
-    pos += static_cast<char>('a' + coluna);
+    if (linha >= 0 && linha <= 25 && coluna >= 0 && coluna <= 25) {
+        pos += static_cast<char>('a' + linha);
+        pos += static_cast<char>('a' + coluna);
+    } else {
+        pos = "(" + std::to_string(linha) + "," + std::to_string(coluna) + ")";
+    }
 
     if (grelha[linha][coluna] == nullptr) {
         return "Posicao " + pos + ": Vazia";
@@ -289,38 +293,11 @@ Terreno* Fabrica::getTerreno(int linha, int coluna) noexcept {
     return const_cast<Terreno*>(std::as_const(*this).getTerreno(linha, coluna));
 }
 
-bool Fabrica::alterarEstadoMaquina(int id, bool ativo) noexcept {
-    for (int l = 0; l < linhas; ++l) {
-        for (int c = 0; c < colunas; ++c) {
-            if (grelha[l][c] != nullptr && grelha[l][c]->getMaquina() != nullptr && grelha[l][c]->getMaquina()->getId() == id) {
-                grelha[l][c]->getMaquina()->setAtivo(ativo);
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-bool Fabrica::ativarMaquina(int id) noexcept {
-    return alterarEstadoMaquina(id, true);
-}
-
-bool Fabrica::desativarMaquina(int id) noexcept {
-    return alterarEstadoMaquina(id, false);
-}
-
 void Fabrica::adicionarCreditos(int valor) noexcept {
-    if (valor > 0) creditos += valor;
-}
-
-bool Fabrica::substituirPorSolo(int linha, int coluna) {
-    if (!estaDentroDosLimites(linha, coluna) || grelha[linha][coluna] == nullptr)
-        return false;
-    Maquina* maq = grelha[linha][coluna]->removerMaquina();
-    delete grelha[linha][coluna];
-    grelha[linha][coluna] = new Solo();
-    if (maq != nullptr) grelha[linha][coluna]->colocarMaquina(maq);
-    return true;
+    creditos += valor;
+    if (creditos < 0) {
+        creditos = 0;
+    }
 }
 
 void Fabrica::getPosicaoAdjacente(int linha, int coluna, const Orientacao& dir, int& destLinha, int& destColuna) noexcept {
