@@ -12,7 +12,6 @@ class Maquina {
     int id;
     Orientacao orientacao;
     int custo;
-    bool ativo;
 
 public:
     explicit Maquina(int custo, Orientacao orientacao = Orientacao::Norte) noexcept;
@@ -31,8 +30,6 @@ public:
 
     int getId() const noexcept;
     int getCusto() const noexcept;
-    bool isAtivo() const noexcept;
-    void setAtivo(bool estado) noexcept;
 
     static Orientacao charParaOrientacao(char c) noexcept;
     static Maquina* criar(const std::string& tipo, Orientacao orientacao = Orientacao::Este);

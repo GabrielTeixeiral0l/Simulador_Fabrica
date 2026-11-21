@@ -228,7 +228,7 @@ void Fabrica::avancarInstante(int numInstantes) {
             for (int coluna = 0; coluna < colunas; ++coluna) {
                 if (grelha[linha][coluna] != nullptr) {
                     Maquina* maquina = grelha[linha][coluna]->getMaquina();
-                    if (maquina != nullptr && maquina->isAtivo()) {
+                    if (maquina != nullptr) {
                         maquina->operar(*this, linha, coluna);
                     }
                 }

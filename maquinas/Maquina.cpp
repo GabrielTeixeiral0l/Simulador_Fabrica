@@ -11,7 +11,7 @@ using std::string;
 int Maquina::proximoId = 1;
 
 Maquina::Maquina(int custo, Orientacao orientacao) noexcept
-    : id(proximoId++), orientacao(orientacao), custo(custo), ativo(true) {}
+    : id(proximoId++), orientacao(orientacao), custo(custo) {}
 
 Maquina::~Maquina() noexcept = default;
 
@@ -43,13 +43,6 @@ int Maquina::getCusto() const noexcept {
     return custo;
 }
 
-bool Maquina::isAtivo() const noexcept {
-    return ativo;
-}
-
-void Maquina::setAtivo(bool estado) noexcept {
-    ativo = estado;
-}
 
 bool Maquina::aceitaItem(Item*) {
     return false;
